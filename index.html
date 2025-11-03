@@ -1,541 +1,1381 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Grammar Quiz - 10 Tests</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Inter font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <style>
-        /* Custom styles for a polished look */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Light gray background */
-        }
-        .quiz-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .quiz-card {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .option-button {
-            transition: all 0.2s;
-        }
-        .option-button:hover:not(.selected):not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        /* Custom background gradient for the header */
-        .gradient-header {
-            background-image: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
-        }
-        /* Style for the question index buttons */
-        .q-index-button {
-            transition: background-color 0.1s, transform 0.1s;
-        }
-        /* Style for the summary table on smaller screens */
-        @media (max-width: 640px) {
-            .summary-table-cell {
-                display: block;
-                width: 100%;
-                text-align: left !important;
-                padding-bottom: 0.5rem;
-                padding-top: 0.5rem;
-                /* Reverted border-bottom back to standard visibility */
-            }
-            .summary-table-row {
-                display: flex;
-                flex-wrap: wrap;
-                margin-bottom: 0; /* Remove gap */
-                padding: 0.5rem;
-                border-bottom: 1px solid #e5e7eb; /* Keep visible row separator */
-            }
-            .summary-table-header {
-                display: none; /* Hide original headers on mobile */
-            }
-            .summary-table-cell:first-child {
-                font-size: 1.125rem; /* Larger number */
-                font-weight: 700;
-                border-bottom: none;
-            }
-            .summary-table-cell:last-child {
-                text-align: right !important;
-                border-bottom: none;
-            }
-        }
-        /* History modal styles */
-        .history-modal {
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        .history-item {
-            transition: all 0.2s;
-        }
-        .history-item:hover {
-            background-color: #f9fafb;
-        }
-        .progress-ring {
-            transform: rotate(-90deg);
-        }
-        .progress-ring-circle {
-            transition: stroke-dashoffset 0.3s;
-        }
-    </style>
+	<title>EngQuizzesForAll - Master Your English Grammar</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!-- Load Tailwind CSS -->
+	<script src="https://cdn.tailwindcss.com"></script>
+	<!-- Load Inter font -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet" />
+	<style>
+		/* Custom styles for a polished look */
+		body {
+			font-family: 'Inter', sans-serif;
+			background-color: #f3f4f6;
+			/* Light gray background */
+			min-height: 100vh;
+		}
+
+		.bee-page-container {
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+		}
+
+		/* Sticky Header */
+		.bee-row-1 {
+			position: sticky;
+			top: 0;
+			z-index: 20;
+			background-color: #ffffff;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+		}
+
+		.main-content-area {
+			flex-grow: 1;
+			padding-top: 2rem;
+			padding-bottom: 2rem;
+		}
+
+		/* Re-styling the original menu to be fully Tailwind compatible and responsive */
+		.bee-row-1 .bee-row-content {
+			max-width: 1440px;
+			margin: 0 auto;
+			padding: 0 1rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+
+		.bee-menu ul.bee-horizontal {
+			display: flex;
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+		}
+
+		.bee-menu ul.bee-horizontal li {
+			padding: 10px 15px;
+			font-size: 16px;
+			font-weight: 600;
+			transition: all 0.2s;
+		}
+
+		.bee-menu ul.bee-horizontal li a {
+			color: #1f2937;
+			/* Dark gray text */
+			text-decoration: none;
+			transition: color 0.2s;
+		}
+
+		.bee-menu ul.bee-horizontal li a:hover,
+		.nav-active {
+			color: #10b981 !important;
+			/* Teal hover color */
+		}
+
+		/* Mobile adjustments for header */
+		@media (max-width: 768px) {
+			.bee-row-1 .bee-row-content {
+				flex-direction: column;
+				padding: 1rem 0;
+			}
+
+			.bee-logo {
+				font-size: 1.5rem !important;
+				margin-bottom: 0.5rem;
+			}
+
+			.bee-menu ul.bee-horizontal {
+				justify-content: center;
+			}
+
+			.bee-menu ul.bee-horizontal li {
+				padding: 8px 10px;
+				font-size: 14px;
+			}
+		}
+
+		/* Quiz Specific Styles (retained) */
+		.quiz-container {
+			display: flex;
+			align-items: flex-start;
+			justify-content: center;
+			padding: 1rem;
+		}
+
+		.quiz-card {
+			box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+		}
+
+		.option-button {
+			transition: all 0.2s;
+		}
+
+		.option-button:hover:not(.selected):not(:disabled) {
+			transform: translateY(-2px);
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+		}
+
+		.gradient-header {
+			background-image: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+		}
+
+		.q-index-button {
+			transition: background-color 0.1s, transform 0.1s;
+		}
+
+		@media (max-width: 640px) {
+			.summary-table-cell {
+				display: block;
+				width: 100%;
+				text-align: left !important;
+				padding-bottom: 0.5rem;
+				padding-top: 0.5rem;
+			}
+
+			.summary-table-row {
+				display: flex;
+				flex-wrap: wrap;
+				margin-bottom: 0;
+				padding: 0.5rem;
+				border-bottom: 1px solid #e5e7eb;
+			}
+
+			.summary-table-header {
+				display: none;
+			}
+
+			.summary-table-cell:first-child {
+				font-size: 1.125rem;
+				font-weight: 700;
+				border-bottom: none;
+			}
+
+			.summary-table-cell:last-child {
+				text-align: right !important;
+				border-bottom: none;
+			}
+		}
+
+		.history-modal {
+			max-height: 80vh;
+			overflow-y: auto;
+		}
+
+		.history-item {
+			transition: all 0.2s;
+		}
+
+		.history-item:hover {
+			background-color: #f9fafb;
+		}
+
+		.progress-ring {
+			transform: rotate(-90deg);
+		}
+
+		.progress-ring-circle {
+			transition: stroke-dashoffset 0.3s;
+		}
+
+		/* Footer adjustments */
+		.bee-row-3 {
+			margin-top: auto;
+			/* Push footer to the bottom */
+		}
+	</style>
 </head>
+
 <body>
+	<div class="bee-page-container">
+		<!-- HEADER / NAVIGATION (Bee Row 1 adapted for Tailwind & Functionality) -->
+		<header class="bee-row bee-row-1 bg-white">
+			<div class="bee-row-content max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+				<div class="bee-logo text-2xl font-extrabold text-gray-800 tracking-tight">
+					Eng<span class="text-teal-500">Quizzes</span>
+				</div>
+				<div class="bee-col bee-col-w10">
+					<div class="bee-block bee-menu">
+						<nav class="bee-menu">
+							<ul class="bee-horizontal">
+								<li><a href="#" target="_self" title="Home" onclick="showSection('home', this)" data-section="home" class="nav-active">HOME</a></li>
+								<li><a href="#" target="_self" title="About Us" onclick="showSection('about', this)" data-section="about">ABOUT</a></li>
+								<li><a href="#" target="_self" title="Test Your English" onclick="showSection('quiz', this)" data-section="quiz">TEST YOUR ENGLISH</a></li>
+								<!-- CONTACTS link removed -->
+								<li><a href="#" target="_self" title="Support Us" onclick="showSection('support', this)" data-section="support">SUPPORT US</a></li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</header>
 
-    <div id="app" class="quiz-container p-4">
+		<!-- MAIN CONTENT AREA (Bee Row 2 replaced with dynamic sections) -->
+		<main class="main-content-area w-full max-w-7xl mx-auto">
 
-        <!-- Quiz Card Container -->
-        <div class="quiz-card w-full max-w-xl bg-white rounded-xl overflow-hidden shadow-2xl">
+			<!-- SECTION: HOME -->
+			<section id="home-section" class="content-section p-4 md:p-8">
+				<div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
+					<h2 class="text-4xl font-extrabold text-gray-800 mb-4 gradient-header bg-clip-text text-transparent inline-block">
+						Welcome to EngQuizzesForAll!
+					</h2>
+					<p class="text-xl text-gray-600 mb-6">
+						The best place to sharpen your English grammar skills through quick, targeted, and fun quizzes.
+					</p>
+					<div class="grid md:grid-cols-3 gap-6 mt-8">
+						<div class="bg-teal-50 p-6 rounded-xl border-l-4 border-teal-500 shadow-md">
+							<h3 class="text-2xl font-semibold text-teal-700 mb-3">Targeted Practice</h3>
+							<p class="text-gray-700">Choose from 10 distinct tests, each focusing on different aspects of grammar, from basic tenses to advanced conditionals and phrasal verbs.</p>
+						</div>
+						<div class="bg-indigo-50 p-6 rounded-xl border-l-4 border-indigo-500 shadow-md">
+							<h3 class="text-2xl font-semibold text-indigo-700 mb-3">Challenge Mode</h3>
+							<p class="text-gray-700">Test your speed and accuracy with our optional 10-minute time limit. See your results and track your progress over time with the detailed history.</p>
+						</div>
+						<div class="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-500 shadow-md">
+							<h3 class="text-2xl font-semibold text-purple-700 mb-3">Detailed Review</h3>
+							<p class="text-gray-700">After each quiz, get instant feedback, including explanations for every correct answer, turning every mistake into a learning opportunity.</p>
+						</div>
+					</div>
+					<div class="mt-10 text-center">
+						<button class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-8 rounded-lg shadow-xl transition duration-300 ease-in-out transform hover:scale-105" onclick="showSection('quiz', document.querySelector('[data-section=\'quiz\']'))">
+							Start Your First Test Now!
+						</button>
+					</div>
+				</div>
+			</section>
 
-            <!-- Header -->
-            <div class="gradient-header text-white p-6 md:p-8">
-                <h1 id="quizTitle" class="text-3xl font-bold tracking-tight">English Quizzes</h1>
-                <p class="mt-1 text-teal-100">Select a test to challenge your grammar knowledge.</p>
-            </div>
-            
-            <!-- Screen 1: Start/Name Input and Test Selection -->
-            <div id="startScreen" class="p-6 md:p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-xl font-semibold text-gray-800">Welcome! Please enter your details.</h2>
-                    <!-- History Button -->
-                    <button id="viewHistoryButton" class="bg-purple-600 hover:bg-purple-700 text-white text-sm px-3 py-2 rounded-lg font-semibold shadow-md transition duration-150 ease-in-out">
-                        View History
-                    </button>
-                </div>
-                <div class="space-y-4">
-                    <div>
-                        <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
-                        <input type="text" id="firstName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" placeholder="İkbal" required>
-                    </div>
-                    <div>
-                        <label for="surname" class="block text-sm font-medium text-gray-700">Surname</label>
-                        <input type="text" id="surname" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" placeholder="SUBAŞI" required>
-                    </div>
-                    <!-- NEW: Time Limit Toggle -->
-                    <div class="pt-2 flex items-center">
-                        <input id="timeLimitToggle" type="checkbox" class="h-4 w-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500">
-                        <label for="timeLimitToggle" class="ml-2 block text-sm font-medium text-gray-700">
-                            Enable 10-Minute Time Limit (Challenge Mode)
-                        </label>
-                    </div>
-                </div>
+			<!-- SECTION: ABOUT -->
+			<section id="about-section" class="content-section hidden p-4 md:p-8">
+				<div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
+					<h2 class="text-4xl font-extrabold text-gray-800 mb-4 border-b pb-2">About EngQuizzesForAll</h2>
+					<p class="text-lg text-gray-600 mb-6">
+						We believe that mastering English grammar shouldn't be boring. Our platform was created to provide a fast, efficient, and engaging way for students and professionals to test their knowledge and identify areas for improvement.
+					</p>
 
-                <h3 class="text-xl font-semibold text-gray-800 mb-4 mt-8">Select a Test</h3>
-                <!-- Test Selection Buttons Container -->
-                <div id="testSelectionContainer" class="grid grid-cols-3 sm:grid-cols-5 gap-3">
-                    <!-- Buttons will be dynamically injected here by JS -->
-                </div>
+					<h3 class="text-2xl font-semibold text-teal-700 mt-8 mb-4">Our Mission</h3>
+					<p class="text-gray-700 mb-4">
+						Our mission is simple: to make complex English grammar rules accessible to everyone. We achieve this by providing 100 carefully curated questions covering the most common and challenging aspects of the language, from basic tenses and prepositions to advanced conditionals and inversions.
+					</p>
 
-                <!-- Temporary feedback message for name validation -->
-                <div id="startFeedbackMessage" class="mt-4 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden bg-yellow-100 text-yellow-800"></div>
-            </div>
+					<h3 class="text-2xl font-semibold text-teal-700 mt-8 mb-4">The Creator</h3>
+					<div class="flex items-start space-x-6 bg-gray-50 p-6 rounded-lg border">
+						<img class="w-24 h-24 rounded-full object-cover shadow-md" src="https://placehold.co/96x96/6ee7b7/065f46?text=MS" alt="Musab İKBAL SUBAŞI">
+						<div>
+							<p class="text-xl font-bold text-gray-900">Musab İKBAL SUBAŞI</p>
+							<p class="text-teal-600 text-sm mb-2">Designer & Developer</p>
+							<p class="text-gray-700 text-sm">
+								"This project was born out of a desire to create a clean, responsive, and distraction-free environment for learning. The focus is on immediate feedback and clear explanations to ensure real learning happens with every question."
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
 
-            <!-- Screen 2: Quiz Question Area (Hidden initially) -->
-            <div id="quizScreen" class="p-6 md:p-8 hidden">
+			<!-- SECTION: TEST YOUR ENGLISH (The original Quiz app content) -->
+			<section id="quiz-section" class="content-section hidden">
+				<!-- Quiz Card Container (Copied from original bee-block-1) -->
+				<div class="quiz-container p-4">
+					<div class="quiz-card w-full max-w-xl bg-white rounded-xl overflow-hidden shadow-2xl">
+						<!-- Header -->
+						<div class="gradient-header text-white p-6 md:p-8">
+							<h1 class="text-3xl font-bold tracking-tight" id="quizTitle">English Quizzes</h1>
+							<p class="mt-1 text-teal-100">Select a test to challenge your grammar knowledge.</p>
+						</div>
+						<!-- Screen 1: Start/Name Input and Test Selection -->
+						<div class="p-6 md:p-8" id="startScreen">
+							<div class="flex justify-between items-center mb-6">
+								<h2 class="text-xl font-semibold text-gray-800">Welcome! Please enter your details.</h2>
+								<!-- History Button -->
+								<button class="bg-purple-600 hover:bg-purple-700 text-white text-sm px-3 py-2 rounded-lg font-semibold shadow-md transition duration-150 ease-in-out" id="viewHistoryButton">
+									View History
+								</button>
+							</div>
+							<div class="space-y-4">
+								<div>
+									<label class="block text-sm font-medium text-gray-700" for="firstName">First Name</label>
+									<input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="firstName" placeholder="İkbal" required="" type="text" />
+								</div>
+								<div>
+									<label class="block text-sm font-medium text-gray-700" for="surname">Surname</label>
+									<input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="surname" placeholder="SUBAŞI" required="" type="text" />
+								</div>
+								<!-- NEW: Time Limit Toggle -->
+								<div class="pt-2 flex items-center">
+									<input class="h-4 w-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500" id="timeLimitToggle" type="checkbox" />
+									<label class="ml-2 block text-sm font-medium text-gray-700" for="timeLimitToggle">
+										Enable 10-Minute Time Limit (Challenge Mode)
+									</label>
+								</div>
+							</div>
+							<h3 class="text-xl font-semibold text-gray-800 mb-4 mt-8">Select a Test</h3>
+							<!-- Test Selection Buttons Container -->
+							<div class="grid grid-cols-3 sm:grid-cols-5 gap-3" id="testSelectionContainer">
+								<!-- Buttons will be dynamically injected here by JS -->
+							</div>
+							<!-- Temporary feedback message for name validation -->
+							<div class="mt-4 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden bg-yellow-100 text-yellow-800" id="startFeedbackMessage"></div>
+						</div>
+						<!-- Screen 2: Quiz Question Area (Hidden initially) -->
+						<div class="p-6 md:p-8 hidden" id="quizScreen">
+							<!-- NEW: Timer and Progress Bar -->
+							<div class="mb-4 hidden" id="quizStatusBar">
+								<div class="text-sm font-medium text-gray-700 mb-1 flex justify-between">
+									<span class="font-bold" id="timerDisplay">10:00 Remaining</span>
+								</div>
+								<div class="h-2 rounded-full overflow-hidden bg-gray-200">
+									<!-- Progress bar color and width are controlled by JS -->
+									<div class="h-2 transition-all duration-300 ease-linear" id="progressBar" style="width: 100%; background-color: #3b82f6;"></div>
+								</div>
+							</div>
+							<div class="flex justify-between items-center mb-6">
+								<div class="text-lg font-medium text-teal-600" id="questionCounter">Question 1 of 10</div>
+								<!-- Button to open the question panel modal -->
+								<button class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded-lg font-semibold shadow-md transition duration-150 ease-in-out" onclick="togglePanel(true)">
+									Question Overview
+								</button>
+								<div class="text-lg font-medium text-gray-500" id="quizScore">Score: 0</div>
+							</div>
+							<div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
+								<p class="text-xl font-bold text-gray-800" id="currentQuestion"></p>
+							</div>
+							<!-- Options Container -->
+							<div class="space-y-3" id="optionsContainer">
+								<!-- Options will be dynamically injected here -->
+							</div>
+							<!-- Feedback Area -->
+							<div class="mt-6 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden" id="feedbackMessage"></div>
+							<!-- Main Navigation Buttons -->
+							<div class="mt-4 flex justify-between space-x-4">
+								<button class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out disabled:opacity-50" id="prevButton" onclick="previousQuestion()">
+									← Previous
+								</button>
+								<button class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out disabled:opacity-50" id="nextButton" onclick="nextQuestion()">
+									Next Question →
+								</button>
+							</div>
+						</div>
+						<!-- Screen 3: Results Area (Hidden initially) -->
+						<div class="p-6 md:p-8 hidden text-center" id="resultsScreen">
+							<h2 class="text-3xl font-bold text-gray-800 mb-4">Test Completed!</h2>
+							<p class="text-xl text-gray-600 mb-8" id="userGreeting"></p>
+							<div class="space-y-3">
+								<div class="bg-green-100 text-green-800 p-4 rounded-lg font-semibold border-2 border-green-300">
+									Final Score: <span class="text-2xl ml-2" id="finalScore"></span>
+								</div>
+								<div class="bg-blue-100 text-blue-800 p-4 rounded-lg font-semibold border-2 border-blue-300">
+									Percentage: <span class="text-2xl ml-2" id="finalPercentage"></span>
+								</div>
+							</div>
+							<!-- NEW: Summary Button -->
+							<button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" id="viewSummaryButton" onclick="toggleSummary()">
+								View Detailed Summary
+							</button>
+							<!-- NEW: Summary Table Container -->
+							<div class="mt-8 text-left hidden border rounded-xl overflow-hidden shadow-lg" id="summaryContainer">
+								<h3 class="p-4 bg-gray-100 text-xl font-bold text-gray-800 mb-0 border-b">Detailed Test Review</h3>
+								<!-- Summary table will be injected here by renderSummaryTable() -->
+							</div>
+							<div class="mt-8 flex space-x-4">
+								<button class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="resetQuiz()">
+									Choose Another Test
+								</button>
+								<button class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" id="viewHistoryFromResults">
+									View History
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 
-                <!-- NEW: Timer and Progress Bar -->
-                <div id="quizStatusBar" class="mb-4 hidden"> 
-                    <div class="text-sm font-medium text-gray-700 mb-1 flex justify-between">
-                        <span id="timerDisplay" class="font-bold">10:00 Remaining</span>
-                    </div>
-                    <div class="h-2 rounded-full overflow-hidden bg-gray-200">
-                        <!-- Progress bar color and width are controlled by JS -->
-                        <div id="progressBar" class="h-2 transition-all duration-300 ease-linear" style="width: 100%; background-color: #3b82f6;"></div>
-                    </div>
-                </div>
+			<!-- SECTION: CONTACTS (Removed) -->
 
-                <div class="flex justify-between items-center mb-6">
-                    <div id="questionCounter" class="text-lg font-medium text-teal-600">Question 1 of 10</div>
-                    
-                    <!-- Button to open the question panel modal -->
-                    <button onclick="togglePanel(true)" class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded-lg font-semibold shadow-md transition duration-150 ease-in-out">
-                        Question Overview
-                    </button>
-                    
-                    <div id="quizScore" class="text-lg font-medium text-gray-500">Score: 0</div>
-                </div>
+			<!-- SECTION: SUPPORT US -->
+			<section id="support-section" class="content-section hidden p-4 md:p-8">
+				<div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100 text-center max-w-md mx-auto">
+					<h2 class="text-4xl font-extrabold text-gray-800 mb-4 border-b pb-2">Support Our Mission</h2>
+					<p class="text-lg text-gray-600 mb-6">
+						If you find our quizzes helpful, consider supporting our work! Your contribution helps us maintain the site and create more high-quality educational content.
+					</p>
+					<div class="space-y-4">
+						<!-- Button 1: Copy Link (Uses custom JS function) -->
+						<button class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out"
+							onclick="copyToClipboard('https://buymeacoffee.com/musabikbal', 'supportFeedback', 'Link copied to clipboard! Thanks for your support.')">
+							Copy Buy Me a Coffee Link
+						</button>
+						<!-- Button 2: Direct Link (Uses a standard <a> tag) -->
+						<a href="https://buymeacoffee.com/musabikbal" target="_blank" rel="noopener noreferrer"
+							class="block w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out">
+							Buy us a Coffee!
+						</a>
+						<!-- Support Feedback Area -->
+						<div id="supportFeedback" class="hidden p-3 rounded-lg text-center font-semibold text-sm"></div>
 
-                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
-                    <p id="currentQuestion" class="text-xl font-bold text-gray-800"></p>
-                </div>
+						<p class="text-sm text-gray-500 pt-2">Thank you for helping us keep English learning accessible!</p>
+					</div>
+				</div>
+			</section>
+		</main>
+		<!-- END MAIN CONTENT AREA -->
 
-                <!-- Options Container -->
-                <div id="optionsContainer" class="space-y-3">
-                    <!-- Options will be dynamically injected here -->
-                </div>
-                
-                <!-- Feedback Area -->
-                <div id="feedbackMessage" class="mt-6 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden"></div>
-                
-                <!-- Main Navigation Buttons -->
-                <div class="mt-4 flex justify-between space-x-4">
-                    <button id="prevButton" onclick="previousQuestion()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out disabled:opacity-50">
-                        &#8592; Previous
-                    </button>
-                    <button id="nextButton" onclick="nextQuestion()" class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out disabled:opacity-50">
-                        Next Question &#8594;
-                    </button>
-                </div>
-            </div>
+		<!-- FOOTER (Original Bee Row 3 & 4) -->
+		<div class="bee-row bee-row-3 mt-auto bg-white border-t border-gray-200">
+			<div class="bee-row-content max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+				<div class="bee-col bee-col-w12">
+					<div class="bee-block bee-paragraph text-center text-sm text-gray-500">
+						<p>© Copyright <strong>EngQuizzesForAll</strong> All Rights Reserved</p>
+						<p>Designed by Musab İKBAL SUBAŞI</p>
+					</div>
+				</div>
+			</div>
+		</div>
 
-            <!-- Screen 3: Results Area (Hidden initially) -->
-            <div id="resultsScreen" class="p-6 md:p-8 hidden text-center">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Test Completed!</h2>
-                <p id="userGreeting" class="text-xl text-gray-600 mb-8"></p>
+	</div>
 
-                <div class="space-y-3">
-                    <div class="bg-green-100 text-green-800 p-4 rounded-lg font-semibold border-2 border-green-300">
-                        Final Score: <span id="finalScore" class="text-2xl ml-2"></span>
-                    </div>
-                    <div class="bg-blue-100 text-blue-800 p-4 rounded-lg font-semibold border-2 border-blue-300">
-                        Percentage: <span id="finalPercentage" class="text-2xl ml-2"></span>
-                    </div>
-                </div>
+	<!-- MODALS (Hidden from original structure but kept for functionality) -->
+	<!-- Question Navigation Modal -->
+	<div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="questionPanelModal">
+		<div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-lg">
+			<div class="flex justify-between items-center mb-4 border-b pb-3">
+				<h3 class="text-xl font-bold text-gray-800">Question Overview (Jump to...)</h3>
+				<button class="text-gray-500 hover:text-gray-800" onclick="togglePanel(false)">
+					<!-- Close Icon (X) -->
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+						<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+					</svg>
+				</button>
+			</div>
+			<!-- Panel Content -->
+			<div class="grid grid-cols-6 sm:grid-cols-8 gap-2 overflow-y-auto max-h-96" id="questionPanel">
+				<!-- Question buttons will be injected here by renderQuestionPanel() -->
+			</div>
+			<button class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="togglePanel(false)">
+				Close Panel
+			</button>
+		</div>
+	</div>
+	<!-- History Modal -->
+	<div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="historyModal">
+		<div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-4xl history-modal">
+			<div class="flex justify-between items-center mb-4 border-b pb-3">
+				<h3 class="text-xl font-bold text-gray-800">Quiz History</h3>
+				<button class="text-gray-500 hover:text-gray-800" onclick="toggleHistoryModal(false)">
+					<!-- Close Icon (X) -->
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+						<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+					</svg>
+				</button>
+			</div>
+			<div class="mb-4 flex justify-between items-center">
+				<div>
+					<label class="block text-sm font-medium text-gray-700 mb-1" for="historyFilter">Filter by Test:</label>
+					<select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="historyFilter">
+						<option value="all">All Tests</option>
+						<!-- Test options will be dynamically added -->
+					</select>
+				</div>
+				<div>
+					<button class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" id="clearHistoryButton">
+						Clear History
+					</button>
+				</div>
+			</div>
+			<div class="overflow-y-auto max-h-96" id="historyContainer">
+				<!-- History items will be injected here by renderHistory() -->
+			</div>
+			<div class="mt-6 flex justify-between">
+				<div class="text-sm text-gray-600" id="historyStats">
+					<!-- History statistics will be displayed here -->
+				</div>
+				<button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="toggleHistoryModal(false)">
+					Close
+				</button>
+			</div>
+		</div>
+	</div>
 
-                <!-- NEW: Summary Button -->
-                <button id="viewSummaryButton" onclick="toggleSummary()" class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out">
-                    View Detailed Summary
-                </button>
+	<script>
+		// --- MULTI-SECTION NAVIGATION LOGIC ---
 
-                <!-- NEW: Summary Table Container -->
-                <div id="summaryContainer" class="mt-8 text-left hidden border rounded-xl overflow-hidden shadow-lg">
-                    <h3 class="p-4 bg-gray-100 text-xl font-bold text-gray-800 mb-0 border-b">Detailed Test Review</h3>
-                    <!-- Summary table will be injected here by renderSummaryTable() -->
-                </div>
-                
-                <div class="mt-8 flex space-x-4">
-                    <button onclick="resetQuiz()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out">
-                        Choose Another Test
-                    </button>
-                    <button id="viewHistoryFromResults" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out">
-                        View History
-                    </button>
-                </div>
-            </div>
-            
-        </div>
-    </div>
+		function showSection(sectionId, navElement) {
+			// 1. Hide all content sections
+			document.querySelectorAll('.content-section').forEach(section => {
+				section.classList.add('hidden');
+			});
 
-    <!-- Question Navigation Modal -->
-    <div id="questionPanelModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-lg">
-            <div class="flex justify-between items-center mb-4 border-b pb-3">
-                <h3 class="text-xl font-bold text-gray-800">Question Overview (Jump to...)</h3>
-                <button onclick="togglePanel(false)" class="text-gray-500 hover:text-gray-800">
-                    <!-- Close Icon (X) -->
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            
-            <!-- Panel Content -->
-            <div id="questionPanel" class="grid grid-cols-6 sm:grid-cols-8 gap-2 overflow-y-auto max-h-96">
-                <!-- Question buttons will be injected here by renderQuestionPanel() -->
-            </div>
-            
-            <button onclick="togglePanel(false)" class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out">
-                Close Panel
-            </button>
-        </div>
-    </div>
+			// 2. Show the selected content section
+			const targetSection = document.getElementById(sectionId + '-section');
+			if (targetSection) {
+				targetSection.classList.remove('hidden');
+			}
 
-    <!-- History Modal -->
-    <div id="historyModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-4xl history-modal">
-            <div class="flex justify-between items-center mb-4 border-b pb-3">
-                <h3 class="text-xl font-bold text-gray-800">Quiz History</h3>
-                <button onclick="toggleHistoryModal(false)" class="text-gray-500 hover:text-gray-800">
-                    <!-- Close Icon (X) -->
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            
-            <div class="mb-4 flex justify-between items-center">
-                <div>
-                    <label for="historyFilter" class="block text-sm font-medium text-gray-700 mb-1">Filter by Test:</label>
-                    <select id="historyFilter" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
-                        <option value="all">All Tests</option>
-                        <!-- Test options will be dynamically added -->
-                    </select>
-                </div>
-                <div>
-                    <button id="clearHistoryButton" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out">
-                        Clear History
-                    </button>
-                </div>
-            </div>
-            
-            <div id="historyContainer" class="overflow-y-auto max-h-96">
-                <!-- History items will be injected here by renderHistory() -->
-            </div>
-            
-            <div class="mt-6 flex justify-between">
-                <div id="historyStats" class="text-sm text-gray-600">
-                    <!-- History statistics will be displayed here -->
-                </div>
-                <button onclick="toggleHistoryModal(false)" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <script>
-        // --- QUIZ DATA (100 Questions) ---
-        const QUESTION_BANK = [
-            // Test 1: Questions 1–10 (Simple Tenses & Vocabulary)
-            { "q": "Mert and Mehmet usually don't play soccer. Mehmet always ..... alone.", "o": ["forces", "plays", "cries", "snores", "shows"], "a": "B", "e": "The main clause uses the Simple Present tense, indicating a routine action ('always'). 'Plays' is the correct third-person singular form." },
-            { "q": "Derya ..... to the gym every day.", "o": ["go", "goes", "going", "gone", "to go"], "a": "B", "e": "The phrase 'every day' requires the Simple Present tense, and for 'Derya' (third person singular), the verb must end in '-es'." },
-            { "q": "They ... a new car last month.", "o": ["buy", "buys", "bought", "buying", "to buy"], "a": "C", "e": "The time phrase 'last month' specifies a completed action in the past, requiring the Simple Past tense form 'bought'." },
-            { "q": "I am looking forward to ... you at the party.", "o": ["to see", "seeing", "see", "saw", "seen"], "a": "B", "e": "The phrase 'look forward to' is a fixed expression, and 'to' acts as a preposition, requiring the gerund form (V+ing)." },
-            { "q": "If it ... tomorrow, we will cancel the picnic.", "o": ["rains", "rain", "rained", "is raining", "will rain"], "a": "A", "e": "This is a First Conditional structure. The 'if' clause uses the Simple Present, and the result clause uses 'will' + base verb." },
-            { "q": "She ... her homework yet.", "o": ["didn't finish", "hasn't finished", "don't finish", "isn't finishing", "wasn't finished"], "a": "B", "e": "The word 'yet' indicates that an action is incomplete up to the present moment, which requires the Present Perfect tense." },
-            { "q": "We ... to the beach last summer.", "o": ["go", "went", "gone", "going", "to go"], "a": "B", "e": "The time phrase 'last summer' indicates a specific time in the past, requiring the Simple Past tense ('went')." },
-            { "q": "He ... his keys. Can you help me find them?", "o": ["loses", "lost", "has lost", "is losing", "to lose"], "a": "C", "e": "The result is visible now ('Can you help me find them?'), so the Present Perfect ('has lost') is used for an action with present consequence." },
-            { "q": "They ... dinner when the phone rang.", "o": ["have", "had", "were having", "are having", "having"], "a": "C", "e": "The Past Continuous ('were having') is used to describe a longer, ongoing action interrupted by a shorter one ('the phone rang')." },
-            { "q": "I ... my best friend since we were kids.", "o": ["know", "knew", "have known", "knowing", "to know"], "a": "C", "e": "The word 'since' introduces a starting point in the past that continues to the present, requiring the Present Perfect tense." },
-            // Test 2: Questions 11-20 (Basic Tenses & Prepositions)
-            { "q": "She ... to the store every Saturday.", "o": ["go", "goes", "going", "gone", "to go"], "a": "B", "e": "The phrase 'every Saturday' indicates a routine, using the Simple Present tense ('goes')." },
-            { "q": "They ... a movie when I called them.", "o": ["watch", "watched", "were watching", "are watching", "watching"], "a": "C", "e": "The Past Continuous ('were watching') shows an action in progress when another short action occurred." },
-            { "q": "I ... finished my project yet.", "o": ["didn't", "haven't", "don't", "isn't", "wasn't"], "a": "B", "e": "The word 'yet' with an incomplete action requires the negative form of the Present Perfect ('haven't finished')." },
-            { "q": "We ... to Paris next summer.", "o": ["travel", "traveled", "are traveling", "will travel", "to travel"], "a": "D", "e": "Future simple ('will travel') is a valid way to talk about future plans or expectations." },
-            { "q": "He ... his leg while playing football last weekend.", "o": ["breaks", "broke", "has broken", "is breaking", "to break"], "a": "B", "e": "The phrase 'last weekend' anchors the action to a specific time in the past, requiring the Simple Past tense." },
-            { "q": "They ... in this city for five years.", "o": ["live", "lived", "have lived", "are living", "to live"], "a": "C", "e": "The word 'for' indicating duration up to now requires the Present Perfect tense." },
-            { "q": "I ... my homework before dinner last night.", "o": ["do", "did", "was doing", "have done", "doing"], "a": "B", "e": "The action 'did' happened at a specific time in the past ('last night'), using Simple Past." },
-            { "q": "She ... to the party if she finishes her work on time.", "o": ["go", "goes", "will go", "is going", "to go"], "a": "C", "e": "First Conditional: The main clause uses 'will go' to express a future consequence." },
-            { "q": "They ... each other since childhood.", "o": ["know", "knew", "have known", "knowing", "to know"], "a": "C", "e": "Use Present Perfect ('have known') with 'since' to show duration up to the present." },
-            { "q": "He ... his car every weekend.", "o": ["wash", "washes", "washing", "washed", "to wash"], "a": "B", "e": "Routine actions require Simple Present tense, using the third-person singular form ('washes')." },
-            // Test 3: Questions 21-30 (Phrasal Verbs, Conditionals, Adjectives)
-            { "q": "I ... my keys. Can you help me find them?", "o": ["lose", "lost", "have lost", "is losing", "to lose"], "a": "C", "e": "Present Perfect ('have lost') for an action that has a current effect." },
-            { "q": "We ... dinner when the guests arrived.", "o": ["have", "had", "were having", "are having", "having"], "a": "C", "e": "Past Continuous ('were having') for the longer action interrupted by the shorter past action ('arrived')." },
-            { "q": "She ... in this company for ten years.", "o": ["work", "worked", "has worked", "is working", "to work"], "a": "C", "e": "The duration ('for ten years') extending up to the present requires the Present Perfect ('has worked')." },
-            { "q": "They ... to the concert last night.", "o": ["go", "went", "gone", "going", "to go"], "a": "B", "e": "Specific past time ('last night') requires the Simple Past tense ('went')." },
-            { "q": "He ... his ankle while hiking last weekend.", "o": ["sprains", "sprained", "has sprained", "is spraining", "to sprain"], "a": "B", "e": "Specific past time ('last weekend') requires the Simple Past tense." },
-            { "q": "If I ... earlier, I wouldn’t have missed the bus.", "o": ["wake up", "woke up", "had woken up", "have woken", "waking up"], "a": "C", "e": "This is a Third Conditional structure, which requires the Past Perfect ('had woken up') in the 'if' clause to talk about a hypothetical past situation." },
-            { "q": "She ... to the doctor because she’s been coughing a lot.", "o": ["should go", "must went", "can go", "might goes", "should went"], "a": "A", "e": "'Should go' is the correct modal verb phrase to suggest necessary advice." },
-            { "q": "The movie was so boring that we decided to ... early.", "o": ["stay", "leave", "arrive", "sleep", "walk"], "a": "B", "e": "The action that follows 'decided to' must be the base form of the verb: 'decided to leave'." },
-            { "q": "He hasn’t called me ... last week.", "o": ["for", "since", "during", "in", "until"], "a": "B", "e": "'Since' is used to specify the starting point of a period that continues up to the present." },
-            { "q": "I wish I ... a car. Taking the bus every day is tiring.", "o": ["have", "had", "will have", "having", "has"], "a": "B", "e": "'I wish' about a current situation uses the Simple Past tense ('had') to express regret or a desire for change." },
-            // Test 4: Questions 31-40 (Comparatives, Prepositions, Reported Speech)
-            { "q": "She is ... than her brother.", "o": ["most tall", "taller", "the taller", "more tall", "tallest"], "a": "B", "e": "The word 'than' requires the comparative form of the adjective, which for 'tall' is 'taller'." },
-            { "q": "We haven’t seen each other ... a long time.", "o": ["for", "since", "at", "in", "by"], "a": "A", "e": "'For' is used to indicate the duration of a period of time." },
-            { "q": "I’m not interested ... politics.", "o": ["on", "at", "in", "of", "for"], "a": "C", "e": "The fixed prepositional phrase is 'interested in'." },
-            { "q": "When I was a child, I ... play outside every day.", "o": ["use to", "used to", "was used to", "am used to", "use"], "a": "B", "e": "To express a habitual action in the past that no longer happens, use the structure 'used to' + base verb." },
-            { "q": "She asked me where I ... the night before.", "o": ["go", "went", "had gone", "was going", "have gone"], "a": "C", "e": "In reported speech, an action preceding the reporting time ('the night before') typically shifts to the Past Perfect ('had gone')." },
-            { "q": "Could you please ... the TV? It’s too loud.", "o": ["turn off", "turn up", "turn over", "turn on", "turn back"], "a": "A", "e": "The phrasal verb 'turn off' means to switch something off, appropriate if the sound is 'too loud'." },
-            { "q": "He’s really good ... playing chess.", "o": ["at", "in", "on", "about", "for"], "a": "A", "e": "The correct preposition to follow the adjective 'good' when talking about skills is 'at'." },
-            { "q": "The exam was ... easier than I expected.", "o": ["much", "too", "very", "so", "most"], "a": "A", "e": "The word 'much' is used to modify and strengthen a comparative adjective like 'easier'." },
-            { "q": "She doesn’t have ... friends in this city.", "o": ["many", "much", "a lot", "some", "few"], "a": "A", "e": "'Friends' is a countable noun, so 'many' is the correct choice to express a large quantity." },
-            { "q": "He promised ... me later.", "o": ["call", "calling", "to call", "called", "to calling"], "a": "C", "e": "The verb 'promise' is followed by the infinitive form ('to' + verb base)." },
-            // Test 5: Questions 41-50 (Tag Questions, Past Perfect, Vocabulary, Quantifiers)
-            { "q": "Let’s go for a walk, ...?", "o": ["will we", "shall we", "do we", "don’t we", "aren’t we"], "a": "B", "e": "The correct tag question to follow a sentence starting with 'Let's' is 'shall we?'" },
-            { "q": "I’m looking for a word that means ‘to make something better’.", "o": ["improve", "destroy", "reduce", "forget", "increase"], "a": "A", "e": "The verb 'improve' means to make something better or to get better." },
-            { "q": "He was tired because he ... all day.", "o": ["worked", "had worked", "has worked", "is working", "works"], "a": "B", "e": "The Past Perfect ('had worked') is used to describe an action that happened before another action in the past (being 'tired')." },
-            { "q": "The opposite of ‘borrow’ is ...", "o": ["lend", "take", "bring", "send", "give"], "a": "A", "e": "'Borrow' means to take something and return it later. 'Lend' means to give something to someone to be returned later." },
-            { "q": "We can’t go out now. It’s ... heavily.", "o": ["rain", "rained", "raining", "rains", "to rain"], "a": "C", "e": "The action is happening now ('can't go out now'), requiring the Present Continuous tense ('raining')." },
-            { "q": "There isn’t ... sugar left in the jar.", "o": ["many", "much", "some", "few", "a lot"], "a": "B", "e": "'Sugar' is an uncountable noun, so 'much' is the correct quantifier in a negative sentence." },
-            { "q": "The train ... at 6 p.m. tomorrow evening.", "o": ["leaves", "left", "is leaving", "leave", "has left"], "a": "A", "e": "Fixed future schedules (like transportation) use the Simple Present tense." },
-            { "q": "I couldn’t find my phone, but it was ... my bag all the time!", "o": ["on", "at", "in", "under", "behind"], "a": "C", "e": "'In' is the correct preposition to describe something contained inside a bag." },
-            { "q": "He didn’t study, ... he failed the test.", "o": ["so", "because", "although", "but", "while"], "a": "A", "e": "'So' is used here to show the consequence or result of the first clause." },
-            { "q": "My sister is very ... . She always helps everyone.", "o": ["selfish", "lazy", "kind", "rude", "angry"], "a": "C", "e": "'Kind' is the adjective that aligns with the descriptive phrase 'She always helps everyone'." },
-            // Test 6: Questions 51-60 (Advanced Conditionals, Gerunds/Infinitives, Collocations)
-            { "q": "If I ... you, I would take that job offer.", "o": ["am", "was", "were", "be", "been"], "a": "C", "e": "The Second Conditional structure for hypothetical advice uses 'were' for all persons, including 'I'." },
-            { "q": "She ... her driving test three times before she finally passed.", "o": ["fails", "failed", "has failed", "had failed", "is failing"], "a": "D", "e": "The Past Perfect ('had failed') is required because the action of failing happened multiple times *before* the final past action (passing)." },
-            { "q": "We’ll start the meeting as soon as everyone ...", "o": ["arrives", "arrived", "will arrive", "arriving", "has arrived"], "a": "A", "e": "Time clauses introduced by 'as soon as' use the Simple Present to refer to future actions." },
-            { "q": "He’s been working here ... he graduated from university.", "o": ["since", "for", "during", "by", "after"], "a": "A", "e": "'Since' is used to denote the starting point of a period that continues up to the present, often with the Present Perfect Continuous." },
-            { "q": "She’s looking forward ... her new colleagues next week.", "o": ["to meet", "to meeting", "meet", "meeting", "met"], "a": "B", "e": "The fixed expression is 'looking forward to' + gerund (V+ing)." },
-            { "q": "I can’t stand people who are always ... about everything.", "o": ["complaining", "complain", "complains", "to complain", "complained"], "a": "A", "e": "'Can't stand' is followed by the gerund (V+ing) to express strong dislike." },
-            { "q": "They managed to ... an agreement after hours of discussion.", "o": ["do", "reach", "make", "get", "arrive"], "a": "B", "e": "The correct collocation is 'to reach an agreement'." },
-            { "q": "The concert was canceled ... the heavy rain.", "o": ["because", "because of", "so", "due", "although"], "a": "B", "e": "'Because of' is followed by a noun phrase ('the heavy rain') and explains the reason." },
-            { "q": "When I called, she ... dinner.", "o": ["cooks", "cooked", "was cooking", "is cooking", "has cooked"], "a": "C", "e": "The Past Continuous ('was cooking') describes the activity in progress when the phone call (Simple Past) happened." },
-            { "q": "Let’s meet at the café ... the corner.", "o": ["in", "on", "at", "by", "under"], "a": "C", "e": "When referring to a specific, small public location like a café or intersection, 'at' is the most common preposition." },
-            // Test 7: Questions 61-70 (Phrasal Verbs, Idioms, Advanced Tenses)
-            { "q": "He’s very ambitious and wants to ... in his career.", "o": ["get off", "get on", "get ahead", "get through", "get over"], "a": "C", "e": "The phrasal verb 'get ahead' means to be successful or advance in one's career." },
-            { "q": "The project was completed ... time and ... budget.", "o": ["at / on", "in / under", "on / below", "within / under", "by / on"], "a": "D", "e": "'Within time' means before the deadline, and 'under budget' means spending less than planned." },
-            { "q": "They ... each other for more than ten years before they got married.", "o": ["know", "knew", "have known", "had known", "are knowing"], "a": "D", "e": "The Past Perfect ('had known') is used to describe an action that was completed before another event in the past ('got married')." },
-            { "q": "She asked me if I ... seen her phone.", "o": ["have", "had", "has", "was", "did"], "a": "B", "e": "Reported speech: The question is about a past action, requiring the Past Perfect ('had seen')." },
-            { "q": "We couldn’t go out because the car ... down.", "o": ["broke", "has broken", "was breaking", "broke down", "had broken down"], "a": "D", "e": "The phrasal verb 'break down' means to stop functioning. The Simple Past form is 'broke down'." },
-            { "q": "I didn’t expect the movie to be so ... It really surprised me.", "o": ["boring", "bored", "interesting", "interested", "funny"], "a": "C", "e": "Adjectives ending in '-ing' describe the quality of something (the movie), while '-ed' describes a feeling (the person)." },
-            { "q": "She has a strong ... for modern art.", "o": ["taste", "smell", "feeling", "sense", "interest"], "a": "A", "e": "'Taste' is used here to mean a preference or appreciation for a particular style." },
-            { "q": "He’s the kind of person who never gives ... easily.", "o": ["away", "off", "in", "out", "up"], "a": "E", "e": "The phrasal verb 'give up' means to quit or stop trying." },
-            { "q": "I’ll call you as soon as I ... home.", "o": ["get", "got", "will get", "getting", "gets"], "a": "A", "e": "In a time clause referring to the future ('as soon as'), use the Simple Present ('get')." },
-            { "q": "It’s important to ... new skills in today’s job market.", "o": ["improve", "develop", "create", "learn", "invent"], "a": "B", "e": "'Develop skills' is a common and appropriate collocation meaning to acquire or enhance abilities." },
-            // Test 8: Questions 71-80 (Inversion, Subjunctive, Participles, Prepositions)
-            { "q": "He didn’t study enough; ..., he failed the exam.", "o": ["however", "although", "therefore", "because", "since"], "a": "C", "e": "'Therefore' is an adverb used to show a consequence or result, following a semicolon or period." },
-            { "q": "Can you ... the lights before you leave, please?", "o": ["turn up", "turn off", "turn over", "turn around", "turn down"], "a": "B", "e": "'Turn off' means to switch something off, which is required before leaving." },
-            { "q": "The manager insisted ... seeing all the reports today.", "o": ["on", "in", "about", "to", "for"], "a": "A", "e": "The verb 'insist' is followed by the preposition 'on' and a gerund (V+ing)." },
-            { "q": "We were late because our flight was ... by the storm.", "o": ["delayed", "cancelled", "missed", "changed", "stopped"], "a": "A", "e": "A 'delayed' flight means its departure was held up, a common result of a storm." },
-            { "q": "The phrase ‘give someone a hand’ means ...", "o": ["to punish them", "to help them", "to applaud them", "to ignore them", "to confuse them"], "a": "B", "e": "This is an idiom meaning 'to help someone with a task'." },
-            { "q": "Hardly ... the meeting started when the fire alarm went off.", "o": ["had", "has", "did", "was", "have"], "a": "A", "e": "The structure 'Hardly... when' requires inversion, using the Past Perfect: 'Hardly had I...'." },
-            { "q": "No sooner ... the door than someone knocked.", "o": ["had I closed", "I had closed", "was I closing", "have I closed", "closed I"], "a": "A", "e": "The structure 'No sooner... than' requires inversion, using the Past Perfect: 'No sooner had I...'." },
-            { "q": "If only I ... more carefully, I wouldn’t have made that mistake.", "o": ["listen", "had listened", "have listened", "listened", "was listening"], "a": "B", "e": "'If only' expressing a wish about a past situation requires the Past Perfect ('had listened')." },
-            { "q": "By the time we arrived, the play ... already ...", "o": ["had / begun", "has / begun", "was / beginning", "began / already", "have / begun"], "a": "A", "e": "'By the time' signals that an action ('the play beginning') was completed before another past action ('we arrived'), requiring Past Perfect." },
-            { "q": "Were I ... the manager, I’d hire more staff immediately.", "o": ["be", "been", "was", "being", "am"], "a": "A", "e": "This is a form of conditional inversion (If I were the manager = Were I the manager), using the base form of the verb after 'Were I...'." },
-            // Test 9: Questions 81-90 (Advanced Vocabulary, Gerunds/Infinitives, Idioms)
-            { "q": "He denied ... the document, though his fingerprints were on it.", "o": ["sign", "to sign", "signed", "signing", "to have signed"], "a": "D", "e": "The verb 'deny' must be followed by a gerund (V+ing)." },
-            { "q": "The company’s success is largely ... its innovative design.", "o": ["thanks to", "because", "due", "because of", "owing"], "a": "A", "e": "The expression 'thanks to' is a common way to attribute a positive outcome to a cause." },
-            { "q": "She spoke so quietly that I could ... hear her.", "o": ["barely", "nearly", "rarely", "scarcely", "hard"], "a": "A", "e": "'Barely' means hardly or scarcely, fitting the context of not being able to hear well." },
-            { "q": "Not only ... the deadline, but they also improved the design.", "o": ["did they meet", "they met", "have they met", "had met", "were they meeting"], "a": "A", "e": "When 'Not only' begins a sentence, inversion is required ('did they meet')." },
-            { "q": "If it hadn’t been for your help, we ... finished the project.", "o": ["wouldn’t", "wouldn’t have", "hadn’t", "didn’t", "won’t have"], "a": "B", "e": "This is the Third Conditional structure: 'If + Past Perfect', then 'would have + Past Participle' (or wouldn't have)." },
-            { "q": "The manager demanded that every employee ... on time.", "o": ["is", "was", "be", "being", "will be"], "a": "C", "e": "Verbs of demand, recommendation, or suggestion often require the subjunctive mood, which uses the base form 'be' for all persons." },
-            { "q": "Having ... the report, she felt much more confident.", "o": ["complete", "completing", "completed", "been completed", "completes"], "a": "C", "e": "The perfect participle ('Having completed') is used to show one action finished before another action started." },
-            { "q": "It’s high time you ... responsibility for your actions.", "o": ["take", "took", "have taken", "taken", "will take"], "a": "B", "e": "The fixed phrase 'It’s high time' is followed by the Simple Past tense to express that an action should have already happened." },
-            { "q": "The committee reached a decision after taking all factors ... account.", "o": ["into", "in", "on", "to", "under"], "a": "A", "e": "The correct collocation is 'to take something into account', meaning to consider it." },
-            { "q": "The speech was so inspiring that it moved the audience to ...", "o": ["tears", "laugh", "sleep", "silence", "anger"], "a": "A", "e": "The idiom 'moved to tears' means to cause someone to feel so strongly that they cry." },
-            // Test 10: Questions 91-100 (Final Review & Advanced Phrasal Verbs)
-            { "q": "He was accused ... confidential information to the press.", "o": ["of leaking", "to leak", "leak", "for leaking", "leaked"], "a": "A", "e": "The verb 'accused' is always followed by the preposition 'of' and a gerund (V+ing)." },
-            { "q": "She was promoted, which came as no surprise, ... her hard work.", "o": ["given", "although", "despite", "owing", "with"], "a": "A", "e": "'Given' acts as a preposition meaning 'considering' or 'in view of', which fits the context." },
-            { "q": "He came ... a brilliant idea during the meeting.", "o": ["up with", "across", "out", "through", "along"], "a": "A", "e": "The phrasal verb 'come up with' means to think of an idea." },
-            { "q": "The politician promised to look ... the matter immediately.", "o": ["after", "into", "for", "over", "through"], "a": "B", "e": "The phrasal verb 'look into' means to investigate or examine." },
-            { "q": "The company is on the verge ... bankruptcy.", "o": ["of", "to", "at", "from", "with"], "a": "A", "e": "The fixed expression is 'on the verge of' + noun/gerund, meaning close to." },
-            { "q": "He has a reputation ... being extremely reliable.", "o": ["for", "of", "to", "as", "about"], "a": "A", "e": "The correct preposition is 'reputation for' + noun/gerund." },
-            { "q": "I can’t put up ... this noise any longer!", "o": ["to", "with", "on", "about", "for"], "a": "B", "e": "The phrasal verb 'put up with' means to tolerate or endure." },
-            { "q": "The phrase ‘to hit the nail on the head’ means ...", "o": ["to make a mistake", "to be exactly right", "to hurt someone", "to fix something", "to start over"], "a": "B", "e": "This idiom means to describe exactly what is causing a situation or problem." },
-            { "q": "No point ... further; the decision has been made.", "o": ["to argue", "arguing", "argue", "of arguing", "for argue"], "a": "B", "e": "The expression 'There's no point' is followed by the gerund form of the verb (V+ing)." },
-            { "q": "Her performance was outstanding; she set a new ... for others to follow.", "o": ["standard", "rule", "goal", "law", "habit"], "a": "A", "e": "The collocation is 'to set a standard', meaning to establish a level of quality." }
-        ];
+			// 3. Update active navigation link styling
+			document.querySelectorAll('.bee-menu a').forEach(a => {
+				a.classList.remove('nav-active');
+			});
+			if (navElement) {
+				navElement.classList.add('nav-active');
+			}
 
-        // --- QUIZ STATE & CONSTANTS ---
-        const TOTAL_QUESTIONS = QUESTION_BANK.length; // 100
-        const TEST_SIZE = 10; // 10 questions per test
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let shuffledQuestions = []; // Stores the 10 questions for the selected test
-        let userName = "";
-        let userSurname = "";
-        let selectedTestNumber = 0;
-        
-        // State to track user answers (stores the selected option: "A", "B", etc.)
-        let userAnswers = [];
-        
-        // --- TIMER CONSTANTS AND STATE ---
-        const TOTAL_TIME_MINUTES = 10;
-        const TOTAL_TIME_SECONDS = TOTAL_TIME_MINUTES * 60; 
-        let timerInterval = null;
-        let timeLeft = TOTAL_TIME_SECONDS;
-        let isTimerEnabled = false;
-        let isTimeExpired = false;
+			// 4. Handle quiz state specific to the 'TEST YOUR ENGLISH' section
+			if (sectionId === 'quiz') {
+				// Ensure the start screen is shown when navigating to the quiz section, 
+				// unless a quiz is actively in progress (handled internally by the quiz logic)
+				if (quizScreen.classList.contains('hidden') && resultsScreen.classList.contains('hidden')) {
+					startScreen.classList.remove('hidden');
+				}
+			} else {
+				// Stop timer if the user navigates away from the quiz
+				stopTimer();
+			}
 
-        // --- HISTORY TRACKING ---
-        const HISTORY_STORAGE_KEY = 'englishQuizHistory';
-        let quizHistory = [];
+			// 5. Contact Form submission listener removed as the section is gone
+		}
 
-        // --- Feedback Messages ---
-        const CORRECT_MESSAGES = ["Perfect!", "Amazing!", "Well Done!", "Excellent!", "You Nailed It!", "Spot On!"];
-        const INCORRECT_MESSAGES = ["Keep Trying!", "Don't Give Up!", "A little mistake, try the next one!", "Almost there!", "Learning happens here, try again next time!"];
+		/**
+		 * Handles contact form submission by generating a mailto link.
+		 * Function removed as the section is gone.
+		 */
+		// function handleContactSubmit(event) {
+		// 	event.preventDefault();
 
-        // --- DOM ELEMENTS ---
-        const startScreen = document.getElementById('startScreen');
-        const quizScreen = document.getElementById('quizScreen');
-        const resultsScreen = document.getElementById('resultsScreen');
-        const currentQuestionEl = document.getElementById('currentQuestion');
-        const optionsContainer = document.getElementById('optionsContainer');
-        const questionCounterEl = document.getElementById('questionCounter');
-        const quizScoreEl = document.getElementById('quizScore');
-        const feedbackMessageEl = document.getElementById('feedbackMessage');
-        const startFeedbackMessageEl = document.getElementById('startFeedbackMessage');
-        const finalScoreEl = document.getElementById('finalScore');
-        const finalPercentageEl = document.getElementById('finalPercentage');
-        const userGreetingEl = document.getElementById('userGreeting');
-        const prevButton = document.getElementById('prevButton');
-        const nextButton = document.getElementById('nextButton');
-        const quizTitleEl = document.getElementById('quizTitle');
-        const questionPanelEl = document.getElementById('questionPanel');
-        const questionPanelModal = document.getElementById('questionPanelModal');
-        const testSelectionContainer = document.getElementById('testSelectionContainer');
-        
-        // NEW TIMER/PROGRESS BAR ELEMENTS
-        const timeLimitToggle = document.getElementById('timeLimitToggle');
-        const quizStatusBar = document.getElementById('quizStatusBar');
-        const timerDisplay = document.getElementById('timerDisplay');
-        const progressBar = document.getElementById('progressBar');
-        const summaryContainer = document.getElementById('summaryContainer');
-        const viewSummaryButton = document.getElementById('viewSummaryButton');
-        
-        // NEW HISTORY ELEMENTS
-        const historyModal = document.getElementById('historyModal');
-        const historyContainer = document.getElementById('historyContainer');
-        const historyFilter = document.getElementById('historyFilter');
-        const viewHistoryButton = document.getElementById('viewHistoryButton');
-        const viewHistoryFromResults = document.getElementById('viewHistoryFromResults');
-        const clearHistoryButton = document.getElementById('clearHistoryButton');
-        const historyStats = document.getElementById('historyStats');
+		// 	const form = event.target;
+		// 	const feedbackEl = document.getElementById('contactFeedback');
 
-        // --- UTILITY FUNCTIONS ---
-        // Function to shuffle an array (Fisher-Yates)
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+		// 	const name = form.contactName.value;
+		// 	const email = form.contactEmail.value;
+		// 	const subject = form.contactSubject.value;
+		// 	const message = form.contactMessage.value;
+		// 	const recipientEmail = 'musabikbal206@gmail.com'; // User's email
 
-        // Function to get a random message
-        function getRandomMessage(messageArray) {
-            const randomIndex = Math.floor(Math.random() * messageArray.length);
-            return messageArray[randomIndex];
-        }
+		// 	const mailtoSubject = encodeURIComponent(`EngQuizzes Inquiry - ${subject}`);
+		// 	const mailtoBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
 
-        function calculateScore() {
-            let currentScore = 0;
-            for (let i = 0; i < shuffledQuestions.length; i++) {
-                // Robust check: ensure userAnswers[i] is recorded and matches the correct answer
-                if (userAnswers[i] !== null && userAnswers[i] === shuffledQuestions[i].a) {
-                    currentScore++;
-                }
-            }
-            score = currentScore;
-            return currentScore;
-        }
-        
-        // Function to apply button styles based on selection and correctness
-        function updateOptionStyles(questionData, selectedAnswer) {
-            const correctAnswer = questionData.a;
-            const optionButtons = Array.from(optionsContainer.children);
+		// 	const mailtoLink = `mailto:${recipientEmail}?subject=${mailtoSubject}&body=${mailtoBody}`;
 
-            optionButtons.forEach(btn => {
-                const isOptionSelected = btn.getAttribute('data-answer') === selectedAnswer;
-                const isOptionCorrect = btn.getAttribute('data-answer') === correctAnswer;
-                const isUserAnswered = userAnswers[currentQuestionIndex] !== null;
+		// 	// Open the default email client
+		// 	window.location.href = mailtoLink;
 
-                // Reset base styling
-                btn.classList.remove('bg-teal-50', 'border-teal-500', 'bg-red-500', 'text-white', 'border-red-600', 'bg-green-500', 'border-green-600', 'font-bold', 'hover:bg-teal-50', 'hover:border-teal-500', 'selected');
-                btn.classList.add('bg-white', 'border-gray-300', 'hover:bg-teal-50', 'hover:border-teal-500');
+		// 	// Show immediate feedback to the user
+		// 	feedbackEl.textContent = "Your email client is opening now! Please send your message from there.";
+		// 	feedbackEl.classList.remove('hidden', 'bg-red-100', 'text-red-800');
+		// 	feedbackEl.classList.add('bg-green-100', 'text-green-800');
 
-                if (isUserAnswered) {
-                    btn.disabled = true; // Disable if answered
+		// 	// Hide feedback after a few seconds
+		// 	setTimeout(() => {
+		// 		feedbackEl.classList.add('hidden');
+		// 	}, 5000);
+		// }
 
-                    if (isOptionCorrect) {
-                        // Highlight correct answer in green
-                        btn.classList.add('bg-green-500', 'text-white', 'border-green-600', 'font-bold');
-                        btn.classList.remove('hover:bg-teal-50', 'hover:border-teal-500');
-                    } else if (isOptionSelected) {
-                        // Highlight incorrect selection in red
-                        btn.classList.add('bg-red-500', 'text-white', 'border-red-600', 'font-bold', 'selected');
-                        btn.classList.remove('hover:bg-teal-50', 'hover:border-teal-500');
-                    } else {
-                        // Keep unselected, incorrect options grayed out
-                        btn.classList.add('opacity-75');
-                    }
-                } else {
-                    btn.disabled = isTimeExpired; // Only disabled by time expiration
-                }
-            });
-        }
-        
-        // Custom alert function (replaces native alert)
-        function alertUser(title, message) {
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4';
-            
-            modal.innerHTML = `
+		/**
+		 * Handles copying text to the clipboard with fallback mechanism.
+		 */
+		function copyToClipboard(text, feedbackElementId, message) {
+			// Attempt to use modern clipboard API
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(text).then(() => {
+					showSupportFeedback(feedbackElementId, message);
+				}).catch(() => {
+					// Fallback for restricted environments
+					fallbackCopy(text, feedbackElementId, message);
+				});
+			} else {
+				// Fallback for older browsers
+				fallbackCopy(text, feedbackElementId, message);
+			}
+		}
+
+		function fallbackCopy(text, feedbackElementId, message) {
+			const tempInput = document.createElement('textarea');
+			tempInput.value = text;
+			// Set invisible and off-screen
+			tempInput.style.position = 'absolute';
+			tempInput.style.left = '-9999px';
+			document.body.appendChild(tempInput);
+			tempInput.focus();
+			tempInput.select();
+			
+			let success = false;
+			try {
+				success = document.execCommand('copy');
+			} catch (err) {
+				console.error('Fallback copying failed: ', err);
+			}
+			document.body.removeChild(tempInput);
+
+			if (success) {
+				showSupportFeedback(feedbackElementId, message);
+			} else {
+				showSupportFeedback(feedbackElementId, 'Copying failed, please copy the link manually: ' + text);
+			}
+		}
+
+		function showSupportFeedback(elementId, message) {
+			const feedbackEl = document.getElementById(elementId);
+			feedbackEl.textContent = message;
+			feedbackEl.classList.remove('hidden');
+			feedbackEl.classList.add('bg-green-100', 'text-green-800');
+			setTimeout(() => {
+				feedbackEl.classList.add('hidden');
+			}, 3000);
+		}
+
+
+		// --- QUIZ DATA (100 Questions) ---
+		const QUESTION_BANK = [
+			// Test 1: Questions 1–10 (Simple Tenses & Vocabulary)
+			{
+				"q": "Mert and Mehmet usually don't play soccer. Mehmet always ..... alone.",
+				"o": ["forces", "plays", "cries", "snores", "shows"],
+				"a": "B",
+				"e": "The main clause uses the Simple Present tense, indicating a routine action ('always'). 'Plays' is the correct third-person singular form."
+			},
+			{
+				"q": "Derya ..... to the gym every day.",
+				"o": ["go", "goes", "going", "gone", "to go"],
+				"a": "B",
+				"e": "The phrase 'every day' requires the Simple Present tense, and for 'Derya' (third person singular), the verb must end in '-es'."
+			},
+			{
+				"q": "They ... a new car last month.",
+				"o": ["buy", "buys", "bought", "buying", "to buy"],
+				"a": "C",
+				"e": "The time phrase 'last month' specifies a completed action in the past, requiring the Simple Past tense form 'bought'."
+			},
+			{
+				"q": "I am looking forward to ... you at the party.",
+				"o": ["to see", "seeing", "see", "saw", "seen"],
+				"a": "B",
+				"e": "The phrase 'look forward to' is a fixed expression, and 'to' acts as a preposition, requiring the gerund form (V+ing)."
+			},
+			{
+				"q": "If it ... tomorrow, we will cancel the picnic.",
+				"o": ["rains", "rain", "rained", "is raining", "will rain"],
+				"a": "A",
+				"e": "This is a First Conditional structure. The 'if' clause uses the Simple Present, and the result clause uses 'will' + base verb."
+			},
+			{
+				"q": "She ... her homework yet.",
+				"o": ["didn't finish", "hasn't finished", "don't finish", "isn't finishing", "wasn't finished"],
+				"a": "B",
+				"e": "The word 'yet' indicates that an action is incomplete up to the present moment, which requires the Present Perfect tense."
+			},
+			{
+				"q": "We ... to the beach last summer.",
+				"o": ["go", "went", "gone", "going", "to go"],
+				"a": "B",
+				"e": "The time phrase 'last summer' indicates a specific time in the past, requiring the Simple Past tense ('went')."
+			},
+			{
+				"q": "He ... his keys. Can you help me find them?",
+				"o": ["loses", "lost", "has lost", "is losing", "to lose"],
+				"a": "C",
+				"e": "The result is visible now ('Can you help me find them?'), so the Present Perfect ('has lost') is used for an action with present consequence."
+			},
+			{
+				"q": "They ... dinner when the phone rang.",
+				"o": ["have", "had", "were having", "are having", "having"],
+				"a": "C",
+				"e": "The Past Continuous ('were having') is used to describe a longer, ongoing action interrupted by a shorter one ('the phone rang')."
+			},
+			{
+				"q": "I ... my best friend since we were kids.",
+				"o": ["know", "knew", "have known", "knowing", "to know"],
+				"a": "C",
+				"e": "The word 'since' introduces a starting point in the past that continues to the present, requiring the Present Perfect tense."
+			},
+			// Test 2: Questions 11-20 (Basic Tenses & Prepositions)
+			{
+				"q": "She ... to the store every Saturday.",
+				"o": ["go", "goes", "going", "gone", "to go"],
+				"a": "B",
+				"e": "The phrase 'every Saturday' indicates a routine, using the Simple Present tense ('goes')."
+			},
+			{
+				"q": "They ... a movie when I called them.",
+				"o": ["watch", "watched", "were watching", "are watching", "watching"],
+				"a": "C",
+				"e": "The Past Continuous ('were watching') shows an action in progress when another short action occurred."
+			},
+			{
+				"q": "I ... finished my project yet.",
+				"o": ["didn't", "haven't", "don't", "isn't", "wasn't"],
+				"a": "B",
+				"e": "The word 'yet' with an incomplete action requires the negative form of the Present Perfect ('haven't finished')."
+			},
+			{
+				"q": "We ... to Paris next summer.",
+				"o": ["travel", "traveled", "are traveling", "will travel", "to travel"],
+				"a": "D",
+				"e": "Future simple ('will travel') is a valid way to talk about future plans or expectations."
+			},
+			{
+				"q": "He ... his leg while playing football last weekend.",
+				"o": ["breaks", "broke", "has broken", "is breaking", "to break"],
+				"a": "B",
+				"e": "The phrase 'last weekend' anchors the action to a specific time in the past, requiring the Simple Past tense."
+			},
+			{
+				"q": "They ... in this city for five years.",
+				"o": ["live", "lived", "have lived", "are living", "to live"],
+				"a": "C",
+				"e": "The word 'for' indicating duration up to now requires the Present Perfect tense."
+			},
+			{
+				"q": "I ... my homework before dinner last night.",
+				"o": ["do", "did", "was doing", "have done", "doing"],
+				"a": "B",
+				"e": "The action 'did' happened at a specific time in the past ('last night'), using Simple Past."
+			},
+			{
+				"q": "She ... to the party if she finishes her work on time.",
+				"o": ["go", "goes", "will go", "is going", "to go"],
+				"a": "C",
+				"e": "First Conditional: The main clause uses 'will go' to express a future consequence."
+			},
+			{
+				"q": "They ... each other since childhood.",
+				"o": ["know", "knew", "have known", "knowing", "to know"],
+				"a": "C",
+				"e": "Use Present Perfect ('have known') with 'since' to show duration up to the present."
+			},
+			{
+				"q": "He ... his car every weekend.",
+				"o": ["wash", "washes", "washing", "washed", "to wash"],
+				"a": "B",
+				"e": "Routine actions require Simple Present tense, using the third-person singular form ('washes')."
+			},
+			// Test 3: Questions 21-30 (Phrasal Verbs, Conditionals, Adjectives)
+			{
+				"q": "I ... my keys. Can you help me find them?",
+				"o": ["lose", "lost", "have lost", "is losing", "to lose"],
+				"a": "C",
+				"e": "Present Perfect ('have lost') for an action that has a current effect."
+			},
+			{
+				"q": "We ... dinner when the guests arrived.",
+				"o": ["have", "had", "were having", "are having", "having"],
+				"a": "C",
+				"e": "Past Continuous ('were having') for the longer action interrupted by the shorter past action ('arrived')."
+			},
+			{
+				"q": "She ... in this company for ten years.",
+				"o": ["work", "worked", "has worked", "is working", "to work"],
+				"a": "C",
+				"e": "The duration ('for ten years') extending up to the present requires the Present Perfect ('has worked')."
+			},
+			{
+				"q": "They ... to the concert last night.",
+				"o": ["go", "went", "gone", "going", "to go"],
+				"a": "B",
+				"e": "Specific past time ('last night') requires the Simple Past tense ('went')."
+			},
+			{
+				"q": "He ... his ankle while hiking last weekend.",
+				"o": ["sprains", "sprained", "has sprained", "is spraining", "to sprain"],
+				"a": "B",
+				"e": "Specific past time ('last weekend') requires the Simple Past tense."
+			},
+			{
+				"q": "If I ... earlier, I wouldn’t have missed the bus.",
+				"o": ["wake up", "woke up", "had woken up", "have woken", "waking up"],
+				"a": "C",
+				"e": "This is a Third Conditional structure, which requires the Past Perfect ('had woken up') in the 'if' clause to talk about a hypothetical past situation."
+			},
+			{
+				"q": "She ... to the doctor because she’s been coughing a lot.",
+				"o": ["should go", "must went", "can go", "might goes", "should went"],
+				"a": "A",
+				"e": "'Should go' is the correct modal verb phrase to suggest necessary advice."
+			},
+			{
+				"q": "The movie was so boring that we decided to ... early.",
+				"o": ["stay", "leave", "arrive", "sleep", "walk"],
+				"a": "B",
+				"e": "The action that follows 'decided to' must be the base form of the verb: 'decided to leave'."
+			},
+			{
+				"q": "He hasn’t called me ... last week.",
+				"o": ["for", "since", "during", "in", "until"],
+				"a": "B",
+				"e": "'Since' is used to specify the starting point of a period that continues up to the present."
+			},
+			{
+				"q": "I wish I ... a car. Taking the bus every day is tiring.",
+				"o": ["have", "had", "will have", "having", "has"],
+				"a": "B",
+				"e": "'I wish' about a current situation uses the Simple Past tense ('had') to express regret or a desire for change."
+			},
+			// Test 4: Questions 31-40 (Comparatives, Prepositions, Reported Speech)
+			{
+				"q": "She is ... than her brother.",
+				"o": ["most tall", "taller", "the taller", "more tall", "tallest"],
+				"a": "B",
+				"e": "The word 'than' requires the comparative form of the adjective, which for 'tall' is 'taller'."
+			},
+			{
+				"q": "We haven’t seen each other ... a long time.",
+				"o": ["for", "since", "at", "in", "by"],
+				"a": "A",
+				"e": "'For' is used to indicate the duration of a period of time."
+			},
+			{
+				"q": "I’m not interested ... politics.",
+				"o": ["on", "at", "in", "of", "for"],
+				"a": "C",
+				"e": "The fixed prepositional phrase is 'interested in'."
+			},
+			{
+				"q": "When I was a child, I ... play outside every day.",
+				"o": ["use to", "used to", "was used to", "am used to", "use"],
+				"a": "B",
+				"e": "To express a habitual action in the past that no longer happens, use the structure 'used to' + base verb."
+			},
+			{
+				"q": "She asked me where I ... the night before.",
+				"o": ["go", "went", "had gone", "was going", "have gone"],
+				"a": "C",
+				"e": "In reported speech, an action preceding the reporting time ('the night before') typically shifts to the Past Perfect ('had gone')."
+			},
+			{
+				"q": "Could you please ... the TV? It’s too loud.",
+				"o": ["turn off", "turn up", "turn over", "turn on", "turn back"],
+				"a": "A",
+				"e": "The phrasal verb 'turn off' means to switch something off, appropriate if the sound is 'too loud'."
+			},
+			{
+				"q": "He’s really good ... playing chess.",
+				"o": ["at", "in", "on", "about", "for"],
+				"a": "A",
+				"e": "The correct preposition to follow the adjective 'good' when talking about skills is 'at'."
+			},
+			{
+				"q": "The exam was ... easier than I expected.",
+				"o": ["much", "too", "very", "so", "most"],
+				"a": "A",
+				"e": "The word 'much' is used to modify and strengthen a comparative adjective like 'easier'."
+			},
+			{
+				"q": "She doesn’t have ... friends in this city.",
+				"o": ["many", "much", "a lot", "some", "few"],
+				"a": "A",
+				"e": "'Friends' is a countable noun, so 'many' is the correct choice to express a large quantity."
+			},
+			{
+				"q": "He promised ... me later.",
+				"o": ["call", "calling", "to call", "called", "to calling"],
+				"a": "C",
+				"e": "The verb 'promise' is followed by the infinitive form ('to' + verb base)."
+			},
+			// Test 5: Questions 41-50 (Tag Questions, Past Perfect, Vocabulary, Quantifiers)
+			{
+				"q": "Let’s go for a walk, ...?",
+				"o": ["will we", "shall we", "do we", "don’t we", "aren’t we"],
+				"a": "B",
+				"e": "The correct tag question to follow a sentence starting with 'Let's' is 'shall we?'"
+			},
+			{
+				"q": "I’m looking for a word that means ‘to make something better’.",
+				"o": ["improve", "destroy", "reduce", "forget", "increase"],
+				"a": "A",
+				"e": "The verb 'improve' means to make something better or to get better."
+			},
+			{
+				"q": "He was tired because he ... all day.",
+				"o": ["worked", "had worked", "has worked", "is working", "works"],
+				"a": "B",
+				"e": "The Past Perfect ('had worked') is used to describe an action that happened before another action in the past (being 'tired')."
+			},
+			{
+				"q": "The opposite of ‘borrow’ is ...",
+				"o": ["lend", "take", "bring", "send", "give"],
+				"a": "A",
+				"e": "'Borrow' means to take something and return it later. 'Lend' means to give something to someone to be returned later."
+			},
+			{
+				"q": "We can’t go out now. It’s ... heavily.",
+				"o": ["rain", "rained", "raining", "rains", "to rain"],
+				"a": "C",
+				"e": "The action is happening now ('can't go out now'), requiring the Present Continuous tense ('raining')."
+			},
+			{
+				"q": "There isn’t ... sugar left in the jar.",
+				"o": ["many", "much", "some", "few", "a lot"],
+				"a": "B",
+				"e": "'Sugar' is an uncountable noun, so 'much' is the correct quantifier in a negative sentence."
+			},
+			{
+				"q": "The train ... at 6 p.m. tomorrow evening.",
+				"o": ["leaves", "left", "is leaving", "leave", "has left"],
+				"a": "A",
+				"e": "Fixed future schedules (like transportation) use the Simple Present tense."
+			},
+			{
+				"q": "I couldn’t find my phone, but it was ... my bag all the time!",
+				"o": ["on", "at", "in", "under", "behind"],
+				"a": "C",
+				"e": "'In' is the correct preposition to describe something contained inside a bag."
+			},
+			{
+				"q": "He didn’t study, ... he failed the test.",
+				"o": ["so", "because", "although", "but", "while"],
+				"a": "A",
+				"e": "'So' is used here to show the consequence or result of the first clause."
+			},
+			{
+				"q": "My sister is very ... . She always helps everyone.",
+				"o": ["selfish", "lazy", "kind", "rude", "angry"],
+				"a": "C",
+				"e": "'Kind' is the adjective that aligns with the descriptive phrase 'She always helps everyone'."
+			},
+			// Test 6: Questions 51-60 (Advanced Conditionals, Gerunds/Infinitives, Collocations)
+			{
+				"q": "If I ... you, I would take that job offer.",
+				"o": ["am", "was", "were", "be", "been"],
+				"a": "C",
+				"e": "The Second Conditional structure for hypothetical advice uses 'were' for all persons, including 'I'."
+			},
+			{
+				"q": "She ... her driving test three times before she finally passed.",
+				"o": ["fails", "failed", "has failed", "had failed", "is failing"],
+				"a": "D",
+				"e": "The Past Perfect ('had failed') is required because the action of failing happened multiple times *before* the final past action (passing)."
+			},
+			{
+				"q": "We’ll start the meeting as soon as everyone ...",
+				"o": ["arrives", "arrived", "will arrive", "arriving", "has arrived"],
+				"a": "A",
+				"e": "Time clauses introduced by 'as soon as' use the Simple Present to refer to future actions."
+			},
+			{
+				"q": "He’s been working here ... he graduated from university.",
+				"o": ["since", "for", "during", "by", "after"],
+				"a": "A",
+				"e": "'Since' is used to denote the starting point of a period that continues up to the present, often with the Present Perfect Continuous."
+			},
+			{
+				"q": "She’s looking forward ... her new colleagues next week.",
+				"o": ["to meet", "to meeting", "meet", "meeting", "met"],
+				"a": "B",
+				"e": "The fixed expression is 'looking forward to' + gerund (V+ing)."
+			},
+			{
+				"q": "I can’t stand people who are always ... about everything.",
+				"o": ["complaining", "complain", "complains", "to complain", "complained"],
+				"a": "A",
+				"e": "'Can't stand' is followed by the gerund (V+ing) to express strong dislike."
+			},
+			{
+				"q": "They managed to ... an agreement after hours of discussion.",
+				"o": ["do", "reach", "make", "get", "arrive"],
+				"a": "B",
+				"e": "The correct collocation is 'to reach an agreement'."
+			},
+			{
+				"q": "The concert was canceled ... the heavy rain.",
+				"o": ["because", "because of", "so", "due", "although"],
+				"a": "B",
+				"e": "'Because of' is followed by a noun phrase ('the heavy rain') and explains the reason."
+			},
+			{
+				"q": "When I called, she ... dinner.",
+				"o": ["cooks", "cooked", "was cooking", "is cooking", "has cooked"],
+				"a": "C",
+				"e": "The Past Continuous ('was cooking') describes the activity in progress when the phone call (Simple Past) happened."
+			},
+			{
+				"q": "Let’s meet at the café ... the corner.",
+				"o": ["in", "on", "at", "by", "under"],
+				"a": "C",
+				"e": "When referring to a specific, small public location like a café or intersection, 'at' is the most common preposition."
+			},
+			// Test 7: Questions 61-70 (Phrasal Verbs, Idioms, Advanced Tenses)
+			{
+				"q": "He’s very ambitious and wants to ... in his career.",
+				"o": ["get off", "get on", "get ahead", "get through", "get over"],
+				"a": "C",
+				"e": "The phrasal verb 'get ahead' means to be successful or advance in one's career."
+			},
+			{
+				"q": "The project was completed ... time and ... budget.",
+				"o": ["at / on", "in / under", "on / below", "within / under", "by / on"],
+				"a": "D",
+				"e": "'Within time' means before the deadline, and 'under budget' means spending less than planned."
+			},
+			{
+				"q": "They ... each other for more than ten years before they got married.",
+				"o": ["know", "knew", "have known", "had known", "are knowing"],
+				"a": "D",
+				"e": "The Past Perfect ('had known') is used to describe an action that was completed before another event in the past ('got married')."
+			},
+			{
+				"q": "She asked me if I ... seen her phone.",
+				"o": ["have", "had", "has", "was", "did"],
+				"a": "B",
+				"e": "Reported speech: The question is about a past action, requiring the Past Perfect ('had seen')."
+			},
+			{
+				"q": "We couldn’t go out because the car ... down.",
+				"o": ["broke", "has broken", "was breaking", "broke down", "had broken down"],
+				"a": "D",
+				"e": "The phrasal verb 'break down' means to stop functioning. The Simple Past form is 'broke down'."
+			},
+			{
+				"q": "I didn’t expect the movie to be so ... It really surprised me.",
+				"o": ["boring", "bored", "interesting", "interested", "funny"],
+				"a": "C",
+				"e": "Adjectives ending in '-ing' describe the quality of something (the movie), while '-ed' describes a feeling (the person)."
+			},
+			{
+				"q": "She has a strong ... for modern art.",
+				"o": ["taste", "smell", "feeling", "sense", "interest"],
+				"a": "A",
+				"e": "'Taste' is used here to mean a preference or appreciation for a particular style."
+			},
+			{
+				"q": "He’s the kind of person who never gives ... easily.",
+				"o": ["away", "off", "in", "out", "up"],
+				"a": "E",
+				"e": "The phrasal verb 'give up' means to quit or stop trying."
+			},
+			{
+				"q": "I’ll call you as soon as I ... home.",
+				"o": ["get", "got", "will get", "getting", "gets"],
+				"a": "A",
+				"e": "In a time clause referring to the future ('as soon as'), use the Simple Present ('get')."
+			},
+			{
+				"q": "It’s important to ... new skills in today’s job market.",
+				"o": ["improve", "develop", "create", "learn", "invent"],
+				"a": "B",
+				"e": "'Develop skills' is a common and appropriate collocation meaning to acquire or enhance abilities."
+			},
+			// Test 8: Questions 71-80 (Inversion, Subjunctive, Participles, Prepositions)
+			{
+				"q": "He didn’t study enough; ..., he failed the exam.",
+				"o": ["however", "although", "therefore", "because", "since"],
+				"a": "C",
+				"e": "'Therefore' is an adverb used to show a consequence or result, following a semicolon or period."
+			},
+			{
+				"q": "Can you ... the lights before you leave, please?",
+				"o": ["turn up", "turn off", "turn over", "turn around", "turn down"],
+				"a": "B",
+				"e": "'Turn off' means to switch something off, which is required before leaving."
+			},
+			{
+				"q": "The manager insisted ... seeing all the reports today.",
+				"o": ["on", "in", "about", "to", "for"],
+				"a": "A",
+				"e": "The verb 'insist' is followed by the preposition 'on' and a gerund (V+ing)."
+			},
+			{
+				"q": "We were late because our flight was ... by the storm.",
+				"o": ["delayed", "cancelled", "missed", "changed", "stopped"],
+				"a": "A",
+				"e": "A 'delayed' flight means its departure was held up, a common result of a storm."
+			},
+			{
+				"q": "The phrase ‘give someone a hand’ means ...",
+				"o": ["to punish them", "to help them", "to applaud them", "to ignore them", "to confuse them"],
+				"a": "B",
+				"e": "This is an idiom meaning 'to help someone with a task'."
+			},
+			{
+				"q": "Hardly ... the meeting started when the fire alarm went off.",
+				"o": ["had", "has", "did", "was", "have"],
+				"a": "A",
+				"e": "The structure 'Hardly... when' requires inversion, using the Past Perfect: 'Hardly had I...'."
+			},
+			{
+				"q": "No sooner ... the door than someone knocked.",
+				"o": ["had I closed", "I had closed", "was I closing", "have I closed", "closed I"],
+				"a": "A",
+				"e": "The structure 'No sooner... than' requires inversion, using the Past Perfect: 'No sooner had I...'."
+			},
+			{
+				"q": "If only I ... more carefully, I wouldn’t have made that mistake.",
+				"o": ["listen", "had listened", "have listened", "listened", "was listening"],
+				"a": "B",
+				"e": "'If only' expressing a wish about a past situation requires the Past Perfect ('had listened')."
+			},
+			{
+				"q": "By the time we arrived, the play ... already ...",
+				"o": ["had / begun", "has / begun", "was / beginning", "began / already", "have / begun"],
+				"a": "A",
+				"e": "'By the time' signals that an action ('the play beginning') was completed before another past action ('we arrived'), requiring Past Perfect."
+			},
+			{
+				"q": "Were I ... the manager, I’d hire more staff immediately.",
+				"o": ["be", "been", "was", "being", "am"],
+				"a": "A",
+				"e": "This is a form of conditional inversion (If I were the manager = Were I the manager), using the base form of the verb after 'Were I...'."
+			},
+			// Test 9: Questions 81-90 (Advanced Vocabulary, Gerunds/Infinitives, Idioms)
+			{
+				"q": "He denied ... the document, though his fingerprints were on it.",
+				"o": ["sign", "to sign", "signed", "signing", "to have signed"],
+				"a": "D",
+				"e": "The verb 'deny' must be followed by a gerund (V+ing)."
+			},
+			{
+				"q": "The company’s success is largely ... its innovative design.",
+				"o": ["thanks to", "because", "due", "because of", "owing"],
+				"a": "A",
+				"e": "The expression 'thanks to' is a common way to attribute a positive outcome to a cause."
+			},
+			{
+				"q": "She spoke so quietly that I could ... hear her.",
+				"o": ["barely", "nearly", "rarely", "scarcely", "hard"],
+				"a": "A",
+				"e": "'Barely' means hardly or scarcely, fitting the context of not being able to hear well."
+			},
+			{
+				"q": "Not only ... the deadline, but they also improved the design.",
+				"o": ["did they meet", "they met", "have they met", "had met", "were they meeting"],
+				"a": "A",
+				"e": "When 'Not only' begins a sentence, inversion is required ('did they meet')."
+			},
+			{
+				"q": "If it hadn’t been for your help, we ... finished the project.",
+				"o": ["wouldn’t", "wouldn’t have", "hadn’t", "didn’t", "won’t have"],
+				"a": "B",
+				"e": "This is the Third Conditional structure: 'If + Past Perfect', then 'would have + Past Participle' (or wouldn't have)."
+			},
+			{
+				"q": "The manager demanded that every employee ... on time.",
+				"o": ["is", "was", "be", "being", "will be"],
+				"a": "C",
+				"e": "Verbs of demand, recommendation, or suggestion often require the subjunctive mood, which uses the base form 'be' for all persons."
+			},
+			{
+				"q": "Having ... the report, she felt much more confident.",
+				"o": ["complete", "completing", "completed", "been completed", "completes"],
+				"a": "C",
+				"e": "The perfect participle ('Having completed') is used to show one action finished before another action started."
+			},
+			{
+				"q": "It’s high time you ... responsibility for your actions.",
+				"o": ["take", "took", "have taken", "taken", "will take"],
+				"a": "B",
+				"e": "The fixed phrase 'It’s high time' is followed by the Simple Past tense to express that an action should have already happened."
+			},
+			{
+				"q": "The committee reached a decision after taking all factors ... account.",
+				"o": ["into", "in", "on", "to", "under"],
+				"a": "A",
+				"e": "The correct collocation is 'to take something into account', meaning to consider it."
+			},
+			{
+				"q": "The speech was so inspiring that it moved the audience to ...",
+				"o": ["tears", "laugh", "sleep", "silence", "anger"],
+				"a": "A",
+				"e": "The idiom 'moved to tears' means to cause someone to feel so strongly that they cry."
+			},
+			// Test 10: Questions 91-100 (Final Review & Advanced Phrasal Verbs)
+			{
+				"q": "He was accused ... confidential information to the press.",
+				"o": ["of leaking", "to leak", "leak", "for leaking", "leaked"],
+				"a": "A",
+				"e": "The verb 'accused' is always followed by the preposition 'of' and a gerund (V+ing)."
+			},
+			{
+				"q": "She was promoted, which came as no surprise, ... her hard work.",
+				"o": ["given", "although", "despite", "owing", "with"],
+				"a": "A",
+				"e": "'Given' acts as a preposition meaning 'considering' or 'in view of', which fits the context."
+			},
+			{
+				"q": "He came ... a brilliant idea during the meeting.",
+				"o": ["up with", "across", "out", "through", "along"],
+				"a": "A",
+				"e": "The phrasal verb 'come up with' means to think of an idea."
+			},
+			{
+				"q": "The politician promised to look ... the matter immediately.",
+				"o": ["after", "into", "for", "over", "through"],
+				"a": "B",
+				"e": "The phrasal verb 'look into' means to investigate or examine."
+			},
+			{
+				"q": "The company is on the verge ... bankruptcy.",
+				"o": ["of", "to", "at", "from", "with"],
+				"a": "A",
+				"e": "The fixed expression is 'on the verge of' + noun/gerund, meaning close to."
+			},
+			{
+				"q": "He has a reputation ... being extremely reliable.",
+				"o": ["for", "of", "to", "as", "about"],
+				"a": "A",
+				"e": "The correct preposition is 'reputation for' + noun/gerund."
+			},
+			{
+				"q": "I can’t put up ... this noise any longer!",
+				"o": ["to", "with", "on", "about", "for"],
+				"a": "B",
+				"e": "The phrasal verb 'put up with' means to tolerate or endure."
+			},
+			{
+				"q": "The phrase ‘to hit the nail on the head’ means ...",
+				"o": ["to make a mistake", "to be exactly right", "to hurt someone", "to fix something", "to start over"],
+				"a": "B",
+				"e": "This idiom means to describe exactly what is causing a situation or problem."
+			},
+			{
+				"q": "No point ... further; the decision has been made.",
+				"o": ["to argue", "arguing", "argue", "of arguing", "for argue"],
+				"a": "B",
+				"e": "The expression 'There's no point' is followed by the gerund form of the verb (V+ing)."
+			},
+			{
+				"q": "Her performance was outstanding; she set a new ... for others to follow.",
+				"o": ["standard", "rule", "goal", "law", "habit"],
+				"a": "A",
+				"e": "The collocation is 'to set a standard', meaning to establish a level of quality."
+			}
+		];
+
+		// --- QUIZ STATE & CONSTANTS ---
+		const TOTAL_QUESTIONS = QUESTION_BANK.length; // 100
+		const TEST_SIZE = 10; // 10 questions per test
+		let currentQuestionIndex = 0;
+		let score = 0;
+		let shuffledQuestions = []; // Stores the 10 questions for the selected test
+		let userName = "";
+		let userSurname = "";
+		let selectedTestNumber = 0;
+
+		// State to track user answers (stores the selected option: "A", "B", etc.)
+		let userAnswers = [];
+
+		// --- TIMER CONSTANTS AND STATE ---
+		const TOTAL_TIME_MINUTES = 10;
+		const TOTAL_TIME_SECONDS = TOTAL_TIME_MINUTES * 60;
+		let timerInterval = null;
+		let timeLeft = TOTAL_TIME_SECONDS;
+		let isTimerEnabled = false;
+		let isTimeExpired = false;
+
+		// --- HISTORY TRACKING ---
+		const HISTORY_STORAGE_KEY = 'englishQuizHistory';
+		let quizHistory = [];
+
+		// --- Feedback Messages ---
+		const CORRECT_MESSAGES = ["Perfect!", "Amazing!", "Well Done!", "Excellent!", "You Nailed It!", "Spot On!"];
+		const INCORRECT_MESSAGES = ["Keep Trying!", "Don't Give Up!", "A little mistake, try the next one!", "Almost there!", "Learning happens here, try again next time!"];
+
+		// --- DOM ELEMENTS ---
+		const startScreen = document.getElementById('startScreen');
+		const quizScreen = document.getElementById('quizScreen');
+		const resultsScreen = document.getElementById('resultsScreen');
+		const currentQuestionEl = document.getElementById('currentQuestion');
+		const optionsContainer = document.getElementById('optionsContainer');
+		const questionCounterEl = document.getElementById('questionCounter');
+		const quizScoreEl = document.getElementById('quizScore');
+		const feedbackMessageEl = document.getElementById('feedbackMessage');
+		const startFeedbackMessageEl = document.getElementById('startFeedbackMessage');
+		const finalScoreEl = document.getElementById('finalScore');
+		const finalPercentageEl = document.getElementById('finalPercentage');
+		const userGreetingEl = document.getElementById('userGreeting');
+		const prevButton = document.getElementById('prevButton');
+		const nextButton = document.getElementById('nextButton');
+		const quizTitleEl = document.getElementById('quizTitle');
+		const questionPanelEl = document.getElementById('questionPanel');
+		const questionPanelModal = document.getElementById('questionPanelModal');
+		const testSelectionContainer = document.getElementById('testSelectionContainer');
+
+		// NEW TIMER/PROGRESS BAR ELEMENTS
+		const timeLimitToggle = document.getElementById('timeLimitToggle');
+		const quizStatusBar = document.getElementById('quizStatusBar');
+		const timerDisplay = document.getElementById('timerDisplay');
+		const progressBar = document.getElementById('progressBar');
+		const summaryContainer = document.getElementById('summaryContainer');
+		const viewSummaryButton = document.getElementById('viewSummaryButton');
+
+		// NEW HISTORY ELEMENTS
+		const historyModal = document.getElementById('historyModal');
+		const historyContainer = document.getElementById('historyContainer');
+		const historyFilter = document.getElementById('historyFilter');
+		const viewHistoryButton = document.getElementById('viewHistoryButton');
+		const viewHistoryFromResults = document.getElementById('viewHistoryFromResults');
+		const clearHistoryButton = document.getElementById('clearHistoryButton');
+		const historyStats = document.getElementById('historyStats');
+
+		// --- UTILITY FUNCTIONS ---
+		// Function to shuffle an array (Fisher-Yates)
+		function shuffleArray(array) {
+			for (let i = array.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[array[i], array[j]] = [array[j], array[i]];
+			}
+			return array;
+		}
+
+		// Function to get a random message
+		function getRandomMessage(messageArray) {
+			const randomIndex = Math.floor(Math.random() * messageArray.length);
+			return messageArray[randomIndex];
+		}
+
+		function calculateScore() {
+			let currentScore = 0;
+			for (let i = 0; i < shuffledQuestions.length; i++) {
+				// Robust check: ensure userAnswers[i] is recorded and matches the correct answer
+				if (userAnswers[i] !== null && userAnswers[i] === shuffledQuestions[i].a) {
+					currentScore++;
+				}
+			}
+			score = currentScore;
+			return currentScore;
+		}
+
+		// Function to apply button styles based on selection and correctness
+		function updateOptionStyles(questionData, selectedAnswer) {
+			const correctAnswer = questionData.a;
+			const optionButtons = Array.from(optionsContainer.children);
+
+			optionButtons.forEach(btn => {
+				const isOptionSelected = btn.getAttribute('data-answer') === selectedAnswer;
+				const isOptionCorrect = btn.getAttribute('data-answer') === correctAnswer;
+				const isUserAnswered = userAnswers[currentQuestionIndex] !== null;
+
+				// Reset base styling
+				btn.classList.remove('bg-teal-50', 'border-teal-500', 'bg-red-500', 'text-white', 'border-red-600', 'bg-green-500', 'border-green-600', 'font-bold', 'hover:bg-teal-50', 'hover:border-teal-500', 'selected');
+				btn.classList.add('bg-white', 'border-gray-300', 'hover:bg-teal-50', 'hover:border-teal-500');
+
+				if (isUserAnswered) {
+					btn.disabled = true; // Disable if answered
+
+					if (isOptionCorrect) {
+						// Highlight correct answer in green
+						btn.classList.add('bg-green-500', 'text-white', 'border-green-600', 'font-bold');
+						btn.classList.remove('hover:bg-teal-50', 'hover:border-teal-500');
+					} else if (isOptionSelected) {
+						// Highlight incorrect selection in red
+						btn.classList.add('bg-red-500', 'text-white', 'border-red-600', 'font-bold', 'selected');
+						btn.classList.remove('hover:bg-teal-50', 'hover:border-teal-500');
+					} else {
+						// Keep unselected, incorrect options grayed out
+						btn.classList.add('opacity-75');
+					}
+				} else {
+					btn.disabled = isTimeExpired; // Only disabled by time expiration
+				}
+			});
+		}
+
+		// Custom alert function (replaces native alert)
+		function alertUser(title, message) {
+			const modal = document.createElement('div');
+			modal.className = 'fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4';
+
+			modal.innerHTML = `
                 <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm text-center">
                     <h4 class="text-xl font-bold mb-2 text-red-600">${title}</h4>
                     <p class="text-gray-600 mb-4">${message}</p>
@@ -544,219 +1384,219 @@
                     </button>
                 </div>
             `;
-            document.body.appendChild(modal);
-        }
+			document.body.appendChild(modal);
+		}
 
-        function displayAnswerFeedback(questionData, selectedAnswer) {
-            const correctAnswer = questionData.a;
-            const correctOptionText = questionData.o[correctAnswer.charCodeAt(0) - 'A'.charCodeAt(0)];
-            
-            updateOptionStyles(questionData, selectedAnswer); // Update button styles
-            
-            // Check if the panel is open and re-render it to update the color
-            if (!questionPanelModal.classList.contains('hidden')) {
-                renderQuestionPanel();
-            }
+		function displayAnswerFeedback(questionData, selectedAnswer) {
+			const correctAnswer = questionData.a;
+			const correctOptionText = questionData.o[correctAnswer.charCodeAt(0) - 'A'.charCodeAt(0)];
 
-            // Show feedback message with random variation and explanation
-            if (selectedAnswer === correctAnswer) {
-                const randomMsg = getRandomMessage(CORRECT_MESSAGES);
-                
-                feedbackMessageEl.innerHTML = `
+			updateOptionStyles(questionData, selectedAnswer); // Update button styles
+
+			// Check if the panel is open and re-render it to update the color
+			if (!questionPanelModal.classList.contains('hidden')) {
+				renderQuestionPanel();
+			}
+
+			// Show feedback message with random variation and explanation
+			if (selectedAnswer === correctAnswer) {
+				const randomMsg = getRandomMessage(CORRECT_MESSAGES);
+
+				feedbackMessageEl.innerHTML = `
                     <div class="text-lg mb-1">${randomMsg}</div>
                     <div class="text-base">Your choice is <span class="font-extrabold text-green-700">correct!</span></div>
                     <div class="text-sm mt-2 font-normal">Answer: ${correctAnswer}. ${correctOptionText}</div>
                 `;
-                
-                feedbackMessageEl.classList.remove('hidden', 'bg-yellow-100', 'bg-red-100', 'text-yellow-800', 'text-red-800');
-                feedbackMessageEl.classList.add('bg-green-100', 'text-green-800');
-            } else {
-                const randomMsg = getRandomMessage(INCORRECT_MESSAGES);
-                
-                let explanation = questionData.e || "Review the grammatical rule associated with this topic to master it!";
 
-                feedbackMessageEl.innerHTML = `
+				feedbackMessageEl.classList.remove('hidden', 'bg-yellow-100', 'bg-red-100', 'text-yellow-800', 'text-red-800');
+				feedbackMessageEl.classList.add('bg-green-100', 'text-green-800');
+			} else {
+				const randomMsg = getRandomMessage(INCORRECT_MESSAGES);
+
+				let explanation = questionData.e || "Review the grammatical rule associated with this topic to master it!";
+
+				feedbackMessageEl.innerHTML = `
                     <div class="text-lg mb-1">${randomMsg}</div>
                     <div class="text-base">The correct answer is <span class="font-extrabold text-green-700">${correctAnswer}. ${correctOptionText}</span>.</div>
                     <div class="text-sm mt-2 font-normal">**Explanation:** ${explanation}</div>
                 `;
 
-                feedbackMessageEl.classList.remove('hidden', 'bg-yellow-100', 'bg-green-100', 'text-yellow-800', 'text-green-800');
-                feedbackMessageEl.classList.add('bg-red-100', 'text-red-800');
-            }
-            feedbackMessageEl.classList.remove('hidden');
-        }
+				feedbackMessageEl.classList.remove('hidden', 'bg-yellow-100', 'bg-green-100', 'text-yellow-800', 'text-green-800');
+				feedbackMessageEl.classList.add('bg-red-100', 'text-red-800');
+			}
+			feedbackMessageEl.classList.remove('hidden');
+		}
 
-        // --- TIMER FUNCTIONS ---
-        function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = seconds % 60;
-            return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-        }
+		// --- TIMER FUNCTIONS ---
+		function formatTime(seconds) {
+			const minutes = Math.floor(seconds / 60);
+			const remainingSeconds = seconds % 60;
+			return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+		}
 
-        function updateTimerDisplay() {
-            if (!isTimerEnabled) return;
-            
-            timerDisplay.textContent = `${formatTime(timeLeft)} Remaining`;
+		function updateTimerDisplay() {
+			if (!isTimerEnabled) return;
 
-            // Update Visual Progress Bar
-            const percentTimeRemaining = (timeLeft / TOTAL_TIME_SECONDS) * 100;
-            progressBar.style.width = `${percentTimeRemaining}%`;
+			timerDisplay.textContent = `${formatTime(timeLeft)} Remaining`;
 
-            // Update Progress Bar Color based on time remaining
-            let colorClass = '';
-            if (percentTimeRemaining > 60) {
-                // Blue (Over 60%)
-                colorClass = 'bg-blue-500'; 
-            } else if (percentTimeRemaining > 30) {
-                // Orange (60% to 30%)
-                colorClass = 'bg-orange-500';
-            } else {
-                // Red (Less than 30%)
-                colorClass = 'bg-red-500';
-            }
-            
-            progressBar.className = `h-2 transition-all duration-300 ease-linear ${colorClass}`;
+			// Update Visual Progress Bar
+			const percentTimeRemaining = (timeLeft / TOTAL_TIME_SECONDS) * 100;
+			progressBar.style.width = `${percentTimeRemaining}%`;
 
-            if (timeLeft <= 0 && !isTimeExpired) {
-                stopTimer();
-                isTimeExpired = true;
-                // Since options are managed by updateOptionStyles, we just need to alert and show results
-                alertUser('Time\'s up!', 'The test has ended because the time limit expired. Your score has been calculated.');
-                setTimeout(showResults, 1500);
-            }
-        }
+			// Update Progress Bar Color based on time remaining
+			let colorClass = '';
+			if (percentTimeRemaining > 60) {
+				// Blue (Over 60%)
+				colorClass = 'bg-blue-500';
+			} else if (percentTimeRemaining > 30) {
+				// Orange (60% to 30%)
+				colorClass = 'bg-orange-500';
+			} else {
+				// Red (Less than 30%)
+				colorClass = 'bg-red-500';
+			}
 
-        function startTimer() {
-            isTimerEnabled = timeLimitToggle.checked;
-            if (!isTimerEnabled) {
-                quizStatusBar.classList.add('hidden');
-                return;
-            }
-            
-            quizStatusBar.classList.remove('hidden');
-            timeLeft = TOTAL_TIME_SECONDS;
-            isTimeExpired = false;
-            updateTimerDisplay(); // Initial display
+			progressBar.className = `h-2 transition-all duration-300 ease-linear ${colorClass}`;
 
-            timerInterval = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    updateTimerDisplay();
-                }
-            }, 1000);
-        }
+			if (timeLeft <= 0 && !isTimeExpired) {
+				stopTimer();
+				isTimeExpired = true;
+				// Since options are managed by updateOptionStyles, we just need to alert and show results
+				alertUser('Time\'s up!', 'The test has ended because the time limit expired. Your score has been calculated.');
+				setTimeout(showResults, 1500);
+			}
+		}
 
-        function stopTimer() {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-        }
-        
-        // --- MODAL PANEL LOGIC ---
-        function togglePanel(show) {
-            if (show) {
-                renderQuestionPanel();
-                questionPanelModal.classList.remove('hidden');
-            } else {
-                questionPanelModal.classList.add('hidden');
-            }
-        }
+		function startTimer() {
+			isTimerEnabled = timeLimitToggle.checked;
+			if (!isTimerEnabled) {
+				quizStatusBar.classList.add('hidden');
+				return;
+			}
 
-        function renderQuestionPanel() {
-            questionPanelEl.innerHTML = ''; // Clear previous buttons
+			quizStatusBar.classList.remove('hidden');
+			timeLeft = TOTAL_TIME_SECONDS;
+			isTimeExpired = false;
+			updateTimerDisplay(); // Initial display
 
-            for (let i = 0; i < shuffledQuestions.length; i++) {
-                const qNum = i + 1;
-                const button = document.createElement('button');
-                
-                // Base classes
-                let classes = 'q-index-button p-1 text-xs font-semibold rounded-lg shadow-sm w-full h-8 flex items-center justify-center border transition duration-100';
+			timerInterval = setInterval(() => {
+				if (timeLeft > 0) {
+					timeLeft--;
+					updateTimerDisplay();
+				}
+			}, 1000);
+		}
 
-                // Determine status coloring
-                if (i === currentQuestionIndex) {
-                    // Current question (Highest priority styling)
-                    classes += ' bg-teal-600 text-white border-teal-700 ring-2 ring-teal-300 transform scale-105';
-                } else if (userAnswers[i] !== null) {
-                    // Answered question - Check correctness
-                    const isCorrect = userAnswers[i] === shuffledQuestions[i].a;
-                    
-                    if (isCorrect) {
-                        // Correctly answered (Green)
-                        classes += ' bg-green-100 text-green-700 border-green-300 hover:bg-green-200';
-                    } else {
-                        // Incorrectly answered (Red)
-                        // Applying the requested red color change for incorrect answers
-                        classes += ' bg-red-100 text-red-700 border-red-300 hover:bg-red-200';
-                    }
-                } else {
-                    // Unanswered question (Gray)
-                    classes += ' bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200';
-                }
+		function stopTimer() {
+			if (timerInterval) {
+				clearInterval(timerInterval);
+				timerInterval = null;
+			}
+		}
 
-                button.className = classes;
-                button.textContent = qNum;
-                button.setAttribute('data-index', i);
-                
-                // Add click handler to jump to question
-                button.onclick = () => jumpToQuestion(i);
+		// --- MODAL PANEL LOGIC ---
+		function togglePanel(show) {
+			if (show) {
+				renderQuestionPanel();
+				questionPanelModal.classList.remove('hidden');
+			} else {
+				questionPanelModal.classList.add('hidden');
+			}
+		}
 
-                questionPanelEl.appendChild(button);
-            }
-        }
+		function renderQuestionPanel() {
+			questionPanelEl.innerHTML = ''; // Clear previous buttons
 
-        function jumpToQuestion(index) {
-            currentQuestionIndex = index;
-            togglePanel(false); // Close the modal immediately after jumping
-            renderQuestion();
-        }
+			for (let i = 0; i < shuffledQuestions.length; i++) {
+				const qNum = i + 1;
+				const button = document.createElement('button');
 
-        // --- HISTORY FUNCTIONS ---
-        function loadHistory() {
-            const storedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
-            if (storedHistory) {
-                quizHistory = JSON.parse(storedHistory);
-            } else {
-                quizHistory = [];
-            }
-        }
+				// Base classes
+				let classes = 'q-index-button p-1 text-xs font-semibold rounded-lg shadow-sm w-full h-8 flex items-center justify-center border transition duration-100';
 
-        function saveHistory() {
-            localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(quizHistory));
-        }
+				// Determine status coloring
+				if (i === currentQuestionIndex) {
+					// Current question (Highest priority styling)
+					classes += ' bg-teal-600 text-white border-teal-700 ring-2 ring-teal-300 transform scale-105';
+				} else if (userAnswers[i] !== null) {
+					// Answered question - Check correctness
+					const isCorrect = userAnswers[i] === shuffledQuestions[i].a;
 
-        function addHistoryEntry(testNumber, score, percentage, timeTaken, timeExpired) {
-            const historyEntry = {
-                id: Date.now(),
-                firstName: userName,
-                surname: userSurname,
-                testNumber: testNumber,
-                score: score,
-                totalQuestions: shuffledQuestions.length,
-                percentage: percentage,
-                dateTime: new Date().toISOString(),
-                timeLimitEnabled: isTimerEnabled,
-                timeExpired: timeExpired,
-                timeTaken: timeTaken
-            };
-            
-            quizHistory.unshift(historyEntry); // Add to beginning of array
-            saveHistory();
-        }
+					if (isCorrect) {
+						// Correctly answered (Green)
+						classes += ' bg-green-100 text-green-700 border-green-300 hover:bg-green-200';
+					} else {
+						// Incorrectly answered (Red)
+						// Applying the requested red color change for incorrect answers
+						classes += ' bg-red-100 text-red-700 border-red-300 hover:bg-red-200';
+					}
+				} else {
+					// Unanswered question (Gray)
+					classes += ' bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200';
+				}
 
-        function renderHistory() {
-            loadHistory();
-            
-            const filterValue = historyFilter.value;
-            let filteredHistory = quizHistory;
-            
-            if (filterValue !== 'all') {
-                filteredHistory = quizHistory.filter(entry => entry.testNumber == filterValue);
-            }
-            
-            if (filteredHistory.length === 0) {
-                historyContainer.innerHTML = `
+				button.className = classes;
+				button.textContent = qNum;
+				button.setAttribute('data-index', i);
+
+				// Add click handler to jump to question
+				button.onclick = () => jumpToQuestion(i);
+
+				questionPanelEl.appendChild(button);
+			}
+		}
+
+		function jumpToQuestion(index) {
+			currentQuestionIndex = index;
+			togglePanel(false); // Close the modal immediately after jumping
+			renderQuestion();
+		}
+
+		// --- HISTORY FUNCTIONS ---
+		function loadHistory() {
+			const storedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
+			if (storedHistory) {
+				quizHistory = JSON.parse(storedHistory);
+			} else {
+				quizHistory = [];
+			}
+		}
+
+		function saveHistory() {
+			localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(quizHistory));
+		}
+
+		function addHistoryEntry(testNumber, score, percentage, timeTaken, timeExpired) {
+			const historyEntry = {
+				id: Date.now(),
+				firstName: userName,
+				surname: userSurname,
+				testNumber: testNumber,
+				score: score,
+				totalQuestions: shuffledQuestions.length,
+				percentage: percentage,
+				dateTime: new Date().toISOString(),
+				timeLimitEnabled: isTimerEnabled,
+				timeExpired: timeExpired,
+				timeTaken: timeTaken
+			};
+
+			quizHistory.unshift(historyEntry); // Add to beginning of array
+			saveHistory();
+		}
+
+		function renderHistory() {
+			loadHistory();
+
+			const filterValue = historyFilter.value;
+			let filteredHistory = quizHistory;
+
+			if (filterValue !== 'all') {
+				filteredHistory = quizHistory.filter(entry => entry.testNumber == filterValue);
+			}
+
+			if (filteredHistory.length === 0) {
+				historyContainer.innerHTML = `
                     <div class="text-center py-8 text-gray-500">
                         <svg class="w-12 h-12 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -765,22 +1605,25 @@
                         <p class="text-sm mt-2">Complete a test to see your history here.</p>
                     </div>
                 `;
-                return;
-            }
-            
-            let htmlContent = '';
-            
-            filteredHistory.forEach(entry => {
-                const date = new Date(entry.dateTime);
-                const formattedDate = date.toLocaleDateString();
-                const formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                
-                // Create circular progress indicator
-                const radius = 20;
-                const circumference = 2 * Math.PI * radius;
-                const offset = circumference - (entry.percentage / 100) * circumference;
-                
-                htmlContent += `
+				return;
+			}
+
+			let htmlContent = '';
+
+			filteredHistory.forEach(entry => {
+				const date = new Date(entry.dateTime);
+				const formattedDate = date.toLocaleDateString();
+				const formattedTime = date.toLocaleTimeString([], {
+					hour: '2-digit',
+					minute: '2-digit'
+				});
+
+				// Create circular progress indicator
+				const radius = 20;
+				const circumference = 2 * Math.PI * radius;
+				const offset = circumference - (entry.percentage / 100) * circumference;
+
+				htmlContent += `
                     <div class="history-item border border-gray-200 rounded-lg p-4 mb-3 bg-white shadow-sm">
                         <div class="flex justify-between items-center">
                             <div class="flex items-center">
@@ -819,34 +1662,34 @@
                             <div class="text-right">
                                 <div class="text-lg font-bold text-gray-800">${entry.score}/${entry.totalQuestions}</div>
                                 <div class="text-sm text-gray-600">
-                                    ${entry.timeLimitEnabled ? 
-                                        (entry.timeExpired ? 
-                                            '<span class="text-red-500">Time Expired</span>' : 
-                                            `Time: ${entry.timeTaken}`) : 
-                                        'No time limit'}
+                                    ${entry.timeLimitEnabled ?
+										(entry.timeExpired ?
+											'<span class="text-red-500">Time Expired</span>' :
+											`Time: ${entry.timeTaken}`) :
+										'No time limit'}
                                 </div>
                             </div>
                         </div>
                     </div>
                 `;
-            });
-            
-            historyContainer.innerHTML = htmlContent;
-            updateHistoryStats(filteredHistory);
-        }
+			});
 
-        function updateHistoryStats(history) {
-            if (history.length === 0) {
-                historyStats.innerHTML = '';
-                return;
-            }
-            
-            const totalTests = history.length;
-            const avgScore = history.reduce((sum, entry) => sum + entry.percentage, 0) / totalTests;
-            const bestScore = Math.max(...history.map(entry => entry.percentage));
-            const testsCompleted = [...new Set(history.map(entry => entry.testNumber))].length;
-            
-            historyStats.innerHTML = `
+			historyContainer.innerHTML = htmlContent;
+			updateHistoryStats(filteredHistory);
+		}
+
+		function updateHistoryStats(history) {
+			if (history.length === 0) {
+				historyStats.innerHTML = '';
+				return;
+			}
+
+			const totalTests = history.length;
+			const avgScore = history.reduce((sum, entry) => sum + entry.percentage, 0) / totalTests;
+			const bestScore = Math.max(...history.map(entry => entry.percentage));
+			const testsCompleted = [...new Set(history.map(entry => entry.testNumber))].length;
+
+			historyStats.innerHTML = `
                 <div class="text-sm text-gray-600">
                     <span class="font-semibold">${totalTests}</span> test${totalTests !== 1 ? 's' : ''} completed | 
                     Avg: <span class="font-semibold">${avgScore.toFixed(1)}%</span> | 
@@ -854,198 +1697,218 @@
                     Tests: <span class="font-semibold">${testsCompleted}/10</span>
                 </div>
             `;
-        }
+		}
 
-        function clearHistory() {
-            if (confirm("Are you sure you want to clear all your quiz history? This action cannot be undone.")) {
-                quizHistory = [];
-                saveHistory();
-                renderHistory();
-            }
-        }
+		function clearHistory() {
+			// Using the custom alert replacement for confirmation
+			const modal = document.createElement('div');
+			modal.className = 'fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4';
 
-        function toggleHistoryModal(show) {
-            if (show) {
-                renderHistory();
-                historyModal.classList.remove('hidden');
-            } else {
-                historyModal.classList.add('hidden');
-            }
-        }
+			modal.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm text-center">
+                    <h4 class="text-xl font-bold mb-2 text-red-600">Confirm Deletion</h4>
+                    <p class="text-gray-600 mb-4">Are you sure you want to clear all your quiz history? This action cannot be undone.</p>
+                    <div class="flex justify-center space-x-4">
+                        <button id="confirmClear" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150">
+                            Yes, Clear History
+                        </button>
+                        <button onclick="this.closest('.fixed').remove()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-150">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            `;
+			document.body.appendChild(modal);
 
-        // --- QUIZ FLOW LOGIC ---
+			document.getElementById('confirmClear').onclick = () => {
+				quizHistory = [];
+				saveHistory();
+				renderHistory();
+				modal.remove();
+			};
+		}
 
-        function renderTestButtons() {
-            testSelectionContainer.innerHTML = '';
-            const numberOfTests = TOTAL_QUESTIONS / TEST_SIZE;
+		function toggleHistoryModal(show) {
+			if (show) {
+				renderHistory();
+				historyModal.classList.remove('hidden');
+			} else {
+				historyModal.classList.add('hidden');
+			}
+		}
 
-            for (let i = 1; i <= numberOfTests; i++) {
-                const button = document.createElement('button');
-                button.textContent = `Test ${i}`;
-                // Pass the test number to the startTest function
-                button.onclick = () => startTest(i); 
-                button.className = 'bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-2 rounded-lg shadow-md transition duration-150 ease-in-out';
-                testSelectionContainer.appendChild(button);
-            }
-            
-            // Populate history filter
-            historyFilter.innerHTML = '<option value="all">All Tests</option>';
-            for (let i = 1; i <= numberOfTests; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = `Test ${i}`;
-                historyFilter.appendChild(option);
-            }
-        }
+		// --- QUIZ FLOW LOGIC ---
 
-        function startTest(testNumber) {
-            const firstNameInput = document.getElementById('firstName').value.trim();
-            const surnameInput = document.getElementById('surname').value.trim();
+		function renderTestButtons() {
+			testSelectionContainer.innerHTML = '';
+			const numberOfTests = TOTAL_QUESTIONS / TEST_SIZE;
 
-            if (!firstNameInput || !surnameInput) {
-                startFeedbackMessageEl.textContent = "Please enter both your first name and surname before selecting a test.";
-                startFeedbackMessageEl.classList.remove('hidden');
-                setTimeout(() => startFeedbackMessageEl.classList.add('hidden'), 3000);
-                return;
-            }
+			for (let i = 1; i <= numberOfTests; i++) {
+				const button = document.createElement('button');
+				button.textContent = `Test ${i}`;
+				// Pass the test number to the startTest function
+				button.onclick = () => startTest(i);
+				button.className = 'bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-2 rounded-lg shadow-md transition duration-150 ease-in-out';
+				testSelectionContainer.appendChild(button);
+			}
 
-            // Save user details
-            userName = firstNameInput.charAt(0).toUpperCase() + firstNameInput.slice(1).toLowerCase();
-            userSurname = surnameInput.charAt(0).toUpperCase() + surnameInput.slice(1).toLowerCase();
+			// Populate history filter
+			historyFilter.innerHTML = '<option value="all">All Tests</option>';
+			for (let i = 1; i <= numberOfTests; i++) {
+				const option = document.createElement('option');
+				option.value = i;
+				option.textContent = `Test ${i}`;
+				historyFilter.appendChild(option);
+			}
+		}
 
-            // Setup the specific test
-            selectedTestNumber = testNumber;
-            currentQuestionIndex = 0;
+		function startTest(testNumber) {
+			const firstNameInput = document.getElementById('firstName').value.trim();
+			const surnameInput = document.getElementById('surname').value.trim();
 
-            // 1. Determine the slice indices
-            const startIndex = (testNumber - 1) * TEST_SIZE;
-            const endIndex = startIndex + TEST_SIZE;
+			if (!firstNameInput || !surnameInput) {
+				startFeedbackMessageEl.textContent = "Please enter both your first name and surname before selecting a test.";
+				startFeedbackMessageEl.classList.remove('hidden');
+				setTimeout(() => startFeedbackMessageEl.classList.add('hidden'), 3000);
+				return;
+			}
 
-            // 2. Extract and shuffle the subset of 10 questions
-            const testQuestions = QUESTION_BANK.slice(startIndex, endIndex);
-            shuffledQuestions = shuffleArray(testQuestions); // Shuffle only the selected test's questions
-            userAnswers = Array(shuffledQuestions.length).fill(null); // Length is always 10
-            score = 0;
+			// Save user details
+			userName = firstNameInput.charAt(0).toUpperCase() + firstNameInput.slice(1).toLowerCase();
+			userSurname = surnameInput.charAt(0).toUpperCase() + surnameInput.slice(1).toLowerCase();
 
-            // 3. Update header text
-            quizTitleEl.textContent = `English Quiz - Test ${testNumber}`;
+			// Setup the specific test
+			selectedTestNumber = testNumber;
+			currentQuestionIndex = 0;
 
-            // 4. Start the timer if enabled
-            startTimer();
+			// 1. Determine the slice indices
+			const startIndex = (testNumber - 1) * TEST_SIZE;
+			const endIndex = startIndex + TEST_SIZE;
 
-            // Transition to quiz screen
-            startScreen.classList.add('hidden');
-            resultsScreen.classList.add('hidden');
-            quizScreen.classList.remove('hidden');
+			// 2. Extract and shuffle the subset of 10 questions
+			const testQuestions = QUESTION_BANK.slice(startIndex, endIndex);
+			shuffledQuestions = shuffleArray(testQuestions); // Shuffle only the selected test's questions
+			userAnswers = Array(shuffledQuestions.length).fill(null); // Length is always 10
+			score = 0;
 
-            renderQuestion();
-        }
+			// 3. Update header text
+			quizTitleEl.textContent = `English Quiz - Test ${testNumber}`;
 
-        function renderQuestion() {
-            if (isTimeExpired) {
-                // Prevent rendering if time is up
-                return; 
-            }
+			// 4. Start the timer if enabled
+			startTimer();
 
-            // 1. Update Score and UI
-            calculateScore();
-            quizScoreEl.textContent = `Score: ${score}`;
-            feedbackMessageEl.classList.add('hidden');
+			// Transition to quiz screen
+			startScreen.classList.add('hidden');
+			resultsScreen.classList.add('hidden');
+			quizScreen.classList.remove('hidden');
 
-            const currentQ = shuffledQuestions[currentQuestionIndex];
-            const selectedAnswer = userAnswers[currentQuestionIndex];
-            const currentTestLength = shuffledQuestions.length; // Always 10
+			renderQuestion();
+		}
 
-            // 2. Control navigation buttons
-            prevButton.disabled = currentQuestionIndex === 0;
-            nextButton.disabled = false; // Next button is never disabled (can always jump to next or finish)
+		function renderQuestion() {
+			if (isTimeExpired) {
+				// Prevent rendering if time is up
+				return;
+			}
 
-            // 3. Update question counter and text
-            questionCounterEl.textContent = `Question ${currentQuestionIndex + 1} of ${currentTestLength}`;
-            currentQuestionEl.textContent = currentQ.q;
+			// 1. Update Score and UI
+			calculateScore();
+			quizScoreEl.textContent = `Score: ${score}`;
+			feedbackMessageEl.classList.add('hidden');
 
-            // 4. Clear previous options and create new ones
-            optionsContainer.innerHTML = '';
-            const optionLabels = ["A", "B", "C", "D", "E"];
-            currentQ.o.forEach((optionText, index) => {
-                const label = optionLabels[index];
-                const button = document.createElement('button');
-                
-                button.className = 'option-button w-full text-left bg-white p-3 rounded-lg border border-gray-300 hover:bg-teal-50 hover:border-teal-500 text-gray-800 font-medium disabled:opacity-75';
-                
-                button.setAttribute('data-answer', label);
-                button.innerHTML = `<span class="font-bold mr-2 text-teal-600">${label}.</span> ${optionText}`;
-                
-                // Use a single click handler for submission and state change
-                button.onclick = () => submitAnswer(label, currentQ);
-                optionsContainer.appendChild(button);
-            });
-            
-            // 5. Handle navigation button text (Finish Quiz) and color
-            if (currentQuestionIndex === currentTestLength - 1) {
-                nextButton.textContent = "Finish Test \u2713"; // Checkmark icon
-                nextButton.classList.remove('bg-teal-600', 'hover:bg-teal-700');
-                nextButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
-            } else {
-                nextButton.textContent = "Next Question \u2192";
-                nextButton.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-                nextButton.classList.add('bg-teal-600', 'hover:bg-teal-700');
-            }
+			const currentQ = shuffledQuestions[currentQuestionIndex];
+			const selectedAnswer = userAnswers[currentQuestionIndex];
+			const currentTestLength = shuffledQuestions.length; // Always 10
 
-            // 6. If question is already answered, display feedback and update styles
-            if (selectedAnswer !== null) {
-                displayAnswerFeedback(currentQ, selectedAnswer);
-            } else {
-                updateOptionStyles(currentQ, selectedAnswer); // Enable options
-            }
-        }
+			// 2. Control navigation buttons
+			prevButton.disabled = currentQuestionIndex === 0;
+			nextButton.disabled = false; // Next button is never disabled (can always jump to next or finish)
 
-        function submitAnswer(selectedAnswer, questionData) {
-            if (isTimeExpired) {
-                 alertUser('Time Expired!', 'The test has ended. You cannot submit or change answers.');
-                 return;
-            }
-            
-            // Record the answer (even if they change their mind, it's immediately recorded)
-            userAnswers[currentQuestionIndex] = selectedAnswer;
+			// 3. Update question counter and text
+			questionCounterEl.textContent = `Question ${currentQuestionIndex + 1} of ${currentTestLength}`;
+			currentQuestionEl.textContent = currentQ.q;
 
-            // Show feedback (styles buttons and displays message)
-            displayAnswerFeedback(questionData, selectedAnswer);
-            
-            // Update score
-            calculateScore();
-            quizScoreEl.textContent = `Score: ${score}`;
-            
-            // After submitting, we can automatically advance if they are not on the last question
-            if (currentQuestionIndex < shuffledQuestions.length - 1) {
-                // Optional: Auto-advance after 1 second for a smoother experience
-                // setTimeout(nextQuestion, 1000); 
-            }
-        }
-        
-        function nextQuestion() {
-            if (isTimeExpired) { return; } // Do nothing if time is up
+			// 4. Clear previous options and create new ones
+			optionsContainer.innerHTML = '';
+			const optionLabels = ["A", "B", "C", "D", "E"];
+			currentQ.o.forEach((optionText, index) => {
+				const label = optionLabels[index];
+				const button = document.createElement('button');
 
-            const currentTestLength = shuffledQuestions.length;
-            if (currentQuestionIndex < currentTestLength - 1) {
-                currentQuestionIndex++;
-                renderQuestion();
-            } else if (currentQuestionIndex === currentTestLength - 1) {
-                // User clicks "Finish Test" on the last question
-                showResults();
-            }
-        }
+				button.className = 'option-button w-full text-left bg-white p-3 rounded-lg border border-gray-300 hover:bg-teal-50 hover:border-teal-500 text-gray-800 font-medium disabled:opacity-75';
 
-        function previousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                renderQuestion();
-            }
-        }
+				button.setAttribute('data-answer', label);
+				button.innerHTML = `<span class="font-bold mr-2 text-teal-600">${label}.</span> ${optionText}`;
 
-        // --- SUMMARY TABLE LOGIC ---
-        function renderSummaryTable() {
-            let htmlContent = `
+				// Use a single click handler for submission and state change
+				button.onclick = () => submitAnswer(label, currentQ);
+				optionsContainer.appendChild(button);
+			});
+
+			// 5. Handle navigation button text (Finish Quiz) and color
+			if (currentQuestionIndex === currentTestLength - 1) {
+				nextButton.textContent = "Finish Test \u2713"; // Checkmark icon
+				nextButton.classList.remove('bg-teal-600', 'hover:bg-teal-700');
+				nextButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
+			} else {
+				nextButton.textContent = "Next Question \u2192";
+				nextButton.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+				nextButton.classList.add('bg-teal-600', 'hover:bg-teal-700');
+			}
+
+			// 6. If question is already answered, display feedback and update styles
+			if (selectedAnswer !== null) {
+				displayAnswerFeedback(currentQ, selectedAnswer);
+			} else {
+				updateOptionStyles(currentQ, selectedAnswer); // Enable options
+			}
+		}
+
+		function submitAnswer(selectedAnswer, questionData) {
+			if (isTimeExpired) {
+				alertUser('Time Expired!', 'The test has ended. You cannot submit or change answers.');
+				return;
+			}
+
+			// Record the answer (even if they change their mind, it's immediately recorded)
+			userAnswers[currentQuestionIndex] = selectedAnswer;
+
+			// Show feedback (styles buttons and displays message)
+			displayAnswerFeedback(questionData, selectedAnswer);
+
+			// Update score
+			calculateScore();
+			quizScoreEl.textContent = `Score: ${score}`;
+
+			// After submitting, we can automatically advance if they are not on the last question
+			// setTimeout(nextQuestion, 1000); // Optional: Auto-advance after 1 second for a smoother experience
+		}
+
+		function nextQuestion() {
+			if (isTimeExpired) {
+				return;
+			} // Do nothing if time is up
+
+			const currentTestLength = shuffledQuestions.length;
+			if (currentQuestionIndex < currentTestLength - 1) {
+				currentQuestionIndex++;
+				renderQuestion();
+			} else if (currentQuestionIndex === currentTestLength - 1) {
+				// User clicks "Finish Test" on the last question
+				showResults();
+			}
+		}
+
+		function previousQuestion() {
+			if (currentQuestionIndex > 0) {
+				currentQuestionIndex--;
+				renderQuestion();
+			}
+		}
+
+		// --- SUMMARY TABLE LOGIC ---
+		function renderSummaryTable() {
+			let htmlContent = `
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50 summary-table-header">
                         <tr>
@@ -1057,26 +1920,26 @@
                     <tbody class="bg-white divide-y divide-gray-200">
             `;
 
-            shuffledQuestions.forEach((qData, index) => {
-                const qNum = index + 1;
-                const userAnswerLabel = userAnswers[index]; // e.g., "A" or null
-                const correctAnswerLabel = qData.a; // e.g., "B"
-                const isCorrect = userAnswerLabel === correctAnswerLabel;
+			shuffledQuestions.forEach((qData, index) => {
+				const qNum = index + 1;
+				const userAnswerLabel = userAnswers[index]; // e.g., "A" or null
+				const correctAnswerLabel = qData.a; // e.g., "B"
+				const isCorrect = userAnswerLabel === correctAnswerLabel;
 
-                const selectedOptionText = userAnswerLabel 
-                    ? qData.o[userAnswerLabel.charCodeAt(0) - 'A'.charCodeAt(0)]
-                    : '<span class="text-red-500 font-semibold">Skipped / Unanswered</span>';
-                    
-                const correctOptionText = qData.o[correctAnswerLabel.charCodeAt(0) - 'A'.charCodeAt(0)];
+				const selectedOptionText = userAnswerLabel ?
+					qData.o[userAnswerLabel.charCodeAt(0) - 'A'.charCodeAt(0)] :
+					'<span class="text-red-500 font-semibold">Skipped / Unanswered</span>';
 
-                const correctnessIcon = isCorrect 
-                    ? '<span class="text-green-600 font-bold text-2xl" title="Correct">\u2713</span>' 
-                    : '<span class="text-red-600 font-bold text-2xl" title="Incorrect">\u2717</span>';
+				const correctOptionText = qData.o[correctAnswerLabel.charCodeAt(0) - 'A'.charCodeAt(0)];
 
-                const rowBg = isCorrect ? 'bg-green-50' : (userAnswerLabel ? 'bg-red-50' : 'bg-yellow-50');
+				const correctnessIcon = isCorrect ?
+					'<span class="text-green-600 font-bold text-2xl" title="Correct">\u2713</span>' :
+					'<span class="text-red-600 font-bold text-2xl" title="Incorrect">\u2717</span>';
+
+				const rowBg = isCorrect ? 'bg-green-50' : (userAnswerLabel ? 'bg-red-50' : 'bg-yellow-50');
 
 
-                htmlContent += `
+				htmlContent += `
                     <tr class="${rowBg} summary-table-row">
                         <td class="px-3 py-3 text-sm font-medium text-gray-900 summary-table-cell border-none sm:border-b sm:border-gray-200">
                             <span class="font-bold sm:hidden">Q.</span> ${qNum}
@@ -1086,15 +1949,15 @@
                             <div class="mt-1 text-xs text-gray-600">
                                 <span class="font-bold text-gray-800">Your Choice (${userAnswerLabel || '-'}):</span> ${selectedOptionText}
                             </div>
-                            ${!isCorrect ? 
-                                `<div class="mt-1 text-xs text-green-700">
+                            ${!isCorrect ?
+								`<div class="mt-1 text-xs text-green-700">
                                     <span class="font-bold text-green-800">Correct (${correctAnswerLabel}):</span> ${correctOptionText}
                                 </div>
                                 <div class="mt-2 p-2 text-xs bg-white rounded-lg text-gray-700 border border-gray-200">
                                     <span class="font-bold">Explanation:</span> ${qData.e}
-                                </div>` 
-                                : ''
-                            }
+                                </div>`
+								: ''
+							}
                         </td>
                         <td class="px-3 py-3 text-center summary-table-cell w-24 sm:w-auto border-none sm:border-b sm:border-gray-200">
                             <div class="sm:hidden text-xs font-bold text-gray-500">Result:</div>
@@ -1102,97 +1965,98 @@
                         </td>
                     </tr>
                 `;
-            });
+			});
 
-            htmlContent += `
+			htmlContent += `
                     </tbody>
                 </table>
             `;
-            
-            summaryContainer.innerHTML = htmlContent;
-        }
 
-        function toggleSummary() {
-            if (summaryContainer.classList.contains('hidden')) {
-                summaryContainer.classList.remove('hidden');
-                viewSummaryButton.textContent = 'Hide Detailed Summary';
-            } else {
-                summaryContainer.classList.add('hidden');
-                viewSummaryButton.textContent = 'View Detailed Summary';
-            }
-        }
-        
-        // --- RESULTS & RESET ---
+			summaryContainer.innerHTML = htmlContent;
+		}
 
-        function showResults() {
-            stopTimer();
-            
-            // Calculate final score one last time
-            const finalScoreValue = calculateScore();
-            const currentTestLength = shuffledQuestions.length; // Always 10
-            const percentage = (finalScoreValue / currentTestLength) * 100;
-            
-            // Update result screen content
-            userGreetingEl.textContent = `Thanks for completing Test ${selectedTestNumber}, ${userName} ${userSurname}!`;
-            
-            let timeStatus = isTimerEnabled 
-                ? (isTimeExpired 
-                    ? '<span class="text-red-600">Time Expired!</span>' 
-                    : `Completed in ${formatTime(TOTAL_TIME_SECONDS - timeLeft)}`)
-                : 'No time limit set.';
+		function toggleSummary() {
+			if (summaryContainer.classList.contains('hidden')) {
+				summaryContainer.classList.remove('hidden');
+				viewSummaryButton.textContent = 'Hide Detailed Summary';
+			} else {
+				summaryContainer.classList.add('hidden');
+				viewSummaryButton.textContent = 'View Detailed Summary';
+			}
+		}
 
-            finalScoreEl.innerHTML = `${finalScoreValue} out of ${currentTestLength} <div class="text-xs font-normal text-gray-600">${timeStatus}</div>`;
-            finalPercentageEl.textContent = `${percentage.toFixed(2)}%`;
-            
-            // Render the detailed summary table
-            renderSummaryTable();
-            summaryContainer.classList.add('hidden'); // Hide by default
-            viewSummaryButton.textContent = 'View Detailed Summary';
+		// --- RESULTS & RESET ---
 
-            // Save to history
-            addHistoryEntry(
-                selectedTestNumber,
-                finalScoreValue,
-                percentage,
-                formatTime(TOTAL_TIME_SECONDS - timeLeft),
-                isTimeExpired
-            );
+		function showResults() {
+			stopTimer();
 
-            // Transition to results screen
-            quizScreen.classList.add('hidden');
-            resultsScreen.classList.remove('hidden');
-        }
+			// Calculate final score one last time
+			const finalScoreValue = calculateScore();
+			const currentTestLength = shuffledQuestions.length; // Always 10
+			const percentage = (finalScoreValue / currentTestLength) * 100;
 
-        function resetQuiz() {
-            stopTimer(); // Ensure the timer is stopped
-            // Restore initial screen state and re-render buttons
-            document.getElementById('firstName').value = userName;
-            document.getElementById('surname').value = userSurname;
-            quizTitleEl.textContent = "English Quizzes";
-            
-            startScreen.classList.remove('hidden');
-            quizScreen.classList.add('hidden');
-            resultsScreen.classList.add('hidden');
-            renderTestButtons();
-        }
-        
-        // Initial setup on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            startScreen.classList.remove('hidden'); 
-            quizScreen.classList.add('hidden');
-            resultsScreen.classList.add('hidden');
-            renderTestButtons(); // Populate the test selection buttons
-            loadHistory(); // Load history from localStorage
-            
-            // Add event listeners for history functionality
-            viewHistoryButton.addEventListener('click', () => toggleHistoryModal(true));
-            viewHistoryFromResults.addEventListener('click', () => toggleHistoryModal(true));
-            clearHistoryButton.addEventListener('click', clearHistory);
-            historyFilter.addEventListener('change', renderHistory);
-        });
+			// Update result screen content
+			userGreetingEl.textContent = `Thanks for completing Test ${selectedTestNumber}, ${userName} ${userSurname}!`;
 
-    </script>
+			let timeStatus = isTimerEnabled ?
+				(isTimeExpired ?
+					'<span class="text-red-600">Time Expired!</span>' :
+					`Completed in ${formatTime(TOTAL_TIME_SECONDS - timeLeft)}`) :
+				'No time limit set.';
 
+			finalScoreEl.innerHTML = `${finalScoreValue} out of ${currentTestLength} <div class="text-xs font-normal text-gray-600">${timeStatus}</div>`;
+			finalPercentageEl.textContent = `${percentage.toFixed(2)}%`;
+
+			// Render the detailed summary table
+			renderSummaryTable();
+			summaryContainer.classList.add('hidden'); // Hide by default
+			viewSummaryButton.textContent = 'View Detailed Summary';
+
+			// Save to history
+			addHistoryEntry(
+				selectedTestNumber,
+				finalScoreValue,
+				percentage,
+				formatTime(TOTAL_TIME_SECONDS - timeLeft),
+				isTimeExpired
+			);
+
+			// Transition to results screen
+			quizScreen.classList.add('hidden');
+			resultsScreen.classList.remove('hidden');
+		}
+
+		function resetQuiz() {
+			stopTimer(); // Ensure the timer is stopped
+			// Restore initial screen state and re-render buttons
+			document.getElementById('firstName').value = userName;
+			document.getElementById('surname').value = userSurname;
+			quizTitleEl.textContent = "English Quizzes";
+
+			startScreen.classList.remove('hidden');
+			quizScreen.classList.add('hidden');
+			resultsScreen.classList.add('hidden');
+			renderTestButtons();
+		}
+
+		// Initial setup on page load
+		document.addEventListener('DOMContentLoaded', () => {
+			// Initialize the navigation to the Home section
+			showSection('home', document.querySelector('[data-section="home"]'));
+
+			renderTestButtons(); // Populate the test selection buttons for the quiz section
+			loadHistory(); // Load history from localStorage
+
+			// Add event listeners for history functionality
+			viewHistoryButton.addEventListener('click', () => toggleHistoryModal(true));
+			viewHistoryFromResults.addEventListener('click', () => toggleHistoryModal(true));
+			clearHistoryButton.addEventListener('click', clearHistory);
+			historyFilter.addEventListener('change', renderHistory);
+			
+			// Initial setup for the contact form listener is removed.
+			// The redundant event listener for the now-removed contactForm is also gone.
+		});
+	</script>
 </body>
 
 </html>
