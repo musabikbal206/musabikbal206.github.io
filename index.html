@@ -901,7 +901,7 @@
 				about_mission_desc: 'Görevimiz basit: karmaşık İngilizce gramer kurallarını herkes için erişilebilir kılmak. Bunu, temel zamanlar ve edatlardan ileri düzey koşul cümlelerine ve devriklere kadar dilin en yaygın ve zorlu yönlerini kapsayan 30 özenle seçilmiş soru sunarak başarıyoruz.',
 				about_creator_title: 'Geliştirici',
 				about_creator_role: 'İngilizce Öğretmeni',
-				about_creator_quote: '"This project was born out of a desire to create a clean, responsive, and distraction-free environment for learning. The focus is on immediate feedback and clear explanations to ensure real learning happens with every question."',
+				about_creator_quote: '"Bu proje, öğrenme için temiz, duyarlı ve dikkat dağıtıcı unsurlardan uzak bir ortam yaratma arzusundan doğdu. Odak noktası, her soruda gerçek öğrenmenin gerçekleşmesini sağlamak için anında geri bildirim ve net açıklamalardır."',
 				about_creator_alt: 'Musab İKBAL SUBAŞI',
 				quiz_start_confirm_details: 'Lütfen bilgilerinizi onaylayın.',
 				quiz_start_view_history: 'Geçmişi Görüntüle',
@@ -2075,9 +2075,9 @@
             
             renderQuestionPanel();
 			if (currentQuestionIndex < shuffledQuestions.length - 1) {
-				setTimeout(nextQuestion, isReviewMode ? 0 : 5000);
+				setTimeout(nextQuestion, isReviewMode ? 0 : 15000);
 			} else {
-				setTimeout(showResults, isReviewMode ? 0 : 5000);
+				setTimeout(showResults, isReviewMode ? 0 : 15000);
 			}
 		}
 		function nextQuestion() {
