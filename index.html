@@ -146,8 +146,34 @@
 			border-color: #8b5cf6;
 		}
 		.cefr-button-C:hover {
-			background-color: #ede9fe;
-		}
+            background-color: #ede9fe;
+        }
+
+        /* NEW: Test button colors for different CEFR levels */
+        .test-button-A {
+            background-color: #ecfdf5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+        .test-button-A:hover {
+            background-color: #d1fae5;
+        }
+        .test-button-B {
+            background-color: #eff6ff;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+        .test-button-B:hover {
+            background-color: #dbeafe;
+        }
+        .test-button-C {
+            background-color: #f5f3ff;
+            border-color: #8b5cf6;
+            color: #5b21b6;
+        }
+        .test-button-C:hover {
+            background-color: #ede9fe;
+        }
 		.progress-ring {
 			transform: rotate(-90deg);
 		}
@@ -1933,45 +1959,64 @@
 			} else {
 				questionPanelModal.classList.add('hidden');
 			}
-		}
-		function renderQuestionPanel() {
-			questionPanelEl.innerHTML = '';
-			for (let i = 0; i < shuffledQuestions.length; i++) {
-				const qNum = i + 1;
-				const button = document.createElement('button');
-				let classes = 'q-index-button p-1 text-xs font-semibold rounded-lg shadow-sm w-full h-8 flex items-center justify-center border transition duration-100';
-				if (i === currentQuestionIndex) {
-					classes += ' bg-teal-600 text-white border-teal-700 ring-2 ring-teal-300 transform scale-105';
-				} else if (userAnswers[i] !== null) {
-					const isCorrect = userAnswers[i] === shuffledQuestions[i].a;
-					if (isCorrect) {
-						classes += ' bg-green-100 text-green-700 border-green-300 hover:bg-green-200';
-					} else {
-						classes += ' bg-red-100 text-red-700 border-red-300 hover:bg-red-200';
-					}
-				} else {
-					classes += ' bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200';
-				}
-				button.className = classes;
-				button.textContent = qNum;
-				button.setAttribute('data-index', i);
-				button.onclick = () => jumpToQuestion(i);
-				questionPanelEl.appendChild(button);
-			}
-			if (isTimeExpired) {
-				const buttons = questionPanelEl.querySelectorAll('button');
-				buttons.forEach(btn => {
-					btn.disabled = true;
-				});
-			}
-		}
-		function jumpToQuestion(index) {
-			if (index >= 0 && index < shuffledQuestions.length) {
-				currentQuestionIndex = index;
-				renderQuestion();
-				togglePanel(false);
-			}
-		}
+		}    function renderQuestionPanel() {
+        questionPanelEl.innerHTML = '';
+        for (let i = 0; i < shuffledQuestions.length; i++) {
+            const qNum = i + 1;
+            const button = document.createElement('button');
+            let classes = 'q-index-button p-1 text-xs font-semibold rounded-lg shadow-sm w-full h-8 flex items-center justify-center border transition duration-100';
+            
+            // NEW: Check if in review mode and disable previous questions
+            const isDisabledInReviewMode = isReviewMode && i < currentQuestionIndex;
+            
+            if (i === currentQuestionIndex) {
+                classes += ' bg-teal-600 text-white border-teal-700 ring-2 ring-teal-300 transform scale-105';
+            } else if (userAnswers[i] !== null) {
+                const isCorrect = userAnswers[i] === shuffledQuestions[i].a;
+                if (isCorrect) {
+                    classes += ' bg-green-100 text-green-700 border-green-300 hover:bg-green-200';
+                } else {
+                    classes += ' bg-red-100 text-red-700 border-red-300 hover:bg-red-200';
+                }
+            } else {
+                classes += ' bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200';
+            }
+            
+            button.className = classes;
+            button.textContent = qNum;
+            button.setAttribute('data-index', i);
+            
+            // NEW: Disable button if in review mode and it's a previous question
+            if (isTimeExpired || isDisabledInReviewMode) {
+                button.disabled = true;
+                button.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                button.onclick = () => jumpToQuestion(i);
+            }
+            
+            questionPanelEl.appendChild(button);
+        }
+        
+        // Remove this duplicate disabling code since we handle it above
+        // if (isTimeExpired) {
+        //     const buttons = questionPanelEl.querySelectorAll('button');
+        //     buttons.forEach(btn => {
+        //         btn.disabled = true;
+        //     });
+        // }
+    }
+        function jumpToQuestion(index) {
+            // NEW: Prevent jumping to previous questions in review mode
+            if (isReviewMode && index < currentQuestionIndex) {
+                return;
+            }
+            
+            if (index >= 0 && index < shuffledQuestions.length) {
+                currentQuestionIndex = index;
+                renderQuestion();
+                togglePanel(false);
+            }
+        }
 		function renderQuestion() {
 			const questionData = shuffledQuestions[currentQuestionIndex];
 			currentQuestionEl.textContent = questionData.q;
@@ -1999,7 +2044,7 @@
 				feedbackMessageEl.classList.add('hidden');
 			}
     
-			prevButton.disabled = currentQuestionIndex === 0 || isTimeExpired;
+			prevButton.disabled = currentQuestionIndex === 0 || isTimeExpired || isReviewMode;
 			const isLastQuestion = currentQuestionIndex === shuffledQuestions.length - 1;
 			if (isLastQuestion) {
 				nextButton.textContent = getLangText('quiz_finish_button');
@@ -2101,50 +2146,66 @@
 			lastHistoryId = historyData.id;
 		}
 		function renderSummaryTable() {
-			summaryContainer.innerHTML = '';
-			const table = document.createElement('table');
-			table.className = 'w-full';
-			table.innerHTML = `
-                <thead class="summary-table-header">
-                    <tr class="bg-gray-100 text-left text-gray-700 font-bold">
-                        <th class="p-3 border-b">${getLangText('summary_q')}</th>
-                        <th class="p-3 border-b">${getLangText('summary_result')}</th>
-                        <th class="p-3 border-b">${getLangText('summary_your_choice')}</th>
-                        <th class="p-3 border-b">${getLangText('summary_correct')}</th>
-                        <th class="p-3 border-b">${getLangText('summary_explanation')}</th>
-                    </tr>
-                </thead>
-                <tbody id="summaryTableBody"></tbody>
+        summaryContainer.innerHTML = '';
+        const table = document.createElement('table');
+        table.className = 'w-full';
+        table.innerHTML = `
+            <thead class="summary-table-header">
+                <tr class="bg-gray-100 text-left text-gray-700 font-bold">
+                    <th class="p-3 border-b">${getLangText('summary_q')}</th>
+                    <th class="p-3 border-b">${getLangText('summary_result')}</th>
+                    <th class="p-3 border-b">${getLangText('summary_your_choice')}</th>
+                    <th class="p-3 border-b">${getLangText('summary_correct')}</th>
+                    <th class="p-3 border-b">${getLangText('summary_explanation')}</th>
+                </tr>
+            </thead>
+            <tbody id="summaryTableBody"></tbody>
+        `;
+        summaryContainer.appendChild(table);
+        const tbody = document.getElementById('summaryTableBody');
+        const optionLabels = ["A", "B", "C", "D", "E"];
+        
+        for (let i = 0; i < shuffledQuestions.length; i++) {
+            const questionData = shuffledQuestions[i];
+            const userAnswer = userAnswers[i];
+            const correctAnswer = questionData.a;
+            const isCorrect = userAnswer === correctAnswer;
+            const isSkipped = userAnswer === null;
+            
+            const row = document.createElement('tr');
+            
+            // Set background color based on answer status
+            let rowClass = '';
+            if (isSkipped) {
+                rowClass = 'bg-yellow-50'; // Yellow for skipped/unanswered
+            } else if (isCorrect) {
+                rowClass = 'bg-green-50'; // Green for correct
+            } else {
+                rowClass = 'bg-red-50'; // Red for incorrect
+            }
+            
+            row.className = `summary-table-row border-b ${rowClass}`;
+            
+            const userAnswerText = userAnswer !== null ? 
+                `${userAnswer}. ${questionData.o[userAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}` : 
+                getLangText('summary_skipped');
+            const correctAnswerText = `${correctAnswer}. ${questionData.o[correctAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}`;
+            const explanationText = questionData.e || "No explanation available.";
+            
+            row.innerHTML = `
+                <td class="summary-table-cell p-3 font-semibold">${i + 1}</td>
+                <td class="summary-table-cell p-3">
+                    <span class="font-bold ${isCorrect ? 'text-green-700' : isSkipped ? 'text-yellow-700' : 'text-red-700'}">
+                        ${isCorrect ? '✓' : isSkipped ? '−' : '✗'}
+                    </span>
+                </td>
+                <td class="summary-table-cell p-3 text-sm">${userAnswerText}</td>
+                <td class="summary-table-cell p-3 text-sm">${correctAnswerText}</td>
+                <td class="summary-table-cell p-3 text-sm">${explanationText}</td>
             `;
-			summaryContainer.appendChild(table);
-			const tbody = document.getElementById('summaryTableBody');
-			const optionLabels = ["A", "B", "C", "D", "E"];
-			for (let i = 0; i < shuffledQuestions.length; i++) {
-				const questionData = shuffledQuestions[i];
-				const userAnswer = userAnswers[i];
-				const correctAnswer = questionData.a;
-				const isCorrect = userAnswer === correctAnswer;
-				const row = document.createElement('tr');
-				row.className = `summary-table-row border-b ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`;
-				const userAnswerText = userAnswer !== null ? 
-					`${userAnswer}. ${questionData.o[userAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}` : 
-					getLangText('summary_skipped');
-				const correctAnswerText = `${correctAnswer}. ${questionData.o[correctAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}`;
-				const explanationText = questionData.e || "No explanation available.";
-				row.innerHTML = `
-                    <td class="summary-table-cell p-3 font-semibold">${i + 1}</td>
-                    <td class="summary-table-cell p-3">
-                        <span class="font-bold ${isCorrect ? 'text-green-700' : 'text-red-700'}">
-                            ${isCorrect ? '✓' : '✗'}
-                        </span>
-                    </td>
-                    <td class="summary-table-cell p-3 text-sm">${userAnswerText}</td>
-                    <td class="summary-table-cell p-3 text-sm">${correctAnswerText}</td>
-                    <td class="summary-table-cell p-3 text-sm">${explanationText}</td>
-                `;
-				tbody.appendChild(row);
-			}
-		}
+            tbody.appendChild(row);
+        }
+    }
 		function toggleHistoryModal(show) {
 			if (show) {
 				renderHistory();
@@ -2283,29 +2344,46 @@
 			reviewDiv.appendChild(headerInfo);
 			const optionLabels = ["A", "B", "C", "D", "E"];
 			entry.questions.forEach((questionData, index) => {
-				const userAnswer = entry.userAnswers[index];
-				const correctAnswer = questionData.a;
-				const isCorrect = userAnswer === correctAnswer;
-				const questionDiv = document.createElement('div');
-				questionDiv.className = `border rounded-lg p-4 ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`;
-				const userAnswerText = userAnswer !== null ? 
-					`${userAnswer}. ${questionData.o[userAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}` : 
-					getLangText('summary_skipped');
-				const correctAnswerText = `${correctAnswer}. ${questionData.o[correctAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}`;
-				const explanationText = questionData.e || "No explanation available.";
-				questionDiv.innerHTML = `
+                const userAnswer = entry.userAnswers[index];
+                const correctAnswer = questionData.a;
+                const isCorrect = userAnswer === correctAnswer;
+                const isSkipped = userAnswer === null;
+                
+                const questionDiv = document.createElement('div');
+                
+                // Set background color based on answer status
+                let questionDivClass = '';
+                if (isSkipped) {
+                    questionDivClass = 'bg-yellow-50 border-yellow-200'; // Yellow for skipped
+                } else if (isCorrect) {
+                    questionDivClass = 'bg-green-50 border-green-200'; // Green for correct
+                } else {
+                    questionDivClass = 'bg-red-50 border-red-200'; // Red for incorrect
+                }
+                
+                questionDiv.className = `border rounded-lg p-4 ${questionDivClass}`;
+                
+                const userAnswerText = userAnswer !== null ? 
+                    `${userAnswer}. ${questionData.o[userAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}` : 
+                    getLangText('summary_skipped');
+                const correctAnswerText = `${correctAnswer}. ${questionData.o[correctAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}`;
+                const explanationText = questionData.e || "No explanation available.";
+                
+                questionDiv.innerHTML = `
                     <h5 class="font-bold text-gray-800 mb-2">${index + 1}. ${questionData.q}</h5>
                     <div class="space-y-2 text-sm">
-                        <div><span class="font-semibold ${isCorrect ? 'text-green-700' : 'text-red-700'}">${getLangText('summary_result')}</span> 
-                            <span class="font-bold ${isCorrect ? 'text-green-700' : 'text-red-700'}">${isCorrect ? '✓ Correct' : '✗ Incorrect'}</span>
+                        <div><span class="font-semibold ${isCorrect ? 'text-green-700' : isSkipped ? 'text-yellow-700' : 'text-red-700'}">${getLangText('summary_result')}</span> 
+                            <span class="font-bold ${isCorrect ? 'text-green-700' : isSkipped ? 'text-yellow-700' : 'text-red-700'}">
+                                ${isCorrect ? '✓ Correct' : isSkipped ? '− Skipped' : '✗ Incorrect'}
+                            </span>
                         </div>
                         <div><span class="font-semibold">${getLangText('summary_your_choice', { label: userAnswer || '-' })}</span> ${userAnswerText}</div>
                         <div><span class="font-semibold">${getLangText('summary_correct', { label: correctAnswer })}</span> ${correctAnswerText}</div>
                         <div><span class="font-semibold">${getLangText('summary_explanation')}:</span> ${explanationText}</div>
                     </div>
                 `;
-				reviewDiv.appendChild(questionDiv);
-			});
+                reviewDiv.appendChild(questionDiv);
+            });
 			reviewDetailsContainer.appendChild(reviewDiv);
 			toggleReviewDetailsModal(true);
 		}
@@ -2316,31 +2394,39 @@
 				reviewDetailsModal.classList.add('hidden');
 			}
 		}
-		function showLevelModal(level) {
-			modalLevelTitle.textContent = `${level} Level`;
-			let description = '';
-			let tests = [];
-			if (level === 'A1 & A2') {
-				description = getLangText('level_a_desc');
-				tests = Array.from({ length: 10 }, (_, i) => i + 1);
-			} else if (level === 'B1 & B2') {
-				description = getLangText('level_b_desc');
-				tests = Array.from({ length: 10 }, (_, i) => i + 11);
-			} else if (level === 'C1 & C2') {
-				description = getLangText('level_c_desc');
-				tests = Array.from({ length: 10 }, (_, i) => i + 21);
-			}
-			modalLevelDescription.textContent = description;
-			cefrTestSelectionContainer.innerHTML = '';
-			tests.forEach(testNum => {
-				const button = document.createElement('button');
-				button.className = 'bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 px-4 rounded-lg shadow-md border border-gray-300 transition duration-150 ease-in-out';
-				button.textContent = `Test ${testNum}`;
-				button.onclick = () => selectTest(testNum, level);
-				cefrTestSelectionContainer.appendChild(button);
-			});
-			levelSelectionModal.classList.remove('hidden');
-		}
+		 function showLevelModal(level) {
+            modalLevelTitle.textContent = `${level} Level`;
+            let description = '';
+            let tests = [];
+            let buttonClass = '';
+            
+            if (level === 'A1 & A2') {
+                description = getLangText('level_a_desc');
+                tests = Array.from({ length: 10 }, (_, i) => i + 1);
+                buttonClass = 'test-button-A';
+            } else if (level === 'B1 & B2') {
+                description = getLangText('level_b_desc');
+                tests = Array.from({ length: 10 }, (_, i) => i + 11);
+                buttonClass = 'test-button-B';
+            } else if (level === 'C1 & C2') {
+                description = getLangText('level_c_desc');
+                tests = Array.from({ length: 10 }, (_, i) => i + 21);
+                buttonClass = 'test-button-C';
+            }
+            
+            modalLevelDescription.textContent = description;
+            cefrTestSelectionContainer.innerHTML = '';
+            
+            tests.forEach(testNum => {
+                const button = document.createElement('button');
+                button.className = `${buttonClass} font-semibold py-3 px-4 rounded-lg shadow-md border-2 transition duration-150 ease-in-out`;
+                button.textContent = `Test ${testNum}`;
+                button.onclick = () => selectTest(testNum, level);
+                cefrTestSelectionContainer.appendChild(button);
+            });
+            
+            levelSelectionModal.classList.remove('hidden');
+        }
 		function hideLevelModal() {
 			levelSelectionModal.classList.add('hidden');
 		}
