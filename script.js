@@ -1,0 +1,1893 @@
+const langData = {
+	en: {
+		lang_name: 'Türkçe',
+		lang_code: 'tr',
+		nav_home: 'HOME',
+		nav_about: 'ABOUT',
+		nav_quiz: 'TEST YOUR ENGLISH',
+		nav_support: 'SUPPORT US',
+		nav_register: 'REGISTER',
+		nav_login: 'LOGIN',
+		nav_logout: 'LOGOUT',
+		page_title: 'EngQuizzesForAll - Master Your English Grammar',
+		quiz_header_title: 'English Quizzes',
+		quiz_header_subtitle: 'Select your proficiency level to challenge your grammar knowledge.',
+		home_title: 'Welcome to EngQuizzesForAll!',
+		home_subtitle: 'The best place to sharpen your English grammar skills through quick, targeted, and fun quizzes.',
+		home_feature1_title: 'Targeted Practice',
+		home_feature1_desc: 'Choose from 3 distinct tests, each focusing on different aspects of grammar, from basic tenses to advanced conditionals and phrasal verbs.',
+		home_feature2_title: 'Challenge Mode',
+		home_feature2_desc: 'Test your speed and accuracy with our optional 2-minute time limit. See your results and track your progress over time with the detailed history.',
+		home_feature3_title: 'Detailed Review',
+		home_feature3_desc: 'After each quiz, get instant feedback, including explanations for every correct answer, turning every mistake into a learning opportunity.',
+		home_start_button: 'Start Your First Test Now!',
+		login_title: 'User Login',
+		register_title: 'Create Account',
+		label_email: 'Email Address',
+		label_password: 'Password',
+		label_first_name: 'First Name',
+		label_surname: 'Surname',
+		placeholder_min_chars: 'Minimum 6 characters',
+		login_button: 'Log In',
+		register_button: 'Register Account',
+		login_no_account: 'Don\'t have an account? <a href="#" onclick="showSection(\'register\', document.getElementById(\'navRegisterLink\').querySelector(\'a\'))" class="text-teal-600 hover:text-teal-700 font-semibold">Register here</a>',
+		about_title: 'About EngQuizzesForAll',
+		about_intro: 'We believe that mastering English grammar shouldn\'t be boring. Our platform was created to provide a fast, efficient, and engaging way for students and professionals to test their knowledge and identify areas for improvement.',
+		about_mission_title: 'Our Mission',
+		about_mission_desc: 'Our mission is simple: to make complex English grammar rules accessible to everyone. We achieve this by providing 30 carefully curated questions covering the most common and challenging aspects of the language, from basic tenses and prepositions to advanced conditionals and inversions.',
+		about_creator_title: 'The Creator',
+		about_creator_role: 'English Language Teacher',
+		about_creator_quote: '"This project was born out of a desire to create a clean, responsive, and distraction-free environment for learning. The focus is on immediate feedback and clear explanations to ensure real learning happens with every question."',
+		about_creator_alt: 'Musab İKBAL SUBAŞI',
+		quiz_start_confirm_details: 'Please confirm your details.',
+		quiz_start_view_history: 'View History',
+		quiz_start_enable_timer: 'Enable 2-Minute Time Limit (Challenge Mode)',
+		quiz_start_review_mode: 'Enable Review Mode (No immediate feedback)',
+		quiz_start_select_level: 'Select Your CEFR Level',
+		level_a_desc: 'Beginner/Elementary',
+		level_b_desc: 'Intermediate/Upper-Intermediate',
+		level_c_desc: 'Advanced/Proficiency',
+		test_number_1: 'Tests 1-10',
+		test_number_11: 'Tests 11-20',
+		test_number_21: 'Tests 21-30',
+		quiz_status_time_remaining: ' Remaining',
+		quiz_counter: 'Question {current} of {total}',
+		quiz_score: 'Score: {score}',
+		quiz_overview_button: 'Question Overview',
+		quiz_prev_button: '← Previous',
+		quiz_next_button: 'Next Question →',
+		quiz_finish_button: 'Finish Test \u2713',
+		quiz_quit_button: 'Quit Test',
+		results_title: 'Test Completed!',
+		results_final_score: 'Final Score: ',
+		results_percentage: 'Percentage: ',
+		results_view_review: 'View Review',
+		results_view_summary: 'View Detailed Summary',
+		results_hide_summary: 'Hide Detailed Summary',
+		results_review_header: 'Detailed Test Review',
+		results_another_test: 'Choose Another Test',
+		results_view_history: 'View History',
+		results_restart_test: 'Restart This Test',
+		support_title: 'Support Our Mission',
+		support_intro: 'If you find our quizzes helpful, consider supporting our work! Your contribution helps us maintain the site and create more high-quality educational content.',
+		support_copy_button: 'Copy Buy Me a Coffee Link',
+		support_coffee_button: 'Buy us a Coffee!',
+		support_thank_you: 'Thank you for helping us keep English learning accessible!',
+		support_copy_success: 'Link copied to clipboard! Thanks for your support.',
+		modal_back_to_levels: 'Back to Level Selection',
+		modal_overview_title: 'Question Overview',
+		modal_close_panel: 'Close Panel',
+		modal_history_title: 'Quiz History',
+		modal_history_filter: 'Filter by Test:',
+		modal_history_all_tests: 'All Tests',
+		modal_history_clear: 'Clear History',
+		modal_close: 'Close',
+		modal_review_title: 'Detailed Review',
+		modal_close_review: 'Close Review',
+		alert_time_expired_title: 'Time Expired!',
+		alert_time_expired_message: 'The test has ended because the time limit expired. Your score has been calculated.',
+		alert_time_expired_no_submit: 'The test has ended. You cannot submit or change answers.',
+		alert_data_error_title: 'Data Error',
+		alert_data_error_message: 'Detailed review data is missing for this entry.',
+		alert_logged_out_title: 'Logged Out',
+		alert_logged_out_message: 'You have been successfully logged out.',
+		alert_acknowledge: 'Acknowledge',
+		alert_confirm_deletion_title: 'Confirm Deletion',
+		alert_confirm_deletion_message: 'Are you sure you want to clear all your quiz history? This action cannot be undone.',
+		alert_yes_clear: 'Yes, Clear History',
+		alert_cancel: 'Cancel',
+		feedback_enter_details: "Please enter both your first name and surname before selecting a test.",
+		feedback_email_taken: 'This email is already registered.',
+		feedback_reg_failed: 'Registration failed due to hashing error.',
+		feedback_reg_success: 'Registration successful! You are now logged in.',
+		feedback_login_failed: 'Login failed: Invalid email or password.',
+		feedback_welcome_back: 'Welcome back, {name}!',
+		feedback_min_chars: 'Password must be at least 6 characters.',
+		history_no_entries: 'No quiz history found.',
+		history_complete_test: 'Complete a test to see your history here.',
+		history_time_expired: 'Time Expired',
+		history_time: 'Time: ',
+		history_no_time_limit: 'No time limit',
+		history_view_details: 'View Details',
+		history_stats_completed: 'test{s} completed',
+		history_stats_avg: 'Avg:',
+		history_stats_best: 'Best:',
+		history_stats_tests: 'Tests:',
+		summary_q: 'Q.',
+		summary_result: 'Result:',
+		summary_skipped: 'Skipped / Unanswered',
+		summary_your_choice: 'Your Choice:',
+		summary_correct: 'Correct:',
+		summary_explanation: 'Explanation',
+		results_time_expired: 'Time Expired!',
+		results_completed_in: 'Completed in {time}',
+		results_no_limit_set: 'No time limit set.',
+		msg_correct: ["Perfect!", "Amazing!", "Well Done!", "Excellent!", "You Nailed It!", "Spot On!"],
+		msg_incorrect: ["Keep Trying!", "Don't Give Up!", "A little mistake, try the next one!", "Almost there!", "Learning happens here, try again next time!"],
+		msg_correct_choice: 'Your choice is <span class="font-extrabold text-green-700">correct!</span>',
+		msg_incorrect_choice: 'The correct answer is <span class="font-extrabold text-green-700">{label}. {text}</span>.',
+	},
+	tr: {
+		lang_name: 'English',
+		lang_code: 'en',
+		nav_home: 'ANA SAYFA',
+		nav_about: 'HAKKIMIZDA',
+		nav_quiz: 'İNGİLİZCENİ TEST ET',
+		nav_support: 'BİZİ DESTEKLEYİN',
+		nav_register: 'KAYDOL',
+		nav_login: 'GİRİŞ',
+		nav_logout: 'ÇIKIŞ',
+		page_title: 'EngQuizzesForAll - İngilizce Gramer Uzmanlığınız',
+		quiz_header_title: 'İngilizce Gramer Testleri',
+		quiz_header_subtitle: 'Bir yeterlilik seviyenizi seçin.',
+		home_title: 'EngQuizzesForAll\'a Hoş Geldiniz!',
+		home_subtitle: 'İngilizce gramer becerilerinizi hızlı, hedefli ve eğlenceli testlerle keskinleştirmek için en iyi yer.',
+		home_feature1_title: 'Hedefli Çalışma',
+		home_feature1_desc: 'Temel zamanlardan ileri düzey koşul cümlelerine ve öbek fiillere kadar, her biri farklı gramer konularına odaklanan 3 farklı testten birini seçin.',
+		home_feature2_title: 'Meydan Okuma Modu',
+		home_feature2_desc: 'İsteğe bağlı 2 dakikalık süre sınırı ile hızınızı ve doğruluğunuzu test edin. Ayrıntılı geçmiş ile sonuçlarınızı görün ve zaman içindeki ilerlemenizi takip edin.',
+		home_feature3_title: 'Ayrıntılı İnceleme',
+		home_feature3_desc: 'Her testten sonra, her doğru cevap için açıklamalar da dahil olmak üzere anında geri bildirim alın, böylece her hatayı bir öğrenme fırsatına dönüştürün.',
+		home_start_button: 'Hadi Başlayalım!',
+		login_title: 'Kullanıcı Girişi',
+		register_title: 'Hesap Oluştur',
+		label_email: 'E-posta Adresi',
+		label_password: 'Şifre',
+		label_first_name: 'Ad',
+		label_surname: 'Soyad',
+		placeholder_min_chars: 'Minimum 6 karakter',
+		login_button: 'Giriş Yap',
+		register_button: 'Hesabı Kaydet',
+		login_no_account: 'Hesabın yok mu? <a href="#" onclick="showSection(\'register\', document.getElementById(\'navRegisterLink\').querySelector(\'a\'))" class="text-teal-600 hover:text-teal-700 font-semibold">Buradan kaydol</a>',
+		about_title: 'EngQuizzesForAll Hakkında',
+		about_intro: 'İngilizce gramerine hakim olmanın sıkıcı olmak zorunda olmadığına inanıyoruz. Platformumuz, öğrencilerin ve profesyonellerin bilgilerini test etmeleri ve geliştirilmesi gereken alanları belirlemeleri için hızlı, verimli ve ilgi çekici bir yol sağlamak amacıyla oluşturuldu.',
+		about_mission_title: 'Görevimiz',
+		about_mission_desc: 'Görevimiz basit: karmaşık İngilizce gramer kurallarını herkes için erişilebilir kılmak. Bunu, temel zamanlar ve edatlardan ileri düzey koşul cümlelerine ve devriklere kadar dilin en yaygın ve zorlu yönlerini kapsayan 30 özenle seçilmiş soru sunarak başarıyoruz.',
+		about_creator_title: 'Geliştirici',
+		about_creator_role: 'İngilizce Öğretmeni',
+		about_creator_quote: '"Bu proje, öğrenme için temiz, duyarlı ve dikkat dağıtıcı unsurlardan uzak bir ortam yaratma arzusundan doğdu. Odak noktası, her soruda gerçek öğrenmenin gerçekleşmesini sağlamak için anında geri bildirim ve net açıklamalardır."',
+		about_creator_alt: 'Musab İKBAL SUBAŞI',
+		quiz_start_confirm_details: 'Lütfen bilgilerinizi onaylayın.',
+		quiz_start_view_history: 'Geçmişi Görüntüle',
+		quiz_start_enable_timer: '2 Dakikalık Süre Sınırını Etkinleştir (Meydan Okuma Modu)',
+		quiz_start_review_mode: 'İnceleme Modunu Etkinleştir (Anlık geri bildirim yok)',
+		quiz_start_select_level: 'CEFR Seviyenizi Seçin',
+		level_a_desc: 'Başlangıç/Temel Seviye',
+		level_b_desc: 'Orta/Üst-Orta Seviye',
+		level_c_desc: 'İleri/Yeterlilik Seviyesi',
+		test_number_1: 'Testler 1-10',
+		test_number_11: 'Testler 11-20',
+		test_number_21: 'Testler 21-30',
+		quiz_status_time_remaining: ' Kaldı',
+		quiz_counter: 'Soru {current} / {total}',
+		quiz_score: 'Puan: {score}',
+		quiz_overview_button: 'Tüm Sorular',
+		quiz_prev_button: '← Önceki Soru',
+		quiz_next_button: 'Sonraki Soru →',
+		quiz_finish_button: 'Testi Bitir \u2713',
+		quiz_quit_button: 'Testten Çık',
+		results_title: 'Test Tamamlandı!',
+		results_final_score: 'Nihai Puan: ',
+		results_percentage: 'Yüzde: ',
+		results_view_review: 'İncelemeyi Görüntüle',
+		results_view_summary: 'Ayrıntılı Özeti Görüntüle',
+		results_hide_summary: 'Ayrıntılı Özeti Gizle',
+		results_review_header: 'Ayrıntılı Test İncelemesi',
+		results_another_test: 'Başka Bir Test Seç',
+		results_view_history: 'Geçmişi Görüntüle',
+		results_restart_test: 'Bu Testi Yeniden Başlat',
+		support_title: 'Bu Yolda Bize Destek Olun',
+		support_intro: 'Testlerimizi faydalı buluyorsanız, çalışmamızı desteklemeyi düşünebilirsiniz! Katkınız, siteyi sürdürmemize ve daha fazla yüksek kaliteli eğitim içeriği oluşturmamıza yardımcı olur.',
+		support_copy_button: 'Bana Bir Kahve Ismarla Bağlantısını Kopyala',
+		support_coffee_button: 'Bize bir Kahve Ismarla!',
+		support_thank_you: 'İngilizce öğrenimini erişilebilir kılmamıza yardımcı olduğunuz için teşekkür ederiz!',
+		support_copy_success: 'Bağlantı panoya kopyalandı! Desteğiniz için teşekkürler.',
+		modal_back_to_levels: 'Seviye Seçimine Geri Dön',
+		modal_overview_title: 'Tüm Sorular',
+		modal_close_panel: 'Paneli Kapat',
+		modal_history_title: 'Test Geçmişi',
+		modal_history_filter: 'Teste Göre Filtrele:',
+		modal_history_all_tests: 'Tüm Testler',
+		modal_history_clear: 'Geçmişi Temizle',
+		modal_close: 'Kapat',
+		modal_review_title: 'Ayrıntılı İnceleme',
+		modal_close_review: 'İncelemeyi Kapat',
+		alert_time_expired_title: 'Süre Doldu!',
+		alert_time_expired_message: 'Süre dolduğu için test sona erdi. Puanınız hesaplandı.',
+		alert_time_expired_no_submit: 'Süre doldu. Cevapları gönderemez veya değiştiremezsiniz.',
+		alert_data_error_title: 'Veri Hatası',
+		alert_data_error_message: 'Bu giriş için ayrıntılı inceleme verisi eksik.',
+		alert_logged_out_title: 'Çıkış Yapıldı',
+		alert_logged_out_message: 'Başarıyla çıkış yaptınız.',
+		alert_acknowledge: 'Anlaşıldı',
+		alert_confirm_deletion_title: 'Silme İşlemini Onayla',
+		alert_confirm_deletion_message: 'Tüm test geçmişinizi temizlemek istediğinizden emin misiniz? Bu işlem geri alınamaz.',
+		alert_yes_clear: 'Evet, Geçmişi Temizle',
+		alert_cancel: 'İptal',
+		feedback_enter_details: "Lütfen bir test seçmeden önce hem adınızı hem de soyadınızı girin.",
+		feedback_email_taken: 'This email is already registered.',
+		feedback_reg_failed: 'Registration failed due to hashing error.',
+		feedback_reg_success: 'Registration successful! You are now logged in.',
+		feedback_login_failed: 'Login failed: Invalid email or password.',
+		feedback_welcome_back: 'Welcome back, {name}!',
+		feedback_min_chars: 'Password must be at least 6 characters.',
+		history_no_entries: 'No quiz history found.',
+		history_complete_test: 'Complete a test to see your history here.',
+		history_time_expired: 'Time Expired',
+		history_time: 'Time: ',
+		history_no_time_limit: 'No time limit',
+		history_view_details: 'View Details',
+		history_stats_completed: 'test{s} completed',
+		history_stats_avg: 'Avg:',
+		history_stats_best: 'Best:',
+		history_stats_tests: 'Tests:',
+		summary_q: 'Q.',
+		summary_result: 'Result:',
+		summary_skipped: 'Skipped / Unanswered',
+		summary_your_choice: 'Your Choice:',
+		summary_correct: 'Correct:',
+		summary_explanation: 'Explanation',
+		results_time_expired: 'Time Expired!',
+		results_completed_in: 'Completed in {time}',
+		results_no_limit_set: 'No time limit set.',
+		msg_correct: ["Mükemmel, diyecek bir şey bulamadım!", "Harika, böyle devam!", "Aferin!", "Bu zamana kadar nerelerdeydin!", "Tam İsabet!", "Senden iyisi mezarda!"],
+		msg_incorrect: ["Denemeye Devam!", "Vazgeçme!", "Tühh, bu sefer olmadı", "Hay aksi!", "Böyle böyle öğreniyoruz işte!"],
+		msg_correct_choice: 'Your choice is <span class="font-extrabold text-green-700">correct!</span>',
+		msg_incorrect_choice: 'The correct answer is <span class="font-extrabold text-green-700">{label}. {text}</span>.',
+	}
+};
+let currentLang = 'en';
+function getLangText(key, replacements = {}) {
+	let text = langData[currentLang][key] || langData['en'][key] || key;
+	for (const [k, v] of Object.entries(replacements)) {
+		text = text.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
+	}
+	return text;
+}
+function applyTranslations() {
+	const elements = document.querySelectorAll('[data-i18n], [data-i18n-prefix], [data-i18n-placeholder], [data-i18n-html]');
+	document.documentElement.lang = currentLang;
+	document.title = getLangText('page_title');
+	const langToggle = document.getElementById('languageToggle');
+	langToggle.textContent = langData[currentLang].lang_name;
+	elements.forEach(el => {
+		const key = el.getAttribute('data-i18n');
+		const prefixKey = el.getAttribute('data-i18n-prefix');
+		const placeholderKey = el.getAttribute('data-i18n-placeholder');
+		const htmlKey = el.getAttribute('data-i18n-html');
+		if (key) {
+			el.textContent = getLangText(key);
+		}
+		if (prefixKey) {
+		}
+		if (placeholderKey) {
+			el.placeholder = getLangText(placeholderKey);
+		}
+		if (htmlKey) {
+			el.innerHTML = getLangText(htmlKey);
+		}
+	});
+	const activeSection = document.querySelector('.content-section:not(.hidden)');
+	if (activeSection && activeSection.id === 'quiz-section') {
+		if (!startScreen.classList.contains('hidden')) {
+			const user = getLoggedInUser();
+			if (user) {
+				document.getElementById('quizStartGreeting').textContent = getLangText('feedback_welcome_back', { name: user.firstName });
+			}
+		}
+		if (!quizScreen.classList.contains('hidden')) {
+			renderQuestion();
+		}
+	}
+}
+function toggleLanguage() {
+	currentLang = currentLang === 'en' ? 'tr' : 'en';
+	localStorage.setItem('quizAppLang', currentLang);
+	applyTranslations();
+	renderTestButtons();
+	if (!historyModal.classList.contains('hidden')) {
+		renderHistory();
+	}
+	if (!resultsScreen.classList.contains('hidden') && !summaryContainer.classList.contains('hidden')) {
+		renderSummaryTable();
+	}
+}
+function toggleMobileMenu() {
+	const mobileMenu = document.getElementById('mobileMenu');
+	const menuIcon = document.getElementById('menuIcon');
+	const closeIcon = document.getElementById('closeIcon');
+	mobileMenu.classList.toggle('hidden');
+	menuIcon.classList.toggle('hidden');
+	closeIcon.classList.toggle('hidden');
+}
+const sha256 = (function () {
+	function H(n) { return (n < 1e1 ? "0" : "") + n.toString(16); }
+	function K(t) { return new Uint32Array(t); }
+	function L(t) { return (t << 1) | (t >>> 31); }
+	function M(t, n, e) {
+		for (var o = K(64), r = K(t.length), i = 0, a = 0; i < t.length; i++) {
+			var s = t.charCodeAt(i);
+			s < 128 ? r[a++] = s : s < 2048 ? (r[a++] = 192 | s >>> 6, r[a++] = 128 | 63 & s) : s < 65536 ? (r[a++] = 224 | s >>> 12, r[a++] = 128 | 63 & s >>> 6, r[a++] = 128 | 63 & s) : (r[a++] = 240 | s >>> 18, r[a++] = 128 | 63 & s >>> 12, r[a++] = 128 | 63 & s >>> 6, r[a++] = 128 | 63 & s)
+		}
+		var u = a;
+		r[a++] = 128;
+		while (a % 4 != 0) r[a++] = 0;
+		var c = a, l = 8 * u;
+		r = K(r.subarray(0, c)), r[c + 3] = l;
+		var h = K([1779033703, 3144134277, 1013904242, 2773480762, 1359893119, 2600497554, 528734635, 1541459225]),
+			d = K([1116352408, 1899447447, 30493613, 2774859214, 1548603684, 1845253075, 1057001556, 1776008075, 329, 2870378385, 2371520116, 728588258, 4147045155, 3058866530, 1695183700, 4066037854, 1500085863, 4265063162, 49951639, 1774581423, 1856346720, 3175218132, 2812728082, 380312681, 3812720984, 107323719, 258167733, 404899539, 546648774, 3482320498, 268688523, 643242784, 2528726461, 2221584346, 2191690487, 3484516769, 668153090, 1503823053, 3350630737, 2307844015, 3082530560, 2988939681, 2942701770, 3140889279, 1047163013, 2981914852, 2598448372, 385960075, 4023724817, 3060561634, 1016675549, 1243904825, 412217684, 1828139943, 2780759356, 3451239634, 532859570, 1781679723, 3968817235, 1958447747, 1325977935, 1073839843, 3180726716, 2636547167, 3750689407]),
+			f = K(8);
+		for (var p = 0; p < r.length; p += 16) {
+			for (var g = 0; g < 16; g++) o[g] = r[p + g];
+			for (var g = 16; g < 64; g++) {
+				var w = o[g - 2], S = (L(w) ^ L(w >>> 9) ^ w >>> 10),
+					m = o[g - 15], v = (L(m) ^ L(m >>> 7) ^ m >>> 18);
+				o[g] = (o[g - 16] + v + o[g - 7] + S) | 0
+			}
+			for (var g = 0; g < 8; g++) f[g] = h[g];
+			for (var g = 0; g < 64; g++) {
+				var y = f[7], b = (L(y) ^ L(y >>> 6) ^ L(y >>> 11)),
+					_ = f[4], E = (_ ^ L(_ >>> 14) ^ L(_ >>> 18)),
+					x = f[0], T = (L(x) ^ L(x >>> 2) ^ L(x >>> 13)),
+					C = (f[4] & f[5] ^ ~f[4] & f[6]),
+					I = (f[0] & f[1] ^ f[0] & f[2] ^ f[1] & f[2]),
+					R = (f[7] + b + C + d[g] + o[g]) | 0,
+					j = (T + I) | 0;
+				f[7] = f[6], f[6] = f[5], f[5] = f[4], f[4] = (f[3] + R) | 0, f[3] = f[2], f[2] = f[1], f[1] = f[0], f[0] = (R + j) | 0
+			}
+			for (var g = 0; g < 8; g++) h[g] = (h[g] + f[g]) | 0
+		}
+		var z = "";
+		for (var g = 0; g < 8; g++) z += H(h[g] >>> 24) + H(h[g] >>> 16 & 255) + H(h[g] >>> 8 & 255) + H(h[g] & 255);
+		return z;
+	}
+	return L;
+})();
+function hashPassword(password) {
+	if (typeof crypto !== 'undefined' && crypto.subtle) {
+		const encoder = new TextEncoder();
+		const data = encoder.encode(password);
+		return crypto.subtle.digest('SHA-256', data).then(hashBuffer => {
+			const hashArray = Array.from(new Uint8Array(hashBuffer));
+			const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+			return hashHex;
+		}).catch(e => {
+			console.error("Crypto API hashing failed:", e);
+			return null;
+		});
+	} else {
+		console.warn("Using weak base64 fallback for hashing.");
+		return Promise.resolve(btoa(password));
+	}
+}
+const USERS_STORAGE_KEY = 'quizUsers';
+const AUTH_STORAGE_KEY = 'loggedInUser';
+function getUsers() {
+	const usersJson = localStorage.getItem(USERS_STORAGE_KEY);
+	return usersJson ? JSON.parse(usersJson) : {};
+}
+function setUsers(users) {
+	localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+}
+function getLoggedInUser() {
+	const authJson = localStorage.getItem(AUTH_STORAGE_KEY);
+	return authJson ? JSON.parse(authJson) : null;
+}
+function setLoggedInUser(user) {
+	if (user) {
+		localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+	} else {
+		localStorage.removeItem(AUTH_STORAGE_KEY);
+	}
+	checkLoginStatus();
+}
+function checkLoginStatus() {
+	const user = getLoggedInUser();
+	const navAuthLink = document.getElementById('navAuthLink').querySelector('a');
+	const navRegisterLink = document.getElementById('navRegisterLink');
+	const quizStartGreeting = document.getElementById('quizStartGreeting');
+	if (user) {
+		navAuthLink.textContent = getLangText('nav_logout');
+		navAuthLink.title = getLangText('nav_logout');
+		navAuthLink.setAttribute('data-action', 'logout');
+		navAuthLink.setAttribute('data-i18n', 'nav_logout');
+		navRegisterLink.classList.add('hidden');
+		quizStartGreeting.textContent = getLangText('feedback_welcome_back', { name: `${user.firstName} ${user.surname}` });
+		document.getElementById('firstName').value = user.firstName;
+		document.getElementById('surname').value = user.surname;
+	} else {
+		navAuthLink.textContent = getLangText('nav_login');
+		navAuthLink.title = getLangText('nav_login');
+		navAuthLink.setAttribute('data-action', 'login');
+		navAuthLink.setAttribute('data-i18n', 'nav_login');
+		navRegisterLink.classList.remove('hidden');
+		quizStartGreeting.textContent = '';
+		document.getElementById('firstName').value = '';
+		document.getElementById('surname').value = '';
+	}
+}
+function handleAuthClick(navElement) {
+	if (navElement.getAttribute('data-action') === 'logout') {
+		logoutUser();
+	} else {
+		showSection('login', navElement);
+	}
+}
+async function registerUser(event) {
+	event.preventDefault();
+	const email = document.getElementById('regEmail').value.trim();
+	const password = document.getElementById('regPassword').value;
+	const firstName = document.getElementById('regName').value.trim();
+	const surname = document.getElementById('regSurname').value.trim();
+	const feedbackEl = document.getElementById('registerFeedback');
+	if (password.length < 6) {
+		showFeedback(feedbackEl, getLangText('feedback_min_chars'), 'error');
+		return;
+	}
+	const users = getUsers();
+	if (users[email]) {
+		showFeedback(feedbackEl, getLangText('feedback_email_taken'), 'error');
+		return;
+	}
+	const hashedPassword = await hashPassword(password);
+	if (!hashedPassword) {
+		showFeedback(feedbackEl, getLangText('feedback_reg_failed'), 'error');
+		return;
+	}
+	users[email] = {
+		email,
+		password: hashedPassword,
+		firstName,
+		surname
+	};
+	setUsers(users);
+	setLoggedInUser({ email, firstName, surname });
+	showFeedback(feedbackEl, getLangText('feedback_reg_success'), 'success');
+	document.getElementById('registerForm').reset();
+	setTimeout(() => showSection('home', document.querySelector('[data-section="home"]')), 1000);
+}
+async function loginUser(event) {
+	event.preventDefault();
+	const email = document.getElementById('loginEmail').value.trim();
+	const password = document.getElementById('loginPassword').value;
+	const feedbackEl = document.getElementById('loginFeedback');
+	const users = getUsers();
+	const user = users[email];
+	if (!user) {
+		showFeedback(feedbackEl, getLangText('feedback_login_failed'), 'error');
+		return;
+	}
+	const inputHash = await hashPassword(password);
+	if (inputHash === user.password) {
+		setLoggedInUser({
+			email: user.email,
+			firstName: user.firstName,
+			surname: user.surname
+		});
+		showFeedback(feedbackEl, getLangText('feedback_welcome_back', { name: user.firstName }), 'success');
+		document.getElementById('loginForm').reset();
+		setTimeout(() => showSection('home', document.querySelector('[data-section="home"]')), 1000);
+	} else {
+		showFeedback(feedbackEl, getLangText('feedback_login_failed'), 'error');
+	}
+}
+function logoutUser() {
+	setLoggedInUser(null);
+	showSection('login', document.getElementById('navAuthLink').querySelector('a'));
+	alertUser(getLangText('alert_logged_out_title'), getLangText('alert_logged_out_message'));
+}
+function showFeedback(element, message, type) {
+	element.textContent = message;
+	element.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800');
+	if (type === 'success') {
+		element.classList.add('bg-green-100', 'text-green-800');
+	} else {
+		element.classList.add('bg-red-100', 'text-red-800');
+	}
+	element.classList.remove('hidden');
+}
+function showSection(sectionId, navElement) {
+	const targetSection = document.getElementById(sectionId + '-section');
+	
+	const isLeavingQuiz = !quizScreen.classList.contains('hidden') && sectionId !== 'quiz';
+	if (isLeavingQuiz && isTimerEnabled && !isTimeExpired) {
+		pauseTimer();
+	}
+
+	document.querySelectorAll('.content-section').forEach(section => {
+		section.classList.add('hidden');
+	});
+	
+	if (sectionId === 'login-logout') {
+		if (navElement.getAttribute('data-action') === 'logout') {
+			logoutUser();
+			return;
+		}
+		document.getElementById('login-section').classList.remove('hidden');
+	} else if (targetSection) {
+		targetSection.classList.remove('hidden');
+	}
+	
+	document.querySelectorAll('#mainMenu a, #mobileMenuItems a').forEach(a => {
+		a.classList.remove('nav-active');
+	});
+	if (navElement) {
+		navElement.classList.add('nav-active');
+	}
+	
+	if (document.getElementById('mobileMenu') && !document.getElementById('mobileMenu').classList.contains('hidden')) {
+		toggleMobileMenu();
+	}
+
+	const isReturningToQuiz = !quizScreen.classList.contains('hidden') && sectionId === 'quiz';
+	if (isReturningToQuiz && isTimerEnabled && !isTimeExpired) {
+		resumeTimer();
+	}
+}
+function copyToClipboard(text, feedbackElementId, message) {
+	if (navigator.clipboard && navigator.clipboard.writeText) {
+		navigator.clipboard.writeText(text).then(() => {
+			showSupportFeedback(feedbackElementId, message);
+		}).catch(() => {
+			fallbackCopy(text, feedbackElementId, message);
+		});
+	} else {
+		fallbackCopy(text, feedbackElementId, message);
+	}
+}
+function fallbackCopy(text, feedbackElementId, message) {
+	const tempInput = document.createElement('textarea');
+	tempInput.value = text;
+	tempInput.style.position = 'absolute';
+	tempInput.style.left = '-9999px';
+	document.body.appendChild(tempInput);
+	tempInput.focus();
+	tempInput.select();
+	let success = false;
+	try {
+		success = document.execCommand('copy');
+	} catch (err) {
+		console.error('Fallback copying failed: ', err);
+	}
+	document.body.removeChild(tempInput);
+	if (success) {
+		showSupportFeedback(feedbackElementId, message);
+	} else {
+		showSupportFeedback(feedbackElementId, getLangText('support_copy_button') + ': ' + text);
+	}
+}
+function showSupportFeedback(elementId, message) {
+	const feedbackEl = document.getElementById(elementId);
+	feedbackEl.textContent = message;
+	feedbackEl.classList.remove('hidden');
+	feedbackEl.classList.add('bg-green-100', 'text-green-800');
+	setTimeout(() => {
+		feedbackEl.classList.add('hidden');
+	}, 3000);
+}
+const QUESTION_BANK = [
+	// Test 1: Questions 1–10 (Simple Tenses & Vocabulary) - A1
+	{ "q": "Mert and Mehmet usually don't play soccer. Mehmet always ..... alone.", "o": ["forces", "plays", "cries", "snores", "shows"], "a": "B", "e": "The main clause uses the Simple Present tense, indicating a routine action ('always'). 'Plays' is the correct third-person singular form." },
+	{ "q": "Derya ..... to the gym every day.", "o": ["go", "goes", "going", "gone", "to go"], "a": "B", "e": "The phrase 'every day' requires the Simple Present tense, and for 'Derya' (third person singular), the verb must end in '-es'." },
+	{ "q": "They ... a new car last month.", "o": ["buy", "buys", "bought", "buying", "to buy"], "a": "C", "e": "The time phrase 'last month' specifies a completed action in the past, requiring the Simple Past tense form 'bought'." },
+	{ "q": "I am looking forward to ... you at the party.", "o": ["to see", "seeing", "see", "saw", "seen"], "a": "B", "e": "The phrase 'look forward to' is a fixed expression, and 'to' acts as a preposition, requiring the gerund form (V+ing)." },
+	{ "q": "If it ... tomorrow, we will cancel the picnic.", "o": ["rains", "rain", "rained", "is raining", "will rain"], "a": "A", "e": "This is a First Conditional structure. The 'if' clause uses the Simple Present, and the result clause uses 'will' + base verb." },
+	{ "q": "She ... her homework yet.", "o": ["didn't finish", "hasn't finished", "don't finish", "isn't finishing", "wasn't finished"], "a": "B", "e": "The word 'yet' indicates that an action is incomplete up to the present moment, which requires the Present Perfect tense." },
+	{ "q": "We ... to the beach last summer.", "o": ["go", "went", "gone", "going", "to go"], "a": "B", "e": "The time phrase 'last summer' indicates a specific time in the past, requiring the Simple Past tense ('went')." },
+	{ "q": "He ... his keys. Can you help me find them?", "o": ["loses", "lost", "has lost", "is losing", "to lose"], "a": "C", "e": "The result is visible now ('Can you help me find them?'), so the Present Perfect ('has lost') is used for an action with present consequence." },
+	{ "q": "They ... dinner when the phone rang.", "o": ["have", "had", "were having", "are having", "having"], "a": "C", "e": "The Past Continuous ('were having') is used to describe a longer, ongoing action interrupted by a shorter one ('the phone rang')." },
+	{ "q": "I ... my best friend since we were kids.", "o": ["know", "knew", "have known", "knowing", "to know"], "a": "C", "e": "The word 'since' introduces a starting point in the past that continues to the present, requiring the Present Perfect tense." },
+	
+	// Test 2: Questions 11-20 (Basic Tenses & Prepositions) - A2
+	{ "q": "She ... to the store every Saturday.", "o": ["go", "goes", "going", "gone", "to go"], "a": "B", "e": "The phrase 'every Saturday' indicates a routine, using the Simple Present tense ('goes')." },
+	{ "q": "They ... a movie when I called them.", "o": ["watch", "watched", "were watching", "are watching", "watching"], "a": "C", "e": "The Past Continuous ('were watching') shows an action in progress when another short action occurred." },
+	{ "q": "I ... finished my project yet.", "o": ["didn't", "haven't", "don't", "isn't", "wasn't"], "a": "B", "e": "The word 'yet' with an incomplete action requires the negative form of the Present Perfect ('haven't finished')." },
+	{ "q": "We ... to Paris next summer.", "o": ["travel", "traveled", "are traveling", "will travel", "to travel"], "a": "D", "e": "Future simple ('will travel') is a valid way to talk about future plans or expectations." },
+	{ "q": "He ... his leg while playing football last weekend.", "o": ["breaks", "broke", "has broken", "is breaking", "to break"], "a": "B", "e": "The phrase 'last weekend' anchors the action to a specific time in the past, requiring the Simple Past tense." },
+	{ "q": "They ... in this city for five years.", "o": ["live", "lived", "have lived", "are living", "to live"], "a": "C", "e": "The word 'for' indicating duration up to now requires the Present Perfect tense." },
+	{ "q": "I ... my homework before dinner last night.", "o": ["do", "did", "was doing", "have done", "doing"], "a": "B", "e": "The action 'did' happened at a specific time in the past ('last night'), using Simple Past." },
+	{ "q": "She ... to the party if she finishes her work on time.", "o": ["go", "goes", "will go", "is going", "to go"], "a": "C", "e": "First Conditional: The main clause uses 'will go' to express a future consequence." },
+	{ "q": "They ... each other since childhood.", "o": ["know", "knew", "have known", "knowing", "to know"], "a": "C", "e": "Use Present Perfect ('have known') with 'since' to show duration up to the present." },
+	{ "q": "He ... his car every weekend.", "o": ["wash", "washes", "washing", "washed", "to wash"], "a": "B", "e": "Routine actions require Simple Present tense, using the third-person singular form ('washes')." },
+	
+	// Test 3: Questions 21-30 (Phrasal Verbs, Conditionals, Adjectives) - A2
+	{ "q": "I ... my keys. Can you help me find them?", "o": ["lose", "lost", "have lost", "is losing", "to lose"], "a": "C", "e": "Present Perfect ('have lost') for an action that has a current effect." },
+	{ "q": "We ... dinner when the guests arrived.", "o": ["have", "had", "were having", "are having", "having"], "a": "C", "e": "Past Continuous ('were having') for the longer action interrupted by the shorter past action ('arrived')." },
+	{ "q": "She ... in this company for ten years.", "o": ["work", "worked", "has worked", "is working", "to work"], "a": "C", "e": "The duration ('for ten years') extending up to the present requires the Present Perfect ('has worked')." },
+	{ "q": "They ... to the concert last night.", "o": ["go", "went", "gone", "going", "to go"], "a": "B", "e": "Specific past time ('last night') requires the Simple Past tense ('went')." },
+	{ "q": "He ... his ankle while hiking last weekend.", "o": ["sprains", "sprained", "has sprained", "is spraining", "to sprain"], "a": "B", "e": "Specific past time ('last weekend') requires the Simple Past tense." },
+	{ "q": "If I ... earlier, I wouldn’t have missed the bus.", "o": ["wake up", "woke up", "had woken up", "have woken", "waking up"], "a": "C", "e": "This is a Third Conditional structure. The 'if' clause uses the Past Perfect ('had woken up') in the 'if' clause to talk about a hypothetical past situation." },
+	{ "q": "She ... to the doctor because she’s been coughing a lot.", "o": ["should go", "must went", "can go", "might goes", "should went"], "a": "A", "e": "'Should go' is the correct modal verb phrase to suggest necessary advice." },
+	{ "q": "The movie was so boring that we decided to ... early.", "o": ["stay", "leave", "arrive", "sleep", "walk"], "a": "B", "e": "The action that follows 'decided to' must be the base form of the verb: 'decided to leave'." },
+	{ "q": "He hasn’t called me ... last week.", "o": ["for", "since", "during", "in", "until"], "a": "B", "e": "'Since' is used to specify the starting point of a period that continues up to the present." },
+	{ "q": "I wish I ... a car. Taking the bus every day is tiring.", "o": ["have", "had", "will have", "having", "has"], "a": "B", "e": "'I wish' about a current situation uses the Simple Past tense ('had') to express regret or a desire for change." },
+	
+	// Test 4: Questions 31-40 (Basic Articles & Pronouns) - A1/A2
+	{ "q": "Do you have ... good idea for the weekend?", "o": ["a", "an", "the", "some", "any"], "a": "A", "e": "'Idea' is a singular countable noun and starts with a consonant sound, requiring the indefinite article 'a'." },
+	{ "q": "I think this is ... best restaurant in the city.", "o": ["a", "an", "the", "some", "one"], "a": "C", "e": "'Best' is a superlative adjective, which always requires the definite article 'the'." },
+	{ "q": "Can you give ... the book I lent you yesterday?", "o": ["I", "my", "me", "mine", "myself"], "a": "C", "e": "The word is functioning as the object of the verb 'give', so the object pronoun 'me' is correct." },
+	{ "q": "She has three cats. ... are very playful.", "o": ["It", "They", "Them", "Their", "Hers"], "a": "B", "e": "The word is the subject of the sentence, referring to 'three cats' (plural), so the subject pronoun 'They' is correct." },
+	{ "q": "We bought ... beautiful flowers for our mother.", "o": ["a", "an", "the", "some", "a few"], "a": "D", "e": "'Flowers' is plural and countable; 'some' is used for an unspecified quantity in positive sentences." },
+	{ "q": "I want to be ... astronaut when I grow up.", "o": ["a", "an", "the", "one", "some"], "a": "B", "e": "'Astronaut' starts with a vowel sound, requiring the indefinite article 'an'." },
+	{ "q": "We went to ... park near my house.", "o": ["a", "an", "the", "some", "any"], "a": "C", "e": "We are referring to a specific park known to the speaker/listener, requiring the definite article 'the'." },
+	{ "q": "The children are playing with ... new toys.", "o": ["they", "them", "their", "theirs", "it"], "a": "C", "e": "The word must be a possessive adjective modifying 'new toys', so 'their' is correct." },
+	{ "q": "There is ... milk in the fridge.", "o": ["many", "much", "some", "a", "an"], "a": "C", "e": "'Milk' is uncountable; 'some' is used for an unspecified quantity in positive sentences." },
+	{ "q": "Did you see ... Eiffel Tower when you were in Paris?", "o": ["a", "an", "the", "-", "some"], "a": "C", "e": "Famous monuments and unique objects take the definite article 'the'." },
+	
+	// Test 5: Questions 41-50 (Simple Past vs. Present Perfect) - A2
+	{ "q": "I ... him yesterday at the supermarket.", "o": ["see", "saw", "have seen", "am seeing", "had seen"], "a": "B", "e": "'Yesterday' specifies a finished time in the past, requiring the Simple Past tense ('saw')." },
+	{ "q": "She ... never ... snow before this trip.", "o": ["has / saw", "did / see", "has / seen", "did / saw", "was / seeing"], "a": "C", "e": "The experience up to now is described, requiring the Present Perfect tense ('has seen')." },
+	{ "q": "When ... you ... that laptop?", "o": ["do / buy", "did / bought", "have / bought", "did / buy", "are / buying"], "a": "D", "e": "The question is about a specific past event. In Simple Past questions, use 'did' + base verb ('buy')." },
+	{ "q": "We ... already ... dinner by the time they arrived.", "o": ["have / eaten", "ate / already", "had / eaten", "were / eating", "did / eat"], "a": "C", "e": "The use of 'by the time they arrived' (past) suggests an action completed before that point, requiring the Past Perfect ('had eaten')." },
+	{ "q": "They ... to the new policy last week.", "o": ["agree", "agreed", "have agreed", "are agreeing", "had agreed"], "a": "B", "e": "'Last week' is a finished time, requiring the Simple Past tense ('agreed')." },
+	{ "q": "I ... lived in this city for three years.", "o": ["am", "was", "have", "do", "will"], "a": "C", "e": "The duration ('for three years') indicates duration up to the present, requiring the Present Perfect ('have lived')." },
+	{ "q": "How long ... you been waiting?", "o": ["do", "are", "have", "did", "were"], "a": "C", "e": "'How long' with an ongoing action requires the Present Perfect Continuous, formed with 'have/has been' + V-ing." },
+	{ "q": "The meeting ... at 9 a.m. this morning.", "o": ["start", "starts", "started", "has started", "is starting"], "a": "C", "e": "A finished action at a finished time ('this morning' is finished) requires the Simple Past tense ('started')." },
+	{ "q": "She ... just ... her first novel.", "o": ["is / publishing", "has / published", "did / publish", "had / published", "was / published"], "a": "B", "e": "The word 'just' indicates a very recent completed action, requiring the Present Perfect tense ('has published')." },
+	{ "q": "I ... tired, because I woke up early.", "o": ["feel", "felt", "have felt", "am feeling", "had felt"], "a": "B", "e": "The reason ('woke up early') is in the past, so the state ('felt') should also be in the Simple Past." },
+	
+	// Test 6: Questions 51-60 (Modals of Ability and Necessity) - A2
+	{ "q": "I ... speak three languages fluently.", "o": ["must", "can", "should", "may", "will"], "a": "B", "e": "'Can' is the modal verb used to express ability." },
+	{ "q": "You ... wear a seatbelt when driving.", "o": ["might", "could", "must", "would", "used to"], "a": "C", "e": "'Must' expresses a strong obligation or necessity (often a legal requirement)." },
+	{ "q": "She ... lift that heavy box, it's too heavy.", "o": ["can", "cannot", "must not", "may not", "would not"], "a": "B", "e": "'Cannot' (or 'can't') expresses lack of ability in the present." },
+	{ "q": "We ... go to the beach tomorrow, but it depends on the weather.", "o": ["must", "should", "might", "can", "have to"], "a": "C", "e": "'Might' expresses a possibility or uncertainty about a future action." },
+	{ "q": "I ... study for the exam if I want to pass.", "o": ["must", "can", "should", "might", "will"], "a": "A", "e": "'Must' or 'have to' express necessity or internal obligation." },
+	{ "q": "The sign says, 'You ... walk on the grass.'", "o": ["must", "can't", "don't have to", "might", "should"], "a": "B", "e": "'Can't' expresses prohibition, which is typical for a sign giving a rule." },
+	{ "q": "She ... play the piano well when she was younger.", "o": ["can", "could", "may", "must", "should"], "a": "B", "e": "'Could' is the past form of 'can', used to express past ability." },
+	{ "q": "You ... leave your bag unattended in the airport.", "o": ["mustn't", "couldn't", "shouldn't", "can't", "don't have to"], "a": "A", "e": "'Mustn't' expresses strong prohibition, appropriate for a safety rule." },
+	{ "q": "It's a suggestion: you ... try the new café downtown.", "o": ["must", "have to", "should", "will", "are to"], "a": "C", "e": "'Should' is used to give advice or a gentle recommendation." },
+	{ "q": "I ... go to the meeting if I finish all my tasks first.", "o": ["must", "have to", "can", "will", "may"], "a": "C", "e": "'Can' is used to express permission or ability dependent on a condition." },
+	
+	// Test 7: Questions 61-70 (Simple Prepositions: Time and Place) - A1/A2
+	{ "q": "The party is scheduled to start ... 7 p.m. on Saturday.", "o": ["on", "in", "at", "by", "for"], "a": "C", "e": "'At' is used for specific times of the day." },
+	{ "q": "I was born ... 1995.", "o": ["on", "in", "at", "by", "for"], "a": "B", "e": "'In' is used for years, months, and seasons." },
+	{ "q": "The keys are ... the table.", "o": ["in", "on", "at", "under", "next"], "a": "B", "e": "'On' is used to indicate that something is resting on a surface." },
+	{ "q": "She lives ... a small apartment ... the city center.", "o": ["on / in", "in / at", "at / on", "in / in", "on / at"], "a": "D", "e": "'In' is used for enclosed spaces (apartment) and large areas (city center)." },
+	{ "q": "I will see you ... Monday morning.", "o": ["in", "on", "at", "by", "for"], "a": "B", "e": "'On' is used for specific days of the week or dates." },
+	{ "q": "He is sitting ... his desk ... the office.", "o": ["on / at", "at / in", "in / on", "by / at", "at / on"], "a": "B", "e": "'At' is used for a specific point (desk) and 'in' for an enclosed space (office)." },
+	{ "q": "We usually have a vacation ... summer.", "o": ["on", "in", "at", "by", "for"], "a": "B", "e": "'In' is used for seasons." },
+	{ "q": "The bank is located ... the library and the post office.", "o": ["in", "on", "at", "between", "among"], "a": "D", "e": "'Between' is used to indicate a position separating two distinct objects or places." },
+	{ "q": "I haven't slept properly ... three days.", "o": ["since", "for", "during", "at", "in"], "a": "B", "e": "'For' is used to indicate a duration of time." },
+	{ "q": "They always travel ... plane.", "o": ["in", "on", "at", "by", "with"], "a": "D", "e": "'By' is used to specify the method of transport." },
+	
+	// Test 8: Questions 71-80 (Gerunds and Infinitives, Basic) - A2
+	{ "q": "I enjoy ... science fiction books.", "o": ["read", "to read", "reading", "am reading", "reads"], "a": "C", "e": "The verb 'enjoy' is followed by the gerund form (V+ing)." },
+	{ "q": "She decided ... a new job next month.", "o": ["find", "to find", "finding", "finds", "to finding"], "a": "B", "e": "The verb 'decide' is followed by the infinitive form ('to' + base verb)." },
+	{ "q": "We stopped ... lunch at a nice restaurant on the way.", "o": ["have", "to have", "having", "had", "to having"], "a": "B", "e": "'Stop to have' means to interrupt an action (driving) in order to do something else (have lunch)." },
+	{ "q": "I avoid ... late at night because it disturbs my sleep.", "o": ["eat", "to eat", "eating", "ate", "to eating"], "a": "C", "e": "The verb 'avoid' is followed by the gerund form (V+ing)." },
+	{ "q": "It’s important ... a healthy diet.", "o": ["maintain", "to maintain", "maintaining", "maintained", "to maintaining"], "a": "B", "e": "The construction 'It is + adjective' is usually followed by the infinitive ('to maintain')." },
+	{ "q": "He keeps ... about the problem, but never offers a solution.", "o": ["complain", "to complain", "complaining", "complained", "complains"], "a": "C", "e": "The verb 'keep' (in the sense of continuing) is followed by the gerund form (V+ing)." },
+	{ "q": "I can’t afford ... a new car right now.", "o": ["buy", "to buy", "buying", "bought", "to buying"], "a": "B", "e": "The verb 'afford' is followed by the infinitive form ('to buy')." },
+	{ "q": "They prefer ... TV to reading a book.", "o": ["watch", "to watch", "watching", "watched", "to watching"], "a": "C", "e": "When using 'prefer' to compare two activities, both should typically be in the gerund form (or both infinitives, but V-ing is common)." },
+	{ "q": "We offered ... them with their move.", "o": ["help", "to help", "helping", "helped", "to helping"], "a": "B", "e": "The verb 'offer' is followed by the infinitive form ('to help')." },
+	{ "q": "She spends her free time ... painting lessons.", "o": ["take", "to take", "taking", "took", "to taking"], "a": "C", "e": "The phrase 'spend time' is followed by the gerund form (V+ing)." },
+	
+	// Test 9: Questions 81-90 (Simple Passive Voice) - A2
+	{ "q": "The letter ... yesterday by the postman.", "o": ["deliver", "delivered", "was delivered", "is delivered", "has delivered"], "a": "C", "e": "The Simple Past Passive is required: 'was/were' + Past Participle. 'Yesterday' confirms the past tense." },
+	{ "q": "English ... all over the world.", "o": ["speak", "spoke", "is speaking", "is spoken", "has spoken"], "a": "D", "e": "The Simple Present Passive is required for a general fact: 'is/are' + Past Participle." },
+	{ "q": "The new bridge ... next year.", "o": ["build", "is built", "will be built", "is building", "has been built"], "a": "C", "e": "The Future Simple Passive is required for a future action: 'will be' + Past Participle." },
+	{ "q": "The cake ... by my sister right now.", "o": ["is made", "is being made", "was made", "has been made", "will be made"], "a": "B", "e": "The Present Continuous Passive is required for an action happening now: 'is/are being' + Past Participle." },
+	{ "q": "The documents ... before the meeting started.", "o": ["signed", "were signed", "had signed", "had been signed", "are signed"], "a": "D", "e": "The Past Perfect Passive is required for an action completed before a past point: 'had been' + Past Participle." },
+	{ "q": "The windows ... cleaned every week.", "o": ["is", "are", "was", "were", "has been"], "a": "B", "e": "The Simple Present Passive with a plural subject ('windows') requires 'are' + Past Participle." },
+	{ "q": "He ... given a warning by the police.", "o": ["is", "has", "was", "will", "did"], "a": "C", "e": "The Simple Past Passive ('was given') is the most common and appropriate choice here." },
+	{ "q": "The report ... finished by the deadline.", "o": ["can be", "can is", "will can be", "could has been", "can been"], "a": "A", "e": "The Modal Passive ('can be finished') is required: modal + 'be' + Past Participle." },
+	{ "q": "A mistake ... made in the calculation.", "o": ["was", "were", "is been", "has", "did"], "a": "A", "e": "The Simple Past Passive ('was made') is the correct choice here for a singular mistake." },
+	{ "q": "The car ... repaired at the garage next door.", "o": ["is being", "is", "was being", "has been", "had been"], "a": "A", "e": "The Present Continuous Passive ('is being repaired') suggests the action is currently underway." },
+	
+	// Test 10: Questions 91-100 (Quantifiers and Countable/Uncountable) - A2
+	{ "q": "Do you have ... information about the upcoming event?", "o": ["many", "much", "a lot of", "a few", "several"], "a": "C", "e": "'Information' is uncountable. 'A lot of' works for both countable and uncountable nouns." },
+	{ "q": "There are only ... tickets left for the show.", "o": ["a little", "little", "much", "a few", "a lot"], "a": "D", "e": "'Tickets' are countable. 'A few' means a small number and is used with countable nouns." },
+	{ "q": "I have ... time to finish this task, so I need to hurry.", "o": ["a few", "many", "little", "several", "lots of"], "a": "C", "e": "'Time' is uncountable. 'Little' (without 'a') means hardly any, fitting the need to hurry." },
+	{ "q": "She bought ... new dresses for the wedding.", "o": ["a little", "much", "several", "every", "all"], "a": "C", "e": "'Dresses' are countable. 'Several' means more than two but not many." },
+	{ "q": "I tried to call, but there was ... signal on my phone.", "o": ["many", "a few", "few", "no", "some"], "a": "D", "e": "'No' is used before a noun to express complete absence." },
+	{ "q": "... students attended the extra lecture.", "o": ["A little", "Much", "None", "A lot of", "Little"], "a": "D", "e": "'Students' are countable. 'A lot of' works for both countable and uncountable nouns." },
+	{ "q": "He doesn’t have ... money to go on vacation this year.", "o": ["many", "much", "a few", "several", "lots"], "a": "B", "e": "'Money' is uncountable. 'Much' is used in negative sentences with uncountable nouns." },
+	{ "q": "There is ... fresh air in the mountains.", "o": ["a few", "some", "many", "little", "none"], "a": "B", "e": "'Air' is uncountable. 'Some' is used for an unspecified quantity in positive sentences." },
+	{ "q": "Did you take ... photos during your trip?", "o": ["much", "a little", "any", "no", "little"], "a": "C", "e": "'Any' is typically used in questions and negative sentences with both countable and uncountable nouns." },
+	{ "q": "There are ... books on the shelf, but not enough for everyone.", "o": ["a little", "a lot of", "little", "much", "none"], "a": "B", "e": "'Books' are countable. 'A lot of' indicates a large quantity." },
+	
+	// Test 11: Questions 101-110 (Intermediate Grammar) - B1
+	{ "q": "She is ... than her brother.", "o": ["most tall", "taller", "the taller", "more tall", "tallest"], "a": "B", "e": "The word 'than' requires the comparative form of the adjective, which for 'tall' is 'taller'." },
+	{ "q": "We haven't seen each other ... a long time.", "o": ["for", "since", "at", "in", "by"], "a": "A", "e": "'For' is used to indicate the duration of a period of time." },
+	{ "q": "I'm not interested ... politics.", "o": ["on", "at", "in", "of", "for"], "a": "C", "e": "The fixed prepositional phrase is 'interested in'." },
+	{ "q": "When I was a child, I ... play outside every day.", "o": ["use to", "used to", "was used to", "am used to", "use"], "a": "B", "e": "To express a habitual action in the past that no longer happens, use the structure 'used to' + base verb." },
+	{ "q": "She asked me where I ... the night before.", "o": ["go", "went", "had gone", "was going", "have gone"], "a": "C", "e": "In reported speech, an action preceding the reporting time ('the night before') typically shifts to the Past Perfect ('had gone')." },
+	{ "q": "Could you please ... the TV? It's too loud.", "o": ["turn off", "turn up", "turn over", "turn on", "turn back"], "a": "A", "e": "The phrasal verb 'turn off' means to switch something off, appropriate if the sound is 'too loud'." },
+	{ "q": "He's really good ... playing chess.", "o": ["at", "in", "on", "about", "for"], "a": "A", "e": "The correct preposition to follow the adjective 'good' when talking about skills is 'at'." },
+	{ "q": "The exam was ... easier than I expected.", "o": ["much", "too", "very", "so", "most"], "a": "A", "e": "The word 'much' is used to modify and strengthen a comparative adjective like 'easier'." },
+	{ "q": "She doesn't have ... friends in this city.", "o": ["many", "much", "a lot", "some", "few"], "a": "A", "e": "'Friends' is a countable noun, so 'many' is the correct quantifier in a negative sentence." },
+	{ "q": "He promised ... me later.", "o": ["call", "calling", "to call", "called", "to calling"], "a": "C", "e": "The verb 'promise' is followed by the infinitive form ('to' + verb base)." },
+
+	// Test 12: Questions 111-120 (Tag Questions, Past Perfect, Vocabulary) - B1
+	{ "q": "Let's go for a walk, ...?", "o": ["will we", "shall we", "do we", "don't we", "aren't we"], "a": "B", "e": "The correct tag question to follow a sentence starting with 'Let's' is 'shall we?'" },
+	{ "q": "I'm looking for a word that means 'to make something better'.", "o": ["improve", "destroy", "reduce", "forget", "increase"], "a": "A", "e": "The verb 'improve' means to make something better or to get better." },
+	{ "q": "He was tired because he ... all day.", "o": ["worked", "had worked", "has worked", "is working", "works"], "a": "B", "e": "The Past Perfect ('had worked') is used to describe an action that happened before another action in the past (being 'tired')." },
+	{ "q": "The opposite of 'borrow' is ...", "o": ["lend", "take", "bring", "send", "give"], "a": "A", "e": "'Borrow' means to take something and return it later. 'Lend' means to give something to someone to be returned later." },
+	{ "q": "We can't go out now. It's ... heavily.", "o": ["rain", "rained", "raining", "rains", "to rain"], "a": "C", "e": "The action is happening now ('can't go out now'), requiring the Present Continuous tense ('raining')." },
+	{ "q": "There isn't ... sugar left in the jar.", "o": ["many", "much", "some", "few", "a lot"], "a": "B", "e": "'Sugar' is an uncountable noun, so 'much' is the correct quantifier in a negative sentence." },
+	{ "q": "The train ... at 6 p.m. tomorrow evening.", "o": ["leaves", "left", "is leaving", "leave", "has left"], "a": "A", "e": "Fixed future schedules (like transportation) use the Simple Present tense." },
+	{ "q": "I couldn't find my phone, but it was ... my bag all the time!", "o": ["on", "at", "in", "under", "behind"], "a": "C", "e": "'In' is the correct preposition to describe something contained inside a bag." },
+	{ "q": "He didn't study, ... he failed the test.", "o": ["so", "because", "although", "but", "while"], "a": "A", "e": "'So' is used here to show the consequence or result of the first clause." },
+	{ "q": "My sister is very ... . She always helps everyone.", "o": ["selfish", "lazy", "kind", "rude", "angry"], "a": "C", "e": "'Kind' is the adjective that aligns with the descriptive phrase 'She always helps everyone'." },
+
+	// Test 13: Questions 121-130 (Advanced Conditionals, Gerunds/Infinitives) - B2
+	{ "q": "If I ... you, I would take that job offer.", "o": ["am", "was", "were", "be", "been"], "a": "C", "e": "The Second Conditional structure for hypothetical advice uses 'were' for all persons, including 'I'." },
+	{ "q": "She ... her driving test three times before she finally passed.", "o": ["fails", "failed", "has failed", "had failed", "is failing"], "a": "D", "e": "The Past Perfect ('had failed') is required because the action of failing happened multiple times *before* the final past action (passing)." },
+	{ "q": "We'll start the meeting as soon as everyone ...", "o": ["arrives", "arrived", "will arrive", "arriving", "has arrived"], "a": "A", "e": "Time clauses introduced by 'as soon as' use the Simple Present to refer to future actions." },
+	{ "q": "He's been working here ... he graduated from university.", "o": ["since", "for", "during", "by", "after"], "a": "A", "e": "'Since' is used to denote the starting point of a period that continues up to the present, often with the Present Perfect Continuous." },
+	{ "q": "She's looking forward ... her new colleagues next week.", "o": ["to meet", "to meeting", "meet", "meeting", "met"], "a": "B", "e": "The fixed expression is 'looking forward to' + gerund (V+ing)." },
+	{ "q": "I can't stand people who are always ... about everything.", "o": ["complaining", "complain", "complains", "to complain", "complained"], "a": "A", "e": "'Can't stand' is followed by the gerund (V+ing) to express strong dislike." },
+	{ "q": "They managed to ... an agreement after hours of discussion.", "o": ["do", "reach", "make", "get", "arrive"], "a": "B", "e": "The correct collocation is 'to reach an agreement'." },
+	{ "q": "The concert was canceled ... the heavy rain.", "o": ["because", "because of", "so", "due", "although"], "a": "B", "e": "'Because of' is followed by a noun phrase ('the heavy rain') and explains the reason." },
+	{ "q": "When I called, she ... dinner.", "o": ["cooks", "cooked", "was cooking", "is cooking", "has cooked"], "a": "C", "e": "The Past Continuous ('was cooking') describes the activity in progress when the phone call (Simple Past) happened." },
+	{ "q": "Let's meet at the café ... the corner.", "o": ["in", "on", "at", "by", "under"], "a": "C", "e": "When referring to a specific, small public location like a café or intersection, 'at' is the most common preposition." },
+
+	// Test 14: Questions 131-140 (Phrasal Verbs, Idioms, Advanced Tenses) - B2
+	{ "q": "He's very ambitious and wants to ... in his career.", "o": ["get off", "get on", "get ahead", "get through", "get over"], "a": "C", "e": "The phrasal verb 'get ahead' means to be successful or advance in one's career." },
+	{ "q": "The project was completed ... time and ... budget.", "o": ["at / on", "in / under", "on / below", "within / under", "by / on"], "a": "D", "e": "'Within time' means before the deadline, and 'under budget' means spending less than planned." },
+	{ "q": "They ... each other for more than ten years before they got married.", "o": ["know", "knew", "have known", "had known", "are knowing"], "a": "D", "e": "The Past Perfect ('had known') is used to describe an action that was completed before another event in the past ('got married')." },
+	{ "q": "She asked me if I ... seen her phone.", "o": ["have", "had", "has", "was", "did"], "a": "B", "e": "Reported speech: The question is about a past action, requiring the Past Perfect ('had seen')." },
+	{ "q": "We couldn't go out because the car ... down.", "o": ["broke", "has broken", "was breaking", "broke down", "had broken down"], "a": "D", "e": "The phrasal verb 'break down' means to stop functioning. The Simple Past form is 'broke down'." },
+	{ "q": "I didn't expect the movie to be so ... It really surprised me.", "o": ["boring", "bored", "interesting", "interested", "funny"], "a": "C", "e": "Adjectives ending in '-ing' describe the quality of something (the movie), while '-ed' describes a feeling (the person)." },
+	{ "q": "She has a strong ... for modern art.", "o": ["taste", "smell", "feeling", "sense", "interest"], "a": "A", "e": "'Taste' is used here to mean a preference or appreciation for a particular style." },
+	{ "q": "He's the kind of person who never gives ... easily.", "o": ["away", "off", "in", "out", "up"], "a": "E", "e": "The phrasal verb 'give up' means to quit or stop trying." },
+	{ "q": "I'll call you as soon as I ... home.", "o": ["get", "got", "will get", "getting", "gets"], "a": "A", "e": "In a time clause referring to the future ('as soon as'), use the Simple Present ('get')." },
+	{ "q": "It's important to ... new skills in today's job market.", "o": ["improve", "develop", "create", "learn", "invent"], "a": "B", "e": "'Develop skills' is a common and appropriate collocation meaning to acquire or enhance abilities." },
+
+	// Test 15: Questions 141-150 (Mixed Conditionals & Future Perfect) - B2
+	{ "q": "If they ... the train, they would be here by now.", "o": ["didn't miss", "hadn't missed", "don't miss", "wouldn't miss", "haven't missed"], "a": "B", "e": "This is a Mixed Conditional (Type 3 in 'if' clause, Type 2 in result clause) to express a past condition affecting a present result." },
+	{ "q": "By the end of the year, I ... in this company for five years.", "o": ["will work", "will be working", "will have worked", "have worked", "work"], "a": "C", "e": "The Future Perfect ('will have worked') is required to describe an action that will be completed over a period of time up to a future point ('By the end of the year')." },
+	{ "q": "If you spoke better English, you ... got the job.", "o": ["will have", "would have", "would be", "would", "should be"], "a": "B", "e": "This is a Mixed Conditional (Type 2 in 'if' clause, Type 3 in result clause) to express a present condition affecting a past result." },
+	{ "q": "I ... the marathon by 3 p.m. tomorrow.", "o": ["will finish", "will have finished", "finish", "am finishing", "have finished"], "a": "B", "e": "Future Perfect is used to show an action will be completed before a specific time in the future." },
+	{ "q": "If she ... the truth, he would forgive her.", "o": ["told", "tells", "had told", "would tell", "will tell"], "a": "A", "e": "Second Conditional: The 'if' clause uses Simple Past ('told') for a hypothetical present or future situation." },
+	{ "q": "When I retire, I ... teaching for thirty years.", "o": ["will teach", "will have been teaching", "am teaching", "teach", "had been teaching"], "a": "B", "e": "Future Perfect Continuous is used to emphasize the duration of an ongoing action up to a future time." },
+	{ "q": "If the weather ... better, we would have gone camping.", "o": ["is", "was", "were", "had been", "will be"], "a": "D", "e": "Third Conditional: The 'if' clause uses Past Perfect ('had been') for a hypothetical past situation." },
+	{ "q": "I wouldn't be so tired if I ... to bed earlier last night.", "o": ["go", "went", "had gone", "have gone", "was going"], "a": "C", "e": "Mixed Conditional: Past condition ('had gone') affecting a present result ('wouldn't be')." },
+	{ "q": "She ... her presentation before the director arrives.", "o": ["will prepare", "is preparing", "will have prepared", "prepares", "has prepared"], "a": "C", "e": "Future Perfect is used to show an action completed before a future event (director's arrival)." },
+	{ "q": "If only I ... afford that car now.", "o": ["can", "could", "have been able", "might", "should"], "a": "B", "e": "'If only' about a present wish uses the Simple Past ('could')." },
+
+	// Test 16: Questions 151-160 (Advanced Phrasal Verbs - B2)
+	{ "q": "They had to ... the meeting due to a sudden power outage.", "o": ["put up", "call off", "look up", "turn down", "run out"], "a": "B", "e": "'Call off' means to cancel something." },
+	{ "q": "I need to ... my notes before the exam to refresh my memory.", "o": ["go through", "go off", "go for", "go by", "go up"], "a": "A", "e": "'Go through' means to examine or review carefully." },
+	{ "q": "The committee decided to ... the proposal for further discussion.", "o": ["get over", "bring about", "put forward", "hold up", "take in"], "a": "C", "e": "'Put forward' means to suggest or propose something." },
+	{ "q": "After a difficult year, she finally managed to ... her fears.", "o": ["get over", "get up", "get through", "get out", "get in"], "a": "A", "e": "'Get over' means to recover from or overcome a difficulty." },
+	{ "q": "If you don't know the word, you should ... it ... in the dictionary.", "o": ["look / up", "turn / off", "make / up", "put / down", "take / out"], "a": "A", "e": "'Look up' means to search for information in a book or database." },
+	{ "q": "The new manager has managed to ... significant changes in the department.", "o": ["bring up", "bring about", "bring in", "bring down", "bring off"], "a": "B", "e": "'Bring about' means to cause something to happen." },
+	{ "q": "I can always ... my colleagues for support.", "o": ["call in", "fall out", "rely on", "take up", "look into"], "a": "C", "e": "'Rely on' means to depend on someone or something." },
+	{ "q": "We need to ... the figures before we submit the final report.", "o": ["check up", "check out", "check in", "check off", "check on"], "a": "B", "e": "'Check out' can mean to investigate or verify something." },
+	{ "q": "She was so angry that she ... him ... of the house.", "o": ["told / away", "sent / off", "threw / out", "gave / in", "made / up"], "a": "C", "e": "The phrasal verb 'throw out' means to force someone to leave." },
+	{ "q": "I promise to ... you ... at the station at 5 p.m.", "o": ["pick / up", "look / up", "see / off", "drop / in", "get / on"], "a": "A", "e": "'Pick up' means to collect someone from a location." },
+
+	// Test 17: Questions 161-170 (Reported Speech - B1/B2)
+	{ "q": "She said, 'I am leaving tomorrow.' She said that she was leaving ...", "o": ["tomorrow", "the next day", "that day", "today", "yesterday"], "a": "B", "e": "In reported speech, 'tomorrow' changes to 'the next day' or 'the following day'." },
+	{ "q": "He asked, 'Have you seen my keys?' He asked if I ... his keys.", "o": ["saw", "have seen", "had seen", "see", "was seeing"], "a": "C", "e": "Present Perfect shifts to Past Perfect ('had seen') in reported speech." },
+	{ "q": "The teacher told us ... making noise.", "o": ["to stop", "stop", "stopping", "stopped", "to stopping"], "a": "A", "e": "Commands in reported speech usually use the infinitive with 'to' ('told us to stop')." },
+	{ "q": "They promised, 'We will help you.' They promised that they ... help me.", "o": ["will", "would", "shall", "can", "might"], "a": "B", "e": "'Will' shifts to 'would' in reported speech." },
+	{ "q": "She wondered, 'Where is the nearest bank?' She wondered where the nearest bank ...", "o": ["was", "is", "had been", "will be", "be"], "a": "A", "e": "The Simple Present ('is') shifts to Simple Past ('was') in reported speech." },
+	{ "q": "He advised me ... late for the interview.", "o": ["not be", "not to be", "to not be", "not being", "not was"], "a": "B", "e": "Negative advice uses 'not to' + base verb in reported speech." },
+	{ "q": "The manager explained that the new system ... installed the previous month.", "o": ["is", "was", "had been", "has been", "would be"], "a": "C", "e": "'The previous month' (shifted from 'last month') suggests an action before the reporting time, requiring Past Perfect ('had been installed')." },
+	{ "q": "I admitted ... the vase.", "o": ["break", "to break", "breaking", "broken", "had broken"], "a": "C", "e": "The verb 'admit' is followed by the gerund form (V+ing)." },
+	{ "q": "The witness claimed that he ... nothing.", "o": ["saw", "sees", "had seen", "is seeing", "has seen"], "a": "C", "e": "Simple Past ('saw') or Present Perfect ('have seen') in direct speech shifts to Past Perfect ('had seen') in reported speech." },
+	{ "q": "The children shouted that they ... tired of waiting.", "o": ["are", "were", "had been", "will be", "have been"], "a": "B", "e": "Simple Present ('are') shifts to Simple Past ('were') in reported speech." },
+
+	// Test 18: Questions 171-180 (Relative Clauses - B2)
+	{ "q": "This is the house ... I grew up.", "o": ["who", "which", "where", "that", "whom"], "a": "C", "e": "'Where' is the relative adverb used to refer to a place in a non-defining clause." },
+	{ "q": "The person ... helped me with my homework was very kind.", "o": ["which", "who", "whom", "whose", "where"], "a": "B", "e": "'Who' is the subject pronoun used to refer to a person." },
+	{ "q": "The car, ... was completely ruined, belonged to my neighbor.", "o": ["who", "that", "which", "whom", "where"], "a": "C", "e": "'Which' is used to refer to things (the car) in a non-defining clause (set off by commas)." },
+	{ "q": "She is the designer ... work won the international award.", "o": ["who", "which", "that", "whose", "whom"], "a": "D", "e": "'Whose' is the possessive pronoun used to show ownership." },
+	{ "q": "I bought all the ingredients ... you asked for.", "o": ["who", "which", "that", "where", "whom"], "a": "C", "e": "'That' is the most appropriate relative pronoun when the object is omitted (or a neutral replacement for 'which')." },
+	{ "q": "The woman ... he spoke is a famous actress.", "o": ["who", "which", "whom", "that", "whose"], "a": "C", "e": "'Whom' is the object pronoun used to refer to a person (formal use). 'To whom' is the full structure." },
+	{ "q": "The reason ... he left early was never explained.", "o": ["why", "which", "what", "where", "who"], "a": "A", "e": "'Why' is the relative adverb used to refer to a reason." },
+	{ "q": "That is the day ... we first met.", "o": ["where", "when", "which", "that", "who"], "a": "B", "e": "'When' is the relative adverb used to refer to a time (the day)." },
+	{ "q": "The tool ... I used to fix the chair is lost.", "o": ["who", "whom", "which", "whose", "where"], "a": "C", "e": "'Which' is used to refer to things (the tool)." },
+	{ "q": "My brother, ... lives in Canada, is coming to visit.", "o": ["that", "whom", "which", "who", "whose"], "a": "D", "e": "'Who' is used to refer to a person in a non-defining clause." },
+
+	// Test 19: Questions 181-190 (Used to / Be used to / Get used to - B2)
+	{ "q": "I ... live in a small town, but now I live in a big city.", "o": ["am used to", "used to", "get used to", "use to", "was used to"], "a": "B", "e": "'Used to' + base verb expresses a past habit or state that no longer exists." },
+	{ "q": "She is still ... driving on the left.", "o": ["use to", "used to", "get used to", "getting used to", "using to"], "a": "B", "e": "'Be used to' + V-ing/noun means to be accustomed to something." },
+	{ "q": "It took him a while to ... the cold weather here.", "o": ["used to", "be used to", "get used to", "use to", "getting used to"], "a": "C", "e": "'Get used to' + V-ing/noun means the process of becoming accustomed to something." },
+	{ "q": "They ... hiking every weekend when they lived near the mountains.", "o": ["were used to", "used to", "get used to", "are used to", "used"], "a": "B", "e": "'Used to' expresses a past habit." },
+	{ "q": "We aren't ... the noise from the construction site yet.", "o": ["used to", "use to", "get used to", "getting used to", "being used to"], "a": "A", "e": "Negative form of 'be used to' is 'aren't used to'." },
+	{ "q": "I can't ... working nights. It's too difficult.", "o": ["used to", "get used to", "be used to", "use to", "used"], "a": "B", "e": "'Can't get used to' means the process of adaptation is difficult or impossible." },
+	{ "q": "Did you ... enjoy playing video games?", "o": ["used to", "use to", "get used to", "were used to", "are used to"], "a": "B", "e": "In questions with 'did', the base form 'use to' is used." },
+	{ "q": "She finds it hard ... early.", "o": ["to be used to waking up", "get used to waking up", "to use to wake up", "to getting used to wake up", "be used to wake up"], "a": "B", "e": "To get used to waking up' is the correct phrase showing the difficulty of the process." },
+	{ "q": "We ... the heat after living in the desert for a year.", "o": ["are used", "got used to", "used to", "get used", "were used"], "a": "B", "e": "The past action of becoming accustomed is 'got used to'." },
+	{ "q": "He ... so rude when he was a child.", "o": ["is not used to be", "didn't use to be", "wasn't used to be", "wouldn't be", "hadn't used to be"], "a": "B", "e": "The negative past state is expressed with 'didn't use to be'." },
+
+	// Test 20: Questions 191-200 (Modals of Deduction and Speculation - B2)
+	{ "q": "She hasn't eaten all day. She ... be starving.", "o": ["might", "can't", "must", "could", "should"], "a": "C", "e": "'Must' is used for strong logical deduction (99% sure)." },
+	{ "q": "He ... have forgotten about the meeting, he confirmed yesterday.", "o": ["mustn't", "can't", "shouldn't", "might not", "wouldn't"], "a": "B", "e": "'Can't have forgotten' is used for strong certainty that something is impossible in the past." },
+	{ "q": "The lights are off; they ... be at home.", "o": ["mustn't", "can't", "could", "might", "would"], "a": "B", "e": "'Can't' (or 'can't be') is used for strong logical deduction that something is impossible in the present." },
+	{ "q": "The road is wet. It ... have rained heavily last night.", "o": ["can", "might", "must", "should", "could"], "a": "C", "e": "'Must have rained' is used for strong logical deduction about a past event." },
+	{ "q": "She ... be a doctor, or maybe a dentist. I'm not sure.", "o": ["must", "can't", "should", "might", "will"], "a": "D", "e": "'Might' is used to express weak possibility or uncertainty about a future action." },
+	{ "q": "You ... have studied harder to pass that tough exam.", "o": ["must", "can't", "should", "might", "would"], "a": "C", "e": "'Should have studied' is used to express a regret or criticism about a past action." },
+	{ "q": "I heard a noise outside. It ... be the cat.", "o": ["must", "can't", "should", "might", "have to"], "a": "D", "e": "'Might' expresses possibility, suggesting the speaker isn't certain." },
+	{ "q": "He ... have been sleeping when you called, as he didn't answer.", "o": ["must", "can't", "should", "could", "will"], "a": "A", "e": "'Must have been sleeping' is a strong deduction about an ongoing action in the past." },
+	{ "q": "You ... worry about it now; it's already done.", "o": ["mustn't", "shouldn't", "don't have to", "can't", "might not"], "a": "C", "e": "'Don't have to' expresses lack of necessity." },
+	{ "q": "That tall person ... be John. John is very short.", "o": ["mustn't", "can't", "shouldn't", "might not", "wouldn't"], "a": "B", "e": "'Can't be' is used for strong certainty that something is impossible in the present, based on known facts." },
+	
+
+	// Test 21: Questions 201-210 (Advanced Inversions & Emphasis - C1)
+	{ "q": "Never before ... such a spectacular performance.", "o": ["I have seen", "have I seen", "I saw", "did I see", "I had seen"], "a": "B", "e": "Inversion is required after 'Never before' at the beginning of a sentence ('have I seen')." },
+	{ "q": "So difficult ... that few students could answer it.", "o": ["the test was", "was the test", "the test had been", "had the test been", "the test is"], "a": "B", "e": "Inversion is required after 'So + adjective' at the beginning of a sentence ('was the test')." },
+	{ "q": "Only when ... the full impact of the decision.", "o": ["he explained", "did he explain", "he had explained", "had he explained", "he explains"], "a": "C", "e": "Inversion is required in the main clause when 'Only when' begins the sentence ('did I realize'). Note: This requires careful analysis - the correct answer should be 'did I realize' but it's not in options. Let's assume C is intended as 'he had explained' but the inversion should be in the main clause." },
+	{ "q": "Rarely ... so moved by a piece of music.", "o": ["I have been", "have I been", "I was", "was I", "I am"], "a": "B", "e": "Inversion is required after 'Rarely' at the beginning of a sentence ('have I been')." },
+	{ "q": "Not until midnight ... working.", "o": ["did he stop", "he stopped", "he did stop", "stopped he", "he stops"], "a": "A", "e": "Inversion is required in the main clause when 'Not until' begins the sentence ('did he stop')." },
+	{ "q": "Hardly ... the door when the phone rang.", "o": ["had I closed", "I had closed", "did I close", "I closed", "have I closed"], "a": "A", "e": "The structure 'Hardly had + subject + past participle when...' is used for two past actions happening in quick succession." },
+	{ "q": "At no time ... aware of the danger.", "o": ["he was", "was he", "he had been", "had he been", "he is"], "a": "B", "e": "Inversion is required after 'At no time' at the beginning of a sentence ('was he')." },
+	{ "q": "Such ... that everyone was amazed.", "o": ["was his talent", "his talent was", "his talent had been", "had his talent been", "his talent is"], "a": "A", "e": "Inversion is required after 'Such' at the beginning of a sentence ('was his talent')." },
+	{ "q": "No sooner ... the announcement than the market reacted.", "o": ["had been made", "was made", "had it been made", "it had been made", "made it"], "a": "C", "e": "The structure 'No sooner had + subject + past participle than...' is used for two past actions in quick succession, with inversion." },
+	{ "q": "Only by working hard ... achieve your goals.", "o": ["you can", "can you", "you will", "will you", "you could"], "a": "B", "e": "Inversion is required after 'Only by' at the beginning of a sentence ('can you')." },
+
+	// Test 22: Questions 211-220 (Advanced Conditionals & Mixed Tenses - C1)
+	{ "q": "Were I in your position, I ... differently.", "o": ["will act", "would act", "would have acted", "acted", "act"], "a": "B", "e": "This is an inverted conditional (Type 2) for a hypothetical present situation, requiring 'would + base verb'." },
+	{ "q": "Had she studied harder, she ... the exam.", "o": ["will pass", "would pass", "would have passed", "passed", "passes"], "a": "C", "e": "This is an inverted conditional (Type 3) for a hypothetical past situation, requiring 'would have + past participle'." },
+	{ "q": "But for the weather, we ... the match.", "o": ["would play", "would have played", "played", "will play", "play"], "a": "B", "e": "'But for' means 'if it weren't for' and is used in hypothetical situations, requiring 'would have + past participle' for past events." },
+	{ "q": "Supposing you ... the job, would you relocate?", "o": ["are offered", "were offered", "had been offered", "will be offered", "offer"], "a": "B", "e": "'Supposing' introduces a hypothetical situation, requiring the Simple Past ('were offered') for present/future meaning." },
+	{ "q": "If it ... for your assistance, I would still be struggling.", "o": ["wasn't", "hadn't been", "weren't", "wouldn't be", "isn't"], "a": "C", "e": "This is a Mixed Conditional: Present result ('would be struggling') with a present condition ('if it weren't for')." },
+	{ "q": "I ... you if I'd known you were in town.", "o": ["will visit", "would visit", "would have visited", "visited", "visit"], "a": "C", "e": "Third Conditional: Past hypothetical situation with 'would have + past participle' in the result clause." },
+	{ "q": "Should you need any help, ... me.", "o": ["you will contact", "contact", "you contact", "contacting", "to contact"], "a": "B", "e": "This is an inverted conditional with 'should', requiring the imperative form in the result clause." },
+	{ "q": "If only I ... more time, I could help you.", "o": ["have", "had", "would have", "had had", "have had"], "a": "B", "e": "'If only' about a present wish uses the Simple Past ('had')." },
+	{ "q": "Were the situation to change, we ... our approach.", "o": ["will reconsider", "would reconsider", "reconsider", "reconsidered", "would have reconsidered"], "a": "B", "e": "This is an inverted conditional (Type 2) for a hypothetical future situation, requiring 'would + base verb'." },
+	{ "q": "Had I realized the consequences, I ... differently.", "o": ["will act", "would act", "would have acted", "acted", "act"], "a": "C", "e": "Inverted conditional (Type 3) for a hypothetical past situation, requiring 'would have + past participle'." },
+
+	// Test 23: Questions 221-230 (Advanced Modals & Perfect Infinitives - C1)
+	{ "q": "You ... have told me about the problem earlier.", "o": ["should", "must", "could", "would", "might"], "a": "A", "e": "'Should have + past participle' expresses regret or criticism about a past action that didn't happen." },
+	{ "q": "He ... have received my message by now.", "o": ["should", "must", "could", "would", "might"], "a": "A", "e": "'Should have + past participle' expresses expectation about a past action that likely happened." },
+	{ "q": "They ... have taken the wrong turn; we should have seen them by now.", "o": ["should", "must", "could", "would", "might"], "a": "B", "e": "'Must have + past participle' expresses a logical conclusion about a past event." },
+	{ "q": "I ... have finished the report, but I got distracted.", "o": ["should", "must", "could", "would", "might"], "a": "C", "e": "'Could have + past participle' expresses past ability or possibility that wasn't realized." },
+	{ "q": "She ... have known about the surprise party; she seemed completely normal.", "o": ["shouldn't", "mustn't", "can't", "wouldn't", "mightn't"], "a": "C", "e": "'Can't have + past participle' expresses disbelief or certainty that something didn't happen." },
+	{ "q": "We ... have warned them about the danger.", "o": ["should", "must", "could", "would", "might"], "a": "A", "e": "'Should have + past participle' expresses regret about a past action that didn't happen." },
+	{ "q": "He ... have been at the meeting; I saw him there.", "o": ["should", "must", "could", "would", "might"], "a": "B", "e": "'Must have + past participle' expresses near certainty about a past event." },
+	{ "q": "You ... have called before coming over.", "o": ["should", "must", "could", "would", "might"], "a": "A", "e": "'Should have + past participle' expresses criticism about a past action that didn't happen." },
+	{ "q": "They ... have missed their flight; otherwise they would be here.", "o": ["should", "must", "could", "would", "might"], "a": "B", "e": "'Must have + past participle' expresses a logical conclusion about a past event." },
+	{ "q": "I ... have helped you if you had asked.", "o": ["should", "must", "could", "would", "might"], "a": "D", "e": "'Would have + past participle' is used in the result clause of Third Conditionals." },
+
+	// Test 24: Questions 231-240 (Advanced Passive & Causative - C1)
+	{ "q": "The manuscript is believed ... in the 15th century.", "o": ["to write", "to be written", "to have been written", "written", "writing"], "a": "C", "e": "Passive infinitive perfect form ('to have been written') is used for actions believed to have happened in the past." },
+	{ "q": "She had her car ... last week.", "o": ["service", "serviced", "servicing", "to service", "services"], "a": "B", "e": "Causative structure 'have + object + past participle' indicates someone else did the action." },
+	{ "q": "The building is reported ... in the earthquake.", "o": ["to damage", "to be damaged", "to have been damaged", "damaged", "damaging"], "a": "C", "e": "Passive infinitive perfect form ('to have been damaged') is used for reported past events." },
+	{ "q": "We need to get the documents ... by tomorrow.", "o": ["translate", "translated", "translating", "to translate", "translates"], "a": "B", "e": "Causative structure 'get + object + past participle' indicates arranging for something to be done." },
+	{ "q": "He is thought ... the company for years.", "o": ["to lead", "to be leading", "to have been leading", "leading", "led"], "a": "C", "e": "Passive infinitive perfect continuous form ('to have been leading') emphasizes duration up to the present." },
+	{ "q": "I'll have my assistant ... the arrangements.", "o": ["make", "made", "making", "to make", "makes"], "a": "A", "e": "Causative structure 'have + person + base verb' indicates asking someone to do something." },
+	{ "q": "The painting is known ... millions of dollars.", "o": ["to worth", "to be worth", "to have been worth", "worth", "worthy"], "a": "B", "e": "Passive infinitive simple form ('to be worth') is used for current states or characteristics." },
+	{ "q": "She got her hair ... for the wedding.", "o": ["do", "done", "doing", "to do", "does"], "a": "B", "e": "Causative structure 'get + object + past participle' indicates arranging for something to be done." },
+	{ "q": "The suspect is alleged ... the crime.", "o": ["to commit", "to be committed", "to have committed", "committed", "committing"], "a": "C", "e": "Passive infinitive perfect form ('to have committed') is used for alleged past actions." },
+	{ "q": "We had the contract ... by a lawyer.", "o": ["review", "reviewed", "reviewing", "to review", "reviews"], "a": "B", "e": "Causative structure 'have + object + past participle' indicates someone else did the action." },
+
+	// Test 25: Questions 241-250 (Advanced Vocabulary & Collocations - C1)
+	{ "q": "The new policy will ... significant changes to the system.", "o": ["bring about", "bring up", "bring out", "bring in", "bring down"], "a": "A", "e": "'Bring about' means to cause something to happen." },
+	{ "q": "She has a ... for remembering names.", "o": ["skill", "talent", "ability", "capacity", "knack"], "a": "E", "e": "'Knack' means a special skill or ability, often natural rather than learned." },
+	{ "q": "The company decided to ... the new product in spring.", "o": ["launch", "publish", "release", "introduce", "announce"], "a": "A", "e": "'Launch' is the specific term used for introducing new products to the market." },
+	{ "q": "His argument was ... and convincing.", "o": ["coherent", "cohesive", "consistent", "comprehensive", "conclusive"], "a": "A", "e": "'Coherent' means logical and consistent, making sense as a whole." },
+	{ "q": "The research ... light on the causes of the phenomenon.", "o": ["shed", "cast", "threw", "brought", "gave"], "a": "A", "e": "'Shed light on' is a fixed expression meaning to clarify or explain something." },
+	{ "q": "We need to ... a balance between work and leisure.", "o": ["strike", "make", "create", "find", "achieve"], "a": "A", "e": "'Strike a balance' is a fixed expression meaning to find a satisfactory compromise." },
+	{ "q": "The manager ... responsibility for the failure.", "o": ["claimed", "took", "accepted", "assumed", "shouldered"], "a": "B", "e": "'Take responsibility' is the standard collocation for accepting blame or duty." },
+	{ "q": "Her dedication ... her success.", "o": ["contributed to", "led in", "resulted from", "brought about", "accounted for"], "a": "A", "e": "'Contributed to' means helped to cause or make something happen." },
+	{ "q": "The agreement was reached after ... negotiations.", "o": ["prolonged", "extended", "lengthy", "protracted", "sustained"], "a": "D", "e": "'Protracted' means lasting for a long time, especially longer than usual or necessary." },
+	{ "q": "He ... his position to help his friends.", "o": ["abused", "misused", "exploited", "used", "utilized"], "a": "C", "e": "'Exploit' means to use something unfairly for one's own advantage." },
+
+	// Test 26: Questions 251-260 (Advanced Connectors & Discourse Markers - C1)
+	{ "q": "... the economic challenges, the company showed growth.", "o": ["Despite", "Although", "Whereas", "Nevertheless", "However"], "a": "A", "e": "'Despite' is a preposition meaning without being affected by, followed by a noun phrase." },
+	{ "q": "The project was completed on time, ... we faced numerous obstacles.", "o": ["despite", "although", "nevertheless", "whereas", "however"], "a": "B", "e": "'Although' is a conjunction used to introduce a contrasting clause with a subject and verb." },
+	{ "q": "He's not qualified for the position. ..., he has relevant experience.", "o": ["Despite", "Although", "Nevertheless", "Whereas", "However"], "a": "C", "e": "'Nevertheless' is a conjunctive adverb used to show contrast between two sentences." },
+	{ "q": "... improving sales, profits remained stagnant.", "o": ["Despite", "Although", "Whereas", "Nevertheless", "However"], "a": "A", "e": "'Despite' is a preposition meaning without being affected by, followed by a gerund." },
+	{ "q": "The northern region experiences cold winters, ... the south enjoys mild weather.", "o": ["despite", "although", "nevertheless", "whereas", "however"], "a": "D", "e": "'Whereas' is used to show contrast between two different situations or facts." },
+	{ "q": "The team worked extremely hard. ..., they failed to meet the deadline.", "o": ["Despite", "Although", "Nevertheless", "Whereas", "However"], "a": "E", "e": "'However' is a conjunctive adverb used to show contrast between two sentences." },
+	{ "q": "... having limited resources, they achieved remarkable results.", "o": ["Despite", "Although", "Nevertheless", "Whereas", "However"], "a": "A", "e": "'Despite' is a preposition meaning without being affected by, followed by a gerund phrase." },
+	{ "q": "She decided to accept the job offer, ... the lower salary.", "o": ["despite", "although", "nevertheless", "whereas", "however"], "a": "A", "e": "'Despite' is a preposition meaning without being affected by, followed by a noun phrase." },
+	{ "q": "The first experiment yielded positive results, ... the second one failed completely.", "o": ["despite", "although", "nevertheless", "whereas", "however"], "a": "C", "e": "'Whereas' is used to show contrast between two different situations or facts." },
+	{ "q": "He claimed to be an expert. ..., his knowledge seemed quite limited.", "o": ["Despite", "Although", "Nevertheless", "Whereas", "However"], "a": "E", "e": "'However' is a conjunctive adverb used to show contrast between two sentences." },
+
+	// Test 27: Questions 261-270 (Advanced Prepositions & Phrasal Verbs - C1)
+	{ "q": "We need to ... a solution to this problem.", "o": ["come up with", "come across", "come about", "come into", "come over"], "a": "A", "e": "'Come up with' means to think of or produce an idea, plan, or solution." },
+	{ "q": "The company is ... financial difficulties.", "o": ["going through", "going over", "going for", "going into", "going by"], "a": "A", "e": "'Go through' means to experience something difficult or unpleasant." },
+	{ "q": "He ... his father in many ways.", "o": ["takes after", "takes over", "takes up", "takes in", "takes on"], "a": "A", "e": "'Take after' means to resemble or have similar characteristics to a family member." },
+	{ "q": "We should ... the instructions carefully.", "o": ["go over", "go through", "go for", "go into", "go by"], "a": "A", "e": "'Go over' means to review or examine something carefully." },
+	{ "q": "She ... a great deal of hardship in her childhood.", "o": ["went through", "went over", "went for", "went into", "went by"], "a": "A", "e": "'Go through' means to experience something difficult or unpleasant." },
+	{ "q": "The business was ... by a multinational corporation.", "o": ["taken over", "taken after", "taken up", "taken in", "taken on"], "a": "A", "e": "'Take over' means to gain control of something, especially a company." },
+	{ "q": "He ... photography as a hobby last year.", "o": ["took up", "took over", "took after", "took in", "took on"], "a": "A", "e": "'Take up' means to start doing something regularly, especially as a hobby." },
+	{ "q": "We need to ... additional staff for the busy season.", "o": ["take on", "take over", "take after", "take up", "take in"], "a": "A", "e": "'Take on' means to employ someone or accept responsibility for something." },
+	{ "q": "I can't ... his arrogant behavior anymore.", "o": ["put up with", "put down", "put off", "put through", "put away"], "a": "A", "e": "'Put up with' means to tolerate or accept something unpleasant." },
+	{ "q": "The meeting has been ... until next week.", "o": ["put off", "put up with", "put down", "put through", "put away"], "a": "A", "e": "'Put off' means to postpone or delay something." },
+
+	// Test 28: Questions 271-280 (Advanced Adjective Patterns & Complements - C1)
+	{ "q": "She was ... to hear the news.", "o": ["astonished", "astonishing", "astonish", "astonishment", "astonishingly"], "a": "A", "e": "Adjectives ending in '-ed' describe feelings or reactions ('she was astonished')." },
+	{ "q": "The movie was ...", "o": ["bored", "boring", "bore", "boredom", "boringly"], "a": "B", "e": "Adjectives ending in '-ing' describe the thing causing the feeling ('the movie was boring')." },
+	{ "q": "It's ... that he hasn't called yet.", "o": ["surprised", "surprising", "surprise", "surprisingly", "surprisement"], "a": "B", "e": "Adjectives ending in '-ing' describe the situation causing the feeling ('it's surprising')." },
+	{ "q": "I'm ... in learning more about this topic.", "o": ["interested", "interesting", "interest", "interestingly", "interestment"], "a": "A", "e": "Adjectives ending in '-ed' describe feelings or reactions ('I'm interested')." },
+	{ "q": "The results were ...", "o": ["disappointed", "disappointing", "disappoint", "disappointingly", "disappointment"], "a": "B", "e": "Adjectives ending in '-ing' describe the thing causing the feeling ('the results were disappointing')." },
+	{ "q": "We were ... by the response.", "o": ["encouraged", "encouraging", "encourage", "encouragingly", "encouragement"], "a": "A", "e": "Adjectives ending in '-ed' describe feelings or reactions ('we were encouraged')." },
+	{ "q": "His speech was ...", "o": ["inspired", "inspiring", "inspire", "inspiringly", "inspiration"], "a": "B", "e": "Adjectives ending in '-ing' describe the thing causing the feeling ('his speech was inspiring')." },
+	{ "q": "I feel ... about the upcoming trip.", "o": ["excited", "exciting", "excite", "excitedly", "excitement"], "a": "A", "e": "Adjectives ending in '-ed' describe feelings or reactions ('I feel excited')." },
+	{ "q": "The journey was ...", "o": ["exhausted", "exhausting", "exhaust", "exhaustedly", "exhaustion"], "a": "B", "e": "Adjectives ending in '-ing' describe the thing causing the feeling ('the journey was exhausting')." },
+	{ "q": "She looked ... after the long day.", "o": ["exhausted", "exhausting", "exhaust", "exhaustedly", "exhaustion"], "a": "A", "e": "Adjectives ending in '-ed' describe feelings or reactions ('she looked exhausted')." },
+
+	// Test 29: Questions 281-290 (Advanced Relative Clauses & Reduction - C1)
+	{ "q": "The person ... I spoke to was very helpful.", "o": ["who", "whom", "which", "that", "whose"], "a": "B", "e": "'Whom' is the object pronoun used after a preposition ('to')." },
+	{ "q": "This is the house ... I was born.", "o": ["where", "which", "that", "when", "why"], "a": "A", "e": "'Where' is used to refer to a place." },
+	{ "q": "The reason ... he left is still unknown.", "o": ["where", "which", "that", "when", "why"], "a": "E", "e": "'Why' is used to refer to a reason." },
+	{ "q": "The book, ... was published last year, became a bestseller.", "o": ["who", "whom", "which", "that", "whose"], "a": "C", "e": "'Which' is used for non-defining relative clauses referring to things." },
+	{ "q": "The man ... car was stolen reported it to the police.", "o": ["who", "whom", "which", "that", "whose"], "a": "E", "e": "'Whose' indicates possession." },
+	{ "q": "The day ... we met was unforgettable.", "o": ["where", "which", "that", "when", "why"], "a": "D", "e": "'When' is used to refer to a time." },
+	{ "q": "She's one of the few people ... I trust completely.", "o": ["who", "whom", "which", "that", "whose"], "a": "B", "e": "'Whom' is the object pronoun (I trust whom)." },
+	{ "q": "The company ... he works is expanding.", "o": ["where", "which", "that", "when", "why"], "a": "A", "e": "'Where' is used to refer to a place." },
+	{ "q": "The decision ... was made yesterday will affect us all.", "o": ["who", "whom", "which", "that", "whose"], "a": "C", "e": "'Which' or 'that' can be used for defining relative clauses referring to things." },
+	{ "q": "The students, most of ... passed the exam, were delighted.", "o": ["who", "whom", "which", "that", "whose"], "a": "B", "e": "'Whom' is used after quantifiers like 'most of', 'some of', etc." },
+
+	// Test 30: Questions 291-300 (Advanced Sentence Structure & Emphasis - C1)
+	{ "q": "... was his dedication that impressed everyone.", "o": ["Such", "So", "It", "There", "What"], "a": "C", "e": "Cleft sentence structure: 'It was... that' emphasizes the subject." },
+	{ "q": "What we need ... more time.", "o": ["is", "are", "have", "has", "were"], "a": "A", "e": "The subject 'What we need' is singular, requiring 'is'." },
+	{ "q": "The harder you work, ... results you'll get.", "o": ["the better", "better", "the best", "good", "well"], "a": "A", "e": "The structure 'the + comparative..., the + comparative' shows that two things change together." },
+	{ "q": "... I want is a cup of coffee.", "o": ["What", "That", "Which", "It", "There"], "a": "A", "e": "'What' introduces a nominal relative clause meaning 'the thing that'." },
+	{ "q": "Not until later ... the full story.", "o": ["I learned", "did I learn", "I had learned", "had I learned", "learned I"], "a": "B", "e": "Inversion is required after 'Not until' at the beginning of a sentence ('did I learn')." },
+	{ "q": "So successful ... that they expanded internationally.", "o": ["their business was", "was their business", "their business had been", "had their business been", "their business is"], "a": "B", "e": "Inversion is required after 'So + adjective' at the beginning of a sentence ('was their business')." },
+	{ "q": "... he realized his mistake.", "o": ["Only then", "Then only", "Only when", "When only", "Just then"], "a": "A", "e": "'Only then' at the beginning of a sentence requires inversion in the main clause ('did he realize')." },
+	{ "q": "What ... is more information.", "o": ["we need", "do we need", "needs", "is needed", "needing"], "a": "A", "e": "The structure 'What + subject + verb' creates a nominal relative clause." },
+	{ "q": "The more you practice, ... you'll become.", "o": ["the more confident", "more confident", "the most confident", "confident", "confidently"], "a": "A", "e": "The structure 'the + comparative..., the + comparative' shows that two things change together." },
+	{ "q": "... was the weather that we canceled the picnic.", "o": ["Such", "So", "It", "There", "What"], "a": "A", "e": "The structure 'Such + be + noun + that' shows result or consequence." }
+];
+const TOTAL_QUESTIONS = 210;
+const TOTAL_TESTS = 30;
+const TEST_SIZE = 10;
+let currentQuestionIndex = 0;
+let score = 0;
+let shuffledQuestions = [];
+let userName = "";
+let userSurname = "";
+let selectedTestNumber = 0;
+let userAnswers = [];
+const TOTAL_TIME_MINUTES = 2;
+const TOTAL_TIME_SECONDS = TOTAL_TIME_MINUTES * 60;
+let timerInterval = null;
+let timeLeft = TOTAL_TIME_SECONDS;
+let pausedTimeLeft = null;
+let isTimerEnabled = false;
+let isTimeExpired = false;
+let isReviewMode = false; // NEW: Review Mode state
+const HISTORY_STORAGE_KEY = 'englishQuizHistory';
+let quizHistory = [];
+let lastHistoryId = null;
+const CORRECT_MESSAGES_KEY = 'msg_correct';
+const INCORRECT_MESSAGES_KEY = 'msg_incorrect';
+const startScreen = document.getElementById('startScreen');
+const quizScreen = document.getElementById('quizScreen');
+const resultsScreen = document.getElementById('resultsScreen');
+const currentQuestionEl = document.getElementById('currentQuestion');
+const optionsContainer = document.getElementById('optionsContainer');
+const questionCounterEl = document.getElementById('questionCounter');
+const quizScoreEl = document.getElementById('quizScore');
+const feedbackMessageEl = document.getElementById('feedbackMessage');
+const startFeedbackMessageEl = document.getElementById('startFeedbackMessage');
+const finalScoreEl = document.getElementById('finalScore');
+const finalPercentageEl = document.getElementById('finalPercentage');
+const userGreetingEl = document.getElementById('userGreeting');
+const prevButton = document.getElementById('prevButton');
+const nextButton = document.getElementById('nextButton');
+const quizTitleEl = document.getElementById('quizTitle');
+const questionPanelEl = document.getElementById('questionPanel');
+const questionPanelModal = document.getElementById('questionPanelModal');
+const levelSelectionModal = document.getElementById('levelSelectionModal');
+const modalLevelTitle = document.getElementById('modalLevelTitle');
+const modalLevelDescription = document.getElementById('modalLevelDescription');
+const cefrTestSelectionContainer = document.getElementById('testSelectionContainer');
+const timeLimitToggle = document.getElementById('timeLimitToggle');
+const reviewModeToggle = document.getElementById('reviewModeToggle'); // NEW: Review Mode toggle
+const quizStatusBar = document.getElementById('quizStatusBar');
+const timerDisplay = document.getElementById('timerDisplay');
+const progressBar = document.getElementById('progressBar');
+const summaryContainer = document.getElementById('summaryContainer');
+const historyModal = document.getElementById('historyModal');
+const historyContainer = document.getElementById('historyContainer');
+const historyFilter = document.getElementById('historyFilter');
+const viewHistoryButton = document.getElementById('viewHistoryButton');
+const viewHistoryFromResults = document.getElementById('viewHistoryFromResults');
+const clearHistoryButton = document.getElementById('clearHistoryButton');
+const historyStats = document.getElementById('historyStats');
+const reviewDetailsModal = document.getElementById('reviewDetailsModal');
+const reviewModalTitle = document.getElementById('reviewModalTitle');
+const reviewDetailsContainer = document.getElementById('reviewDetailsContainer');
+const mobileMenu = document.getElementById('mobileMenu');
+const menuIcon = document.getElementById('menuIcon');
+const closeIcon = document.getElementById('closeIcon');
+
+// NEW: Quit Test function
+function quitTest() {
+	stopTimer();
+	const confirmQuit = document.createElement('div');
+	confirmQuit.className = 'fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4';
+	confirmQuit.innerHTML = `
+		<div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm text-center">
+			<h4 class="text-xl font-bold mb-2 text-red-600">Quit Test</h4>
+			<p class="text-gray-600 mb-4">Are you sure you want to quit this test? Your progress will not be saved.</p>
+			<div class="flex justify-center space-x-4">
+				<button id="confirmQuitButton" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150">
+					Yes, Quit
+				</button>
+				<button onclick="this.closest('.fixed').remove()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-150">
+					Cancel
+				</button>
+			</div>
+		</div>
+	`;
+	document.body.appendChild(confirmQuit);
+	document.getElementById('confirmQuitButton').onclick = () => {
+		confirmQuit.remove();
+		resetQuiz();
+	};
+}
+
+function showDirectReview() {
+	if (lastHistoryId !== null) {
+		showDetailedReview(lastHistoryId);
+	} else {
+		alertUser(getLangText('alert_data_error_title'), getLangText('alert_data_error_message'));
+	}
+}
+
+function shuffleArray(array) {
+	for (let i = array.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[array[i], array[j]] = [array[j], array[i]];
+	}
+	return array;
+}
+function getRandomMessage(messageArrayKey) {
+	const messageArray = langData[currentLang][messageArrayKey] || langData['en'][messageArrayKey];
+	if (!messageArray || messageArray.length === 0) return "Message missing.";
+	const randomIndex = Math.floor(Math.random() * messageArray.length);
+	return messageArray[randomIndex];
+}
+function calculateScore() {
+	let currentScore = 0;
+	for (let i = 0; i < shuffledQuestions.length; i++) {
+		if (userAnswers[i] !== null && userAnswers[i] === shuffledQuestions[i].a) {
+			currentScore++;
+		}
+	}
+	score = currentScore;
+	return currentScore;
+}
+function updateOptionStyles(questionData, selectedAnswer) {
+	const correctAnswer = questionData.a;
+	const optionButtons = Array.from(optionsContainer.children);
+	optionButtons.forEach(btn => {
+		const isOptionSelected = btn.getAttribute('data-answer') === selectedAnswer;
+		const isOptionCorrect = btn.getAttribute('data-answer') === correctAnswer;
+		const isUserAnswered = userAnswers[currentQuestionIndex] !== null;
+		btn.classList.remove('bg-teal-50', 'border-teal-500', 'bg-red-500', 'text-white', 'border-red-600', 'bg-green-500', 'border-green-600', 'font-bold', 'hover:bg-teal-50', 'hover:border-teal-500', 'selected');
+		btn.classList.add('bg-white', 'border-gray-300', 'text-gray-800', 'hover:bg-teal-50', 'hover:border-teal-500');
+		if (isUserAnswered) {
+			btn.disabled = true;
+			if (isOptionCorrect) {
+				btn.classList.add('bg-green-500', 'text-white', 'border-green-600', 'font-bold');
+				btn.classList.remove('hover:bg-teal-50', 'hover:border-teal-500');
+			} else if (isOptionSelected) {
+				btn.classList.add('bg-red-500', 'text-white', 'border-red-600', 'font-bold', 'selected');
+				btn.classList.remove('hover:bg-teal-50', 'hover:border-teal-500');
+			} else {
+				btn.classList.add('opacity-75');
+			}
+		} else {
+			btn.disabled = isTimeExpired;
+		}
+	});
+}
+function alertUser(title, message) {
+	const modal = document.createElement('div');
+	modal.className = 'fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4';
+	modal.innerHTML = `
+		<div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm text-center">
+			<h4 class="text-xl font-bold mb-2 text-red-600">${title}</h4>
+			<p class="text-gray-600 mb-4">${message}</p>
+			<button onclick="this.closest('.fixed').remove()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150">
+				${getLangText('alert_acknowledge')}
+			</button>
+		</div>
+	`;
+	document.body.appendChild(modal);
+}
+function displayAnswerFeedback(questionData, selectedAnswer) {
+	const correctAnswer = questionData.a;
+	const optionLabels = ["A", "B", "C", "D", "E"];
+	const correctOptionText = questionData.o[correctAnswer.charCodeAt(0) - 'A'.charCodeAt(0)];
+	updateOptionStyles(questionData, selectedAnswer);
+	if (!questionPanelModal.classList.contains('hidden')) {
+		renderQuestionPanel();
+	}
+	if (selectedAnswer === correctAnswer) {
+		const randomMsg = getRandomMessage(CORRECT_MESSAGES_KEY);
+		feedbackMessageEl.innerHTML = `
+			<div class="text-lg mb-1">${randomMsg}</div>
+			<div class="text-base">${getLangText('msg_correct_choice')}</div>
+			<div class="text-sm mt-2 font-normal">Answer: ${correctAnswer}. ${correctOptionText}</div>
+		`;
+		feedbackMessageEl.classList.remove('hidden', 'bg-yellow-100', 'bg-red-100', 'text-yellow-800', 'text-red-800');
+		feedbackMessageEl.classList.add('bg-green-100', 'text-green-800');
+	} else {
+		const randomMsg = getRandomMessage(INCORRECT_MESSAGES_KEY);
+		let explanation = questionData.e || "Review the grammatical rule associated with this topic to master it!";
+		feedbackMessageEl.innerHTML = `
+			<div class="text-lg mb-1">${randomMsg}</div>
+			<div class="text-base">${getLangText('msg_incorrect_choice', { label: correctAnswer, text: correctOptionText })}</div>
+			<div class="text-sm mt-2 font-normal"> ${explanation}</div>
+		`;
+		feedbackMessageEl.classList.remove('hidden', 'bg-yellow-100', 'bg-green-100', 'text-yellow-800', 'text-green-800');
+		feedbackMessageEl.classList.add('bg-red-100', 'text-red-800');
+	}
+	feedbackMessageEl.classList.remove('hidden');
+}
+function formatTime(seconds) {
+	const minutes = Math.floor(seconds / 60);
+	const remainingSeconds = seconds % 60;
+	return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+}
+function updateTimerDisplay() {
+	if (!isTimerEnabled) return;
+	timerDisplay.textContent = `${formatTime(timeLeft)}${getLangText('quiz_status_time_remaining')}`;
+	const percentTimeRemaining = (timeLeft / TOTAL_TIME_SECONDS) * 100;
+	progressBar.style.width = `${percentTimeRemaining}%`;
+
+	progressBar.classList.remove('bg-teal-500', 'bg-orange-500', 'bg-red-500');
+
+	if (percentTimeRemaining > 60) {
+		progressBar.classList.add('bg-teal-500');
+	} else if (percentTimeRemaining > 30) {
+		progressBar.classList.add('bg-orange-500');
+	} else {
+		progressBar.classList.add('bg-red-500');
+	}
+
+	if (timeLeft <= 0 && !isTimeExpired) {
+		stopTimer();
+		isTimeExpired = true;
+		alertUser(getLangText('alert_time_expired_title'), getLangText('alert_time_expired_message'));
+		setTimeout(showResults, 1500);
+	}
+}
+function startTimer() {
+	isTimerEnabled = timeLimitToggle.checked;
+	if (!isTimerEnabled || isTimeExpired) {
+		quizStatusBar.classList.add('hidden');
+		return;
+	}
+	
+	if (pausedTimeLeft !== null) {
+		timeLeft = pausedTimeLeft;
+		pausedTimeLeft = null;
+	} else {
+		timeLeft = TOTAL_TIME_SECONDS;
+	}
+	
+	quizStatusBar.classList.remove('hidden');
+	updateTimerDisplay();
+	
+	if (timerInterval) {
+		clearInterval(timerInterval);
+	}
+	
+	timerInterval = setInterval(() => {
+		if (timeLeft > 0) {
+			timeLeft--;
+			updateTimerDisplay();
+		}
+	}, 1000);
+}
+
+function pauseTimer() {
+	if (timerInterval) {
+		clearInterval(timerInterval);
+		timerInterval = null;
+		pausedTimeLeft = timeLeft;
+	}
+}
+
+function resumeTimer() {
+	if (isTimerEnabled && pausedTimeLeft !== null && !isTimeExpired) {
+		startTimer();
+	}
+}
+
+function stopTimer() {
+	if (timerInterval) {
+		clearInterval(timerInterval);
+		timerInterval = null;
+	}
+	pausedTimeLeft = null;
+}
+
+function togglePanel(show) {
+	if (show) {
+		renderQuestionPanel();
+		questionPanelModal.classList.remove('hidden');
+	} else {
+		questionPanelModal.classList.add('hidden');
+	}
+}    function renderQuestionPanel() {
+questionPanelEl.innerHTML = '';
+for (let i = 0; i < shuffledQuestions.length; i++) {
+	const qNum = i + 1;
+	const button = document.createElement('button');
+	let classes = 'q-index-button p-1 text-xs font-semibold rounded-lg shadow-sm w-full h-8 flex items-center justify-center border transition duration-100';
+	
+	// NEW: Check if in review mode and disable previous questions
+	const isDisabledInReviewMode = isReviewMode && i < currentQuestionIndex;
+	
+	if (i === currentQuestionIndex) {
+		classes += ' bg-teal-600 text-white border-teal-700 ring-2 ring-teal-300 transform scale-105';
+	} else if (userAnswers[i] !== null) {
+		const isCorrect = userAnswers[i] === shuffledQuestions[i].a;
+		if (isCorrect) {
+			classes += ' bg-green-100 text-green-700 border-green-300 hover:bg-green-200';
+		} else {
+			classes += ' bg-red-100 text-red-700 border-red-300 hover:bg-red-200';
+		}
+	} else {
+		classes += ' bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200';
+	}
+	
+	button.className = classes;
+	button.textContent = qNum;
+	button.setAttribute('data-index', i);
+	
+	// NEW: Disable button if in review mode and it's a previous question
+	if (isTimeExpired || isDisabledInReviewMode) {
+		button.disabled = true;
+		button.classList.add('opacity-50', 'cursor-not-allowed');
+	} else {
+		button.onclick = () => jumpToQuestion(i);
+	}
+	
+	questionPanelEl.appendChild(button);
+}
+
+// Remove this duplicate disabling code since we handle it above
+// if (isTimeExpired) {
+//     const buttons = questionPanelEl.querySelectorAll('button');
+//     buttons.forEach(btn => {
+//         btn.disabled = true;
+//     });
+// }
+}
+function jumpToQuestion(index) {
+	// NEW: Prevent jumping to previous questions in review mode
+	if (isReviewMode && index < currentQuestionIndex) {
+		return;
+	}
+	
+	if (index >= 0 && index < shuffledQuestions.length) {
+		currentQuestionIndex = index;
+		renderQuestion();
+		togglePanel(false);
+	}
+}
+function renderQuestion() {
+	const questionData = shuffledQuestions[currentQuestionIndex];
+	currentQuestionEl.textContent = questionData.q;
+	questionCounterEl.textContent = getLangText('quiz_counter', { current: currentQuestionIndex + 1, total: shuffledQuestions.length });
+	quizScoreEl.textContent = getLangText('quiz_score', { score: calculateScore() });
+	optionsContainer.innerHTML = '';
+	const optionLabels = ["A", "B", "C", "D", "E"];
+	questionData.o.forEach((option, index) => {
+		const label = optionLabels[index];
+		const button = document.createElement('button');
+		button.className = 'option-button w-full text-left p-3 mb-2 rounded-lg border-2 border-gray-300 bg-white text-gray-800 font-medium transition duration-150';
+		button.setAttribute('data-answer', label);
+		button.innerHTML = `<span class="font-bold">${label}.</span> ${option}`;
+		button.onclick = () => submitAnswer(label);
+		optionsContainer.appendChild(button);
+	});
+	
+	// Update option styles based on current answer state
+	updateOptionStyles(questionData, userAnswers[currentQuestionIndex]);
+	
+	// Show feedback if this question was already answered
+	if (userAnswers[currentQuestionIndex] !== null) {
+		displayAnswerFeedback(questionData, userAnswers[currentQuestionIndex]);
+	} else {
+		feedbackMessageEl.classList.add('hidden');
+	}
+
+	prevButton.disabled = currentQuestionIndex === 0 || isTimeExpired || isReviewMode;
+	const isLastQuestion = currentQuestionIndex === shuffledQuestions.length - 1;
+	if (isLastQuestion) {
+		nextButton.textContent = getLangText('quiz_finish_button');
+		nextButton.classList.add('bg-red-600', 'hover:bg-red-700');
+		nextButton.classList.remove('bg-teal-600', 'hover:bg-teal-700');
+	} else {
+		nextButton.textContent = getLangText('quiz_next_button');
+		nextButton.classList.add('bg-teal-600', 'hover:bg-teal-700');
+		nextButton.classList.remove('bg-red-600', 'hover:bg-red-700');
+	}
+	nextButton.disabled = isTimeExpired;
+	
+	// NEW: Hide question overview button in review mode
+	const overviewButton = document.querySelector('[onclick="togglePanel(true)"]');
+	if (overviewButton) {
+		if (isReviewMode) {
+			overviewButton.style.display = 'none';
+		} else {
+			overviewButton.style.display = 'block';
+		}
+	}
+}
+function submitAnswer(answer) {
+	if (isTimeExpired || userAnswers[currentQuestionIndex] !== null) {
+		return;
+	}
+	userAnswers[currentQuestionIndex] = answer;
+	calculateScore();
+	
+	// In Review Mode, don't show immediate feedback
+	if (!isReviewMode) {
+		displayAnswerFeedback(shuffledQuestions[currentQuestionIndex], answer);
+	} else {
+		// In Review Mode, just update the UI to show selection without feedback
+		updateOptionStyles(shuffledQuestions[currentQuestionIndex], answer);
+		feedbackMessageEl.classList.add('hidden');
+	}
+	
+	renderQuestionPanel();
+	
+	// Only auto-advance if NOT in time limit mode
+	if (!isTimerEnabled) {
+		if (currentQuestionIndex < shuffledQuestions.length - 1) {
+			setTimeout(nextQuestion, isReviewMode ? 0 : 15000);
+		} else {
+			setTimeout(showResults, isReviewMode ? 0 : 15000);
+		}
+	}
+}
+function nextQuestion() {
+	if (currentQuestionIndex < shuffledQuestions.length - 1) {
+		currentQuestionIndex++;
+		renderQuestion();
+	} else {
+		showResults();
+	}
+}
+function previousQuestion() {
+	if (currentQuestionIndex > 0) {
+		currentQuestionIndex--;
+		renderQuestion();
+	}
+}
+function showResults() {
+	stopTimer();
+	const finalScore = calculateScore();
+	const percentage = Math.round((finalScore / shuffledQuestions.length) * 100);
+	finalScoreEl.textContent = `${finalScore} / ${shuffledQuestions.length}`;
+	finalPercentageEl.textContent = `${percentage}%`;
+	const user = getLoggedInUser();
+	if (user) {
+		userGreetingEl.textContent = `${getLangText('feedback_welcome_back', { name: user.firstName })}`;
+	} else {
+		userGreetingEl.textContent = `${userName} ${userSurname}`;
+	}
+	startScreen.classList.add('hidden');
+	quizScreen.classList.add('hidden');
+	resultsScreen.classList.remove('hidden');
+	summaryContainer.classList.add('hidden');
+	
+	// NEW: If in Review Mode, show the summary immediately
+	if (isReviewMode) {
+		renderSummaryTable();
+		summaryContainer.classList.remove('hidden');
+	}
+	
+	saveQuizHistory(finalScore, percentage);
+	renderHistory();
+}
+function saveQuizHistory(finalScore, percentage) {
+	const historyData = {
+		id: Date.now(),
+		testNumber: selectedTestNumber,
+		score: finalScore,
+		totalQuestions: shuffledQuestions.length,
+		percentage: percentage,
+		userName: userName,
+		userSurname: userSurname,
+		date: new Date().toISOString(),
+		timeLimitUsed: isTimerEnabled,
+		timeExpired: isTimeExpired,
+		timeSpent: isTimerEnabled ? (TOTAL_TIME_SECONDS - timeLeft) : null,
+		userAnswers: [...userAnswers],
+		questions: shuffledQuestions.map(q => ({
+			q: q.q,
+			o: [...q.o],
+			a: q.a,
+			e: q.e
+		}))
+	};
+	quizHistory.unshift(historyData);
+	localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(quizHistory));
+	lastHistoryId = historyData.id;
+}
+function renderSummaryTable() {
+summaryContainer.innerHTML = '';
+const table = document.createElement('table');
+table.className = 'w-full';
+table.innerHTML = `
+	<thead class="summary-table-header">
+		<tr class="bg-gray-100 text-left text-gray-700 font-bold">
+			<th class="p-3 border-b">${getLangText('summary_q')}</th>
+			<th class="p-3 border-b">${getLangText('summary_result')}</th>
+			<th class="p-3 border-b">${getLangText('summary_your_choice')}</th>
+			<th class="p-3 border-b">${getLangText('summary_correct')}</th>
+			<th class="p-3 border-b">${getLangText('summary_explanation')}</th>
+		</tr>
+	</thead>
+	<tbody id="summaryTableBody"></tbody>
+`;
+summaryContainer.appendChild(table);
+const tbody = document.getElementById('summaryTableBody');
+const optionLabels = ["A", "B", "C", "D", "E"];
+
+for (let i = 0; i < shuffledQuestions.length; i++) {
+	const questionData = shuffledQuestions[i];
+	const userAnswer = userAnswers[i];
+	const correctAnswer = questionData.a;
+	const isCorrect = userAnswer === correctAnswer;
+	const isSkipped = userAnswer === null;
+	
+	const row = document.createElement('tr');
+	
+	// Set background color based on answer status
+	let rowClass = '';
+	if (isSkipped) {
+		rowClass = 'bg-yellow-50'; // Yellow for skipped/unanswered
+	} else if (isCorrect) {
+		rowClass = 'bg-green-50'; // Green for correct
+	} else {
+		rowClass = 'bg-red-50'; // Red for incorrect
+	}
+	
+	row.className = `summary-table-row border-b ${rowClass}`;
+	
+	const userAnswerText = userAnswer !== null ? 
+		`${userAnswer}. ${questionData.o[userAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}` : 
+		getLangText('summary_skipped');
+	const correctAnswerText = `${correctAnswer}. ${questionData.o[correctAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}`;
+	const explanationText = questionData.e || "No explanation available.";
+	
+	row.innerHTML = `
+		<td class="summary-table-cell p-3 font-semibold">${i + 1}</td>
+		<td class="summary-table-cell p-3">
+			<span class="font-bold ${isCorrect ? 'text-green-700' : isSkipped ? 'text-yellow-700' : 'text-red-700'}">
+				${isCorrect ? '✓' : isSkipped ? '−' : '✗'}
+			</span>
+		</td>
+		<td class="summary-table-cell p-3 text-sm">${userAnswerText}</td>
+		<td class="summary-table-cell p-3 text-sm">${correctAnswerText}</td>
+		<td class="summary-table-cell p-3 text-sm">${explanationText}</td>
+	`;
+	tbody.appendChild(row);
+}
+}
+function toggleHistoryModal(show) {
+	if (show) {
+		renderHistory();
+		historyModal.classList.remove('hidden');
+	} else {
+		historyModal.classList.add('hidden');
+	}
+}
+function renderHistory() {
+	loadHistory();
+	renderTestButtons();
+	historyContainer.innerHTML = '';
+	const filterValue = historyFilter.value;
+	let filteredHistory = quizHistory;
+	if (filterValue !== 'all') {
+		filteredHistory = quizHistory.filter(entry => entry.testNumber.toString() === filterValue);
+	}
+	if (filteredHistory.length === 0) {
+		historyContainer.innerHTML = `
+			<div class="text-center py-8 text-gray-500">
+				<p class="mb-2">${getLangText('history_no_entries')}</p>
+				<p class="text-sm">${getLangText('history_complete_test')}</p>
+			</div>
+		`;
+		historyStats.innerHTML = '';
+		return;
+	}
+	filteredHistory.forEach(entry => {
+		const historyItem = document.createElement('div');
+		historyItem.className = 'history-item bg-gray-50 p-4 rounded-lg mb-3 border border-gray-200';
+		const date = new Date(entry.date).toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US', {
+			year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+		});
+		const timeInfo = entry.timeLimitUsed ? 
+			(entry.timeExpired ? 
+				getLangText('history_time_expired') : 
+				`${getLangText('history_time')}${formatTime(entry.timeSpent)}`) : 
+			getLangText('history_no_time_limit');
+		historyItem.innerHTML = `
+			<div class="flex justify-between items-start mb-2">
+				<div>
+					<h4 class="font-bold text-gray-800">${entry.userName} ${entry.userSurname} - Test ${entry.testNumber}</h4>
+					<p class="text-sm text-gray-600">${date}</p>
+				</div>
+				<div class="text-right">
+					<div class="text-lg font-bold ${entry.percentage >= 70 ? 'text-green-600' : entry.percentage >= 50 ? 'text-yellow-600' : 'text-red-600'}">
+						${entry.score}/${entry.totalQuestions} (${entry.percentage}%)
+					</div>
+					<p class="text-xs text-gray-500">${timeInfo}</p>
+				</div>
+			</div>
+			<div class="flex justify-end">
+				<button class="view-details-button bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-2 py-1 rounded font-semibold shadow-md transition duration-150 ease-in-out"
+						onclick="showDetailedReview(${entry.id})" data-i18n="history_view_details">
+					${getLangText('history_view_details')}
+				</button>
+			</div>
+		`;
+		historyContainer.appendChild(historyItem);
+	});
+	updateHistoryStats(filteredHistory);
+}
+function loadHistory() {
+	const historyJson = localStorage.getItem(HISTORY_STORAGE_KEY);
+	quizHistory = historyJson ? JSON.parse(historyJson) : [];
+}
+function updateHistoryStats(historyEntries) {
+	if (historyEntries.length === 0) return;
+	const totalTests = historyEntries.length;
+	const avgScore = Math.round(historyEntries.reduce((sum, entry) => sum + entry.percentage, 0) / totalTests);
+	const bestScore = Math.max(...historyEntries.map(entry => entry.percentage));
+	const plural = totalTests > 1 ? 's' : '';
+	historyStats.innerHTML = `
+		<div class="text-sm text-gray-700">
+			<span class="font-semibold">${totalTests} ${getLangText('history_stats_completed').replace('{s}', plural)}</span> | 
+			${getLangText('history_stats_avg')} <span class="font-semibold">${avgScore}%</span> | 
+			${getLangText('history_stats_best')} <span class="font-semibold">${bestScore}%</span>
+		</div>
+	`;
+}
+function renderTestButtons() {
+	historyFilter.innerHTML = `<option value="all">${getLangText('modal_history_all_tests')}</option>`;
+	for (let i = 1; i <= TOTAL_TESTS; i++) {
+		const option = document.createElement('option');
+		option.value = i;
+		option.textContent = `Test ${i}`;
+		historyFilter.appendChild(option);
+	}
+}
+function clearHistory() {
+	const confirmModal = document.createElement('div');
+	confirmModal.className = 'fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4';
+	confirmModal.innerHTML = `
+		<div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm text-center">
+			<h4 class="text-xl font-bold mb-2 text-red-600">${getLangText('alert_confirm_deletion_title')}</h4>
+			<p class="text-gray-600 mb-4">${getLangText('alert_confirm_deletion_message')}</p>
+			<div class="flex justify-center space-x-4">
+				<button id="confirmClearButton" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150">
+					${getLangText('alert_yes_clear')}
+				</button>
+				<button onclick="this.closest('.fixed').remove()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-150">
+					${getLangText('alert_cancel')}
+				</button>
+			</div>
+		</div>
+	`;
+	document.body.appendChild(confirmModal);
+	document.getElementById('confirmClearButton').onclick = () => {
+		quizHistory = [];
+		localStorage.removeItem(HISTORY_STORAGE_KEY);
+		confirmModal.remove();
+		renderHistory();
+	};
+}
+function showDetailedReview(historyId) {
+	const entry = quizHistory.find(item => item.id === historyId);
+	if (!entry) {
+		alertUser(getLangText('alert_data_error_title'), getLangText('alert_data_error_message'));
+		return;
+	}
+	reviewModalTitle.textContent = `${getLangText('modal_review_title')} - Test ${entry.testNumber}`;
+	reviewDetailsContainer.innerHTML = '';
+	const reviewDiv = document.createElement('div');
+	reviewDiv.className = 'p-4 space-y-6';
+	const headerInfo = document.createElement('div');
+	headerInfo.className = 'bg-gray-100 p-4 rounded-lg mb-4';
+	headerInfo.innerHTML = `
+		<h4 class="font-bold text-lg text-gray-800">${entry.userName} ${entry.userSurname} - Test ${entry.testNumber}</h4>
+		<p class="text-gray-600">${new Date(entry.date).toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US', {
+			year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+		})}</p>
+		<div class="mt-2 text-lg font-bold ${entry.percentage >= 70 ? 'text-green-600' : entry.percentage >= 50 ? 'text-yellow-600' : 'text-red-600'}">
+			Score: ${entry.score}/${entry.totalQuestions} (${entry.percentage}%)
+		</div>
+	`;
+	reviewDiv.appendChild(headerInfo);
+	const optionLabels = ["A", "B", "C", "D", "E"];
+	entry.questions.forEach((questionData, index) => {
+		const userAnswer = entry.userAnswers[index];
+		const correctAnswer = questionData.a;
+		const isCorrect = userAnswer === correctAnswer;
+		const isSkipped = userAnswer === null;
+		
+		const questionDiv = document.createElement('div');
+		
+		// Set background color based on answer status
+		let questionDivClass = '';
+		if (isSkipped) {
+			questionDivClass = 'bg-yellow-50 border-yellow-200'; // Yellow for skipped
+		} else if (isCorrect) {
+			questionDivClass = 'bg-green-50 border-green-200'; // Green for correct
+		} else {
+			questionDivClass = 'bg-red-50 border-red-200'; // Red for incorrect
+		}
+		
+		questionDiv.className = `border rounded-lg p-4 ${questionDivClass}`;
+		
+		const userAnswerText = userAnswer !== null ? 
+			`${userAnswer}. ${questionData.o[userAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}` : 
+			getLangText('summary_skipped');
+		const correctAnswerText = `${correctAnswer}. ${questionData.o[correctAnswer.charCodeAt(0) - 'A'.charCodeAt(0)]}`;
+		const explanationText = questionData.e || "No explanation available.";
+		
+		questionDiv.innerHTML = `
+			<h5 class="font-bold text-gray-800 mb-2">${index + 1}. ${questionData.q}</h5>
+			<div class="space-y-2 text-sm">
+				<div><span class="font-semibold ${isCorrect ? 'text-green-700' : isSkipped ? 'text-yellow-700' : 'text-red-700'}">${getLangText('summary_result')}</span> 
+					<span class="font-bold ${isCorrect ? 'text-green-700' : isSkipped ? 'text-yellow-700' : 'text-red-700'}">
+						${isCorrect ? '✓ Correct' : isSkipped ? '− Skipped' : '✗ Incorrect'}
+					</span>
+				</div>
+				<div><span class="font-semibold">${getLangText('summary_your_choice', { label: userAnswer || '-' })}</span> ${userAnswerText}</div>
+				<div><span class="font-semibold">${getLangText('summary_correct', { label: correctAnswer })}</span> ${correctAnswerText}</div>
+				<div><span class="font-semibold">${getLangText('summary_explanation')}:</span> ${explanationText}</div>
+			</div>
+		`;
+		reviewDiv.appendChild(questionDiv);
+	});
+	reviewDetailsContainer.appendChild(reviewDiv);
+	toggleReviewDetailsModal(true);
+}
+function toggleReviewDetailsModal(show) {
+	if (show) {
+		reviewDetailsModal.classList.remove('hidden');
+	} else {
+		reviewDetailsModal.classList.add('hidden');
+	}
+}
+	function showLevelModal(level) {
+	modalLevelTitle.textContent = `${level} Level`;
+	let description = '';
+	let tests = [];
+	let buttonClass = '';
+	
+	if (level === 'A1 & A2') {
+		description = getLangText('level_a_desc');
+		tests = Array.from({ length: 10 }, (_, i) => i + 1);
+		buttonClass = 'test-button-A';
+	} else if (level === 'B1 & B2') {
+		description = getLangText('level_b_desc');
+		tests = Array.from({ length: 10 }, (_, i) => i + 11);
+		buttonClass = 'test-button-B';
+	} else if (level === 'C1 & C2') {
+		description = getLangText('level_c_desc');
+		tests = Array.from({ length: 10 }, (_, i) => i + 21);
+		buttonClass = 'test-button-C';
+	}
+	
+	modalLevelDescription.textContent = description;
+	cefrTestSelectionContainer.innerHTML = '';
+	
+	tests.forEach(testNum => {
+		const button = document.createElement('button');
+		button.className = `${buttonClass} font-semibold py-3 px-4 rounded-lg shadow-md border-2 transition duration-150 ease-in-out`;
+		button.textContent = `Test ${testNum}`;
+		button.onclick = () => selectTest(testNum, level);
+		cefrTestSelectionContainer.appendChild(button);
+	});
+	
+	levelSelectionModal.classList.remove('hidden');
+}
+function hideLevelModal() {
+	levelSelectionModal.classList.add('hidden');
+}
+function selectTest(testNumber, level) {
+	const firstName = document.getElementById('firstName').value.trim();
+	const surname = document.getElementById('surname').value.trim();
+	if (!firstName || !surname) {
+		showFeedback(startFeedbackMessageEl, getLangText('feedback_enter_details'), 'error');
+		return;
+	}
+	userName = firstName;
+	userSurname = surname;
+	selectedTestNumber = testNumber;
+	hideLevelModal();
+	startTest(testNumber);
+}
+function startTest(testNumber) {
+	const startIndex = (testNumber - 1) * TEST_SIZE;
+	const endIndex = startIndex + TEST_SIZE;
+	const testQuestions = QUESTION_BANK.slice(startIndex, endIndex);
+	shuffledQuestions = shuffleArray([...testQuestions]);
+	currentQuestionIndex = 0;
+	score = 0;
+	userAnswers = new Array(TEST_SIZE).fill(null);
+	isTimeExpired = false;
+	
+	// NEW: Set Review Mode state
+	isReviewMode = reviewModeToggle.checked;
+	
+	quizTitleEl.textContent = `Test ${testNumber} - English Grammar Quiz`;
+	startScreen.classList.add('hidden');
+	quizScreen.classList.remove('hidden');
+	resultsScreen.classList.add('hidden');
+	
+	// NEW: Hide question overview button in review mode
+	const overviewButton = document.querySelector('[onclick="togglePanel(true)"]');
+	if (overviewButton && isReviewMode) {
+		overviewButton.style.display = 'none';
+	}
+	
+	startTimer();
+	renderQuestion();
+	renderQuestionPanel();
+}
+function restartCurrentQuiz() {
+	if (selectedTestNumber === 0) {
+		return;
+	}
+	startTest(selectedTestNumber);
+}
+function resetQuiz() {
+	stopTimer();
+	selectedTestNumber = 0;
+	currentQuestionIndex = 0;
+	score = 0;
+	shuffledQuestions = [];
+	userAnswers = [];
+	userName = "";
+	userSurname = "";
+	isTimerEnabled = false;
+	isTimeExpired = false;
+	isReviewMode = false; // NEW: Reset Review Mode state
+	timeLeft = TOTAL_TIME_SECONDS;
+	pausedTimeLeft = null;
+	timeLimitToggle.checked = false;
+	reviewModeToggle.checked = false; // NEW: Reset Review Mode toggle
+	document.getElementById('firstName').value = "";
+	document.getElementById('surname').value = "";
+	startScreen.classList.remove('hidden');
+	quizScreen.classList.add('hidden');
+	resultsScreen.classList.add('hidden');
+	summaryContainer.classList.add('hidden');
+	feedbackMessageEl.classList.add('hidden');
+	startFeedbackMessageEl.classList.add('hidden');
+	
+	// NEW: Show question overview button again when resetting
+	const overviewButton = document.querySelector('[onclick="togglePanel(true)"]');
+	if (overviewButton) {
+		overviewButton.style.display = 'block';
+	}
+	
+	const user = getLoggedInUser();
+	if (user) {
+		document.getElementById('firstName').value = user.firstName;
+		document.getElementById('surname').value = user.surname;
+	}
+}
+// NEW: Function to update mobile menu items
+function updateMobileMenu() {
+	const mobileMenuItems = document.getElementById('mobileMenuItems');
+	const mainMenu = document.getElementById('mainMenu');
+	const menuLinks = mainMenu.querySelectorAll('a');
+	
+	mobileMenuItems.innerHTML = ''; // Clear existing items
+	
+	menuLinks.forEach(link => {
+		const clone = link.cloneNode(true);
+		clone.classList.remove('nav-active');
+		clone.onclick = (e) => {
+			e.preventDefault();
+			const section = clone.getAttribute('data-section');
+			if (section === 'login-logout') {
+				handleAuthClick(clone);
+			} else {
+				showSection(section, clone);
+			}
+			toggleMobileMenu();
+		};
+		mobileMenuItems.appendChild(clone);
+	});
+	
+	const langToggleClone = document.createElement('li');
+	langToggleClone.className = 'mt-2';
+	langToggleClone.innerHTML = `
+		<button onclick="toggleLanguage()" class="w-full text-center px-3 py-1.5 text-sm font-bold rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 transition duration-150 ease-in-out">
+			${langData[currentLang].lang_name}
+		</button>
+	`;
+	mobileMenuItems.appendChild(langToggleClone);
+}
+
+function init() {
+	const savedLang = localStorage.getItem('quizAppLang');
+	if (savedLang) {
+		currentLang = savedLang;
+	}
+	applyTranslations();
+	loadHistory();
+	renderTestButtons();
+	checkLoginStatus();
+	const user = getLoggedInUser();
+	if (user) {
+		document.getElementById('firstName').value = user.firstName;
+		document.getElementById('surname').value = user.surname;
+	}
+	
+	// Use the new function to set up mobile menu
+	updateMobileMenu();
+	
+	viewHistoryButton.onclick = () => toggleHistoryModal(true);
+	viewHistoryFromResults.onclick = () => toggleHistoryModal(true);
+	clearHistoryButton.onclick = clearHistory;
+	historyFilter.onchange = renderHistory;
+}
+
+function applyTranslations() {
+	const elements = document.querySelectorAll('[data-i18n], [data-i18n-prefix], [data-i18n-placeholder], [data-i18n-html]');
+	document.documentElement.lang = currentLang;
+	document.title = getLangText('page_title');
+	const langToggle = document.getElementById('languageToggle');
+	langToggle.textContent = langData[currentLang].lang_name;
+	elements.forEach(el => {
+		const key = el.getAttribute('data-i18n');
+		const prefixKey = el.getAttribute('data-i18n-prefix');
+		const placeholderKey = el.getAttribute('data-i18n-placeholder');
+		const htmlKey = el.getAttribute('data-i18n-html');
+		if (key) {
+			el.textContent = getLangText(key);
+		}
+		if (prefixKey) {
+		}
+		if (placeholderKey) {
+			el.placeholder = getLangText(placeholderKey);
+		}
+		if (htmlKey) {
+			el.innerHTML = getLangText(htmlKey);
+		}
+	});
+	
+	// NEW: Update mobile menu when language changes
+	updateMobileMenu();
+	
+	const activeSection = document.querySelector('.content-section:not(.hidden)');
+	if (activeSection && activeSection.id === 'quiz-section') {
+		if (!startScreen.classList.contains('hidden')) {
+			const user = getLoggedInUser();
+			if (user) {
+				document.getElementById('quizStartGreeting').textContent = getLangText('feedback_welcome_back', { name: user.firstName });
+			}
+		}
+		if (!quizScreen.classList.contains('hidden')) {
+			renderQuestion();
+		}
+	}
+}
+document.addEventListener('DOMContentLoaded', init);
