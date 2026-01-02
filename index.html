@@ -1,363 +1,486 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>EngQuizzesForAll - Master Your English Grammar</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Musab İkbal SUBAŞI - Teacher & Developer Portfolio">
+    <title>Musab İkbal SUBAŞI | Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.svg">
+    
+    <!-- Google Fonts: Plus Jakarta Sans for a professional, elite look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        main: '#0b1121', /* Deeper, richer background */
+                        card: '#151f32',
+                        border: '#2a3649',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0b1121;
+            color: #e2e8f0;
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0b1121 75%);
+            background-attachment: fixed;
+        }
+        
+        .glass-card {
+            background: rgba(21, 31, 50, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-4px);
+            background: rgba(26, 38, 61, 0.8);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section-header {
+            position: relative;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #60a5fa, #c084fc);
+            border-radius: 2px;
+        }
+
+        /* Language Toggling Logic */
+        body.lang-tr .en-text { display: none; }
+        body.lang-en .tr-text { display: none; }
+    </style>
 </head>
-<body data-lang="en">
-    <div class="bee-page-container">
-        <header class="bee-row bee-row-1">
-            <div class="bee-row-content max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center justify-between w-full">
-                    <!-- Logo -->
-                    <div class="bee-logo text-2xl font-extrabold text-gray-800 tracking-tight cursor-pointer" onclick="showSection('home', document.querySelector('[data-section=\'home\']'))">
-                        Eng<span class="text-teal-500">Quizzes</span>
-                    </div>
-                    <!-- Desktop Menu -->
-                    <div id="desktopNav" class="hidden sm:flex items-center justify-end">
-                        <div class="bee-block bee-menu mr-4">
-                            <nav class="bee-menu">
-                                <ul id="mainMenu" class="flex items-center">
-                                    <li><a href="#" target="_self" data-i18n="nav_home" onclick="showSection('home', this)" data-section="home" class="nav-active">HOME</a></li>
-                                    <li><a href="#" target="_self" data-i18n="nav_about" onclick="showSection('about', this)" data-section="about">ABOUT</a></li>
-                                    <li><a href="#" target="_self" data-i18n="nav_quiz" onclick="showSection('quiz', this)" data-section="quiz">TEST YOUR ENGLISH</a></li>
-                                    <li><a href="#" target="_self" data-i18n="nav_support" onclick="showSection('support', this)" data-section="support">SUPPORT US</a></li>
-                                    <li id="navRegisterLink"><a href="#" target="_self" data-i18n="nav_register" onclick="showSection('register', this)" data-section="register">REGISTER</a></li>
-                                    <li id="navAuthLink"><a href="#" target="_self" data-i18n="nav_login" onclick="handleAuthClick(this)" data-section="login-logout">LOGIN</a></li>
-                                    <li>
-                                        <button id="languageToggle" onclick="toggleLanguage()" class="ml-4 px-3 py-1.5 text-sm font-bold rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 transition duration-150 ease-in-out">Türkçe</button>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                    <!-- Mobile Menu Button -->
-                    <button id="mobileMenuButton" class="sm:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-150" onclick="toggleMobileMenu()">
-                        <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                        </svg>
-                        <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
+<body class="antialiased min-h-screen flex flex-col lang-en" id="mainBody">
+
+    <!-- Language Toggle -->
+    <div class="absolute top-6 right-6 z-50">
+        <button onclick="toggleLanguage()" class="bg-card/80 hover:bg-white/10 text-white px-4 py-2 rounded-full border border-white/10 transition text-sm font-bold backdrop-blur-md flex items-center gap-2">
+            <i class="fas fa-globe text-slate-400"></i>
+            <span class="en-text">TR</span>
+            <span class="tr-text">EN</span>
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="pt-28 pb-20 px-6 relative overflow-hidden text-center">
+        <!-- Subtle Glow behind profile -->
+        <div class="absolute top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto relative z-10">
+            <!-- Profile Photo -->
+            <div class="inline-block p-1.5 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 mb-8 shadow-2xl">
+                <img src="photo.jpg" alt="Profile Photo" class="w-36 h-36 rounded-full object-cover border-4 border-[#0b1121] bg-slate-800">
             </div>
-            <!-- Mobile Menu Dropdown -->
-            <div id="mobileMenu" class="hidden sm:hidden w-full border-t border-gray-100 bg-white">
-                <nav class="py-2">
-                    <ul id="mobileMenuItems" class="flex flex-col space-y-2 px-4 pb-2 text-center"></ul>
-                </nav>
-            </div>
-        </header>
+            
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-white leading-tight">
+                Musab İkbal <span class="text-gradient">SUBAŞI</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-slate-300 font-medium max-w-2xl mx-auto mb-10 leading-relaxed">
+                <span class="en-text">Bridging the gap between <span class="text-blue-400">Education</span> & <span class="text-purple-400">Technology</span> through modern web experiences.</span>
+                <span class="tr-text">Modern web deneyimleriyle <span class="text-blue-400">Eğitim</span> ve <span class="text-purple-400">Teknoloji</span> arasındaki boşluğu dolduruyorum.</span>
+            </p>
+            
+            <a href="https://github.com/musabikbal206" target="_blank" class="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/20 text-white px-8 py-3.5 rounded-full transition-all group font-semibold tracking-wide">
+                <i class="fab fa-github text-xl group-hover:scale-110 transition-transform"></i> 
+                <span class="en-text">GitHub Profile</span>
+                <span class="tr-text">GitHub Profili</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 w-full relative z-10">
         
-        <main class="main-content-area w-full max-w-7xl mx-auto">
-            <!-- Home Section -->
-            <section id="home-section" class="content-section p-4 md:p-8">
-                <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
-                    <h2 class="text-4xl font-extrabold text-gray-800 mb-4 gradient-header bg-clip-text text-transparent inline-block" data-i18n="home_title">Welcome to EngQuizzesForAll!</h2>
-                    <p class="text-xl text-gray-600 mb-6" data-i18n="home_subtitle">The best place to sharpen your English grammar skills through quick, targeted, and fun quizzes. Now featuring **3 distinct tests**!</p>
-                    <div class="grid md:grid-cols-3 gap-6 mt-8">
-                        <div class="bg-teal-50 p-6 rounded-xl border-l-4 border-teal-500 shadow-md">
-                            <h3 class="text-2xl font-semibold text-teal-700 mb-3" data-i18n="home_feature1_title">Targeted Practice</h3>
-                            <p class="text-gray-700" data-i18n="home_feature1_desc">Choose from 3 distinct tests, each focusing on different aspects of grammar, from basic tenses to advanced conditionals and phrasal verbs.</p>
+        <!-- Section: Education & Language -->
+        <div class="mb-24">
+            <div class="section-header flex flex-col md:flex-row md:items-end gap-2 md:gap-4">
+                <h2 class="text-3xl font-bold text-white tracking-tight">
+                    <span class="en-text">Language & Education</span>
+                    <span class="tr-text">Dil ve Eğitim</span>
+                </h2>
+                <span class="text-slate-400 text-sm font-medium pb-1.5">
+                    <span class="en-text">ELT Resources & Learning Platforms</span>
+                    <span class="tr-text">ELT Kaynakları ve Öğrenme Platformları</span>
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- YDS -->
+                <a href="https://musabikbal206.github.io/yds" class="glass-card rounded-xl p-7 group block h-full">
+                    <div class="flex justify-between items-start mb-5">
+                        <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-graduation-cap"></i>
                         </div>
-                        <div class="bg-indigo-50 p-6 rounded-xl border-l-4 border-indigo-500 shadow-md">
-                            <h3 class="text-2xl font-semibold text-indigo-700 mb-3" data-i18n="home_feature2_title">Challenge Mode</h3>
-                            <p class="text-gray-700" data-i18n="home_feature2_desc">Test your speed and accuracy with our optional 2-minute time limit. See your results and track your progress over time with the detailed history.</p>
-                        </div>
-                        <div class="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-500 shadow-md">
-                            <h3 class="text-2xl font-semibold text-purple-700 mb-3" data-i18n="home_feature3_title">Detailed Review</h3>
-                            <p class="text-gray-700" data-i18n="home_feature3_desc">After each quiz, get instant feedback, including explanations for every correct answer, turning every mistake into a learning opportunity.</p>
-                        </div>
+                        <span class="text-[10px] uppercase tracking-wider font-bold bg-white/5 text-slate-300 px-2.5 py-1 rounded border border-white/10">Exam Prep</span>
                     </div>
-                    <div class="mt-10 text-center">
-                        <button class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-8 rounded-lg shadow-xl transition duration-300 ease-in-out transform hover:scale-105" onclick="showSection('quiz', document.querySelector('[data-section=\'quiz\']'))" data-i18n="home_start_button">Start Your First Test Now!</button>
+                    <h3 class="text-xl font-bold mb-3 text-white group-hover:text-blue-400 transition-colors">E-YDS Simulation</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        <span class="en-text">Professional YDS exam simulation and comprehensive preparation platform.</span>
+                        <span class="tr-text">Profesyonel YDS sınav simülasyonu ve kapsamlı hazırlık platformu.</span>
+                    </p>
+                </a>
+
+                <!-- EngQuizzesForAll -->
+                <a href="https://musabikbal206.github.io/EngQuizzesForAll" class="glass-card rounded-xl p-7 group block h-full">
+                    <div class="flex justify-between items-start mb-5">
+                        <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <span class="text-[10px] uppercase tracking-wider font-bold bg-white/5 text-slate-300 px-2.5 py-1 rounded border border-white/10">Repository</span>
                     </div>
-                </div>
-            </section>
-            
-            <!-- Login Section -->
-            <section id="login-section" class="content-section hidden p-4 md:p-8 flex justify-center">
-                <div class="auth-card w-full max-w-md bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-100">
-                    <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2 text-center" data-i18n="login_title">User Login</h2>
-                    <form id="loginForm" onsubmit="loginUser(event)">
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700" for="loginEmail" data-i18n="label_email">Email Address</label>
-                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="loginEmail" placeholder="you@example.com" required="" type="email" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700" for="loginPassword" data-i18n="label_password">Password</label>
-                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="loginPassword" data-i18n-placeholder="placeholder_min_chars" placeholder="Minimum 6 characters" required="" type="password" minlength="6" />
-                            </div>
+                    <h3 class="text-xl font-bold mb-3 text-white group-hover:text-emerald-400 transition-colors">English Quizzes For All</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        <span class="en-text">A massive, organized repository of quizzes for English learners of all levels.</span>
+                        <span class="tr-text">Her seviyedeki İngilizce öğrencileri için kapsamlı quiz arşivi.</span>
+                    </p>
+                </a>
+
+                <!-- ConvoCards -->
+                <a href="https://musabikbal206.github.io/convocards" class="glass-card rounded-xl p-7 group block h-full">
+                    <div class="flex justify-between items-start mb-5">
+                        <div class="w-12 h-12 bg-pink-500/20 text-pink-400 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-comments"></i>
                         </div>
-                        <div id="loginFeedback" class="mt-4 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden"></div>
-                        <button type="submit" class="mt-6 w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out" data-i18n="login_button">Log In</button>
-                        <p class="mt-4 text-center text-sm text-gray-600" data-i18n-html="login_no_account">Don't have an account? <a href="#" onclick="showSection('register', document.getElementById('navRegisterLink').querySelector('a'))" class="text-teal-600 hover:text-teal-700 font-semibold" data-i18n="login_register_link">Register here</a></p>
-                    </form>
-                </div>
-            </section>
-            
-            <!-- Register Section -->
-            <section id="register-section" class="content-section hidden p-4 md:p-8 flex justify-center">
-                <div class="auth-card w-full max-w-md bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-100">
-                    <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2 text-center" data-i18n="register_title">Create Account</h2>
-                    <form id="registerForm" onsubmit="registerUser(event)">
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700" for="regEmail" data-i18n="label_email">Email Address</label>
-                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="regEmail" placeholder="you@example.com" required="" type="email" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700" for="regPassword" data-i18n="label_password">Password</label>
-                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="regPassword" data-i18n-placeholder="placeholder_min_chars" placeholder="Minimum 6 characters" required="" type="password" minlength="6" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700" for="regName" data-i18n="label_first_name">First Name</label>
-                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="regName" placeholder="John" required="" type="text" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700" for="regSurname" data-i18n="label_surname">Surname</label>
-                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="regSurname" placeholder="Doe" required="" type="text" />
-                            </div>
-                        </div>
-                        <div id="registerFeedback" class="mt-4 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden"></div>
-                        <button type="submit" class="mt-6 w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out" data-i18n="register_button">Register Account</button>
-                    </form>
-                </div>
-            </section>
-            
-            <!-- About Section -->
-            <section id="about-section" class="content-section hidden p-4 md:p-8">
-                <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
-                    <h2 class="text-4xl font-extrabold text-gray-800 mb-4 border-b pb-2" data-i18n="about_title">About EngQuizzesForAll</h2>
-                    <p class="text-lg text-gray-600 mb-6" data-i18n="about_intro">We believe that mastering English grammar shouldn't be boring. Our platform was created to provide a fast, efficient, and engaging way for students and professionals to test their knowledge and identify areas for improvement.</p>
-                    <h3 class="text-2xl font-semibold text-teal-700 mt-8 mb-4" data-i18n="about_mission_title">Our Mission</h3>
-                    <p class="text-gray-700 mb-4" data-i18n="about_mission_desc">Our mission is simple: to make complex English grammar rules accessible to everyone. We achieve this by providing 30 carefully curated questions covering the most common and challenging aspects of the language, from basic tenses and prepositions to advanced conditionals and inversions.</p>
-                    <h3 class="text-2xl font-semibold text-teal-700 mt-8 mb-4" data-i18n="about_creator_title">The Creator</h3>
-                    <div class="flex items-start space-x-6 bg-gray-50 p-6 rounded-lg border">
-                        <img class="w-24 h-24 rounded-full object-cover shadow-md" src="CV photo.jpg" data-i18n-alt="about_creator_alt" alt="Musab İKBAL SUBAŞI">
-                        <div>
-                            <p class="text-xl font-bold text-gray-900">Musab İKBAL SUBAŞI</p>
-                            <p class="text-teal-600 text-sm mb-2" data-i18n="about_creator_role">English Language Teacher</p>
-                            <p class="text-gray-700 text-sm" data-i18n="about_creator_quote">"This project was born out of a desire to create a clean, responsive, and distraction-free environment for learning. The focus is on immediate feedback and clear explanations to ensure real learning happens with every question."</p>
-                        </div>
+                        <span class="text-[10px] uppercase tracking-wider font-bold bg-white/5 text-slate-300 px-2.5 py-1 rounded border border-white/10">Speaking</span>
                     </div>
-                </div>
-            </section>
-            
-            <!-- Quiz Section -->
-            <section id="quiz-section" class="content-section hidden">
-                <div class="quiz-container p-4">
-                    <div class="quiz-card w-full max-w-xl bg-white rounded-xl overflow-hidden shadow-2xl">
-                        <div class="gradient-header text-white p-6 md:p-8">
-                            <h1 class="text-3xl font-bold tracking-tight" id="quizTitle" data-i18n="quiz_header_title">English Quizzes</h1>
-                            <p class="mt-1 text-teal-100" data-i18n="quiz_header_subtitle">Select your proficiency level to challenge your grammar knowledge.</p>
+                    <h3 class="text-xl font-bold mb-3 text-white group-hover:text-pink-400 transition-colors">ConvoCards</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        <span class="en-text">Interactive conversation prompt cards designed to boost fluency.</span>
+                        <span class="tr-text">Akıcılığı artırmak için tasarlanmış interaktif konuşma kartları.</span>
+                    </p>
+                </a>
+
+                <!-- Parliamo -->
+                <a href="https://musabikbal206.github.io/parliamo" class="glass-card rounded-xl p-7 group block h-full">
+                    <div class="flex justify-between items-start mb-5">
+                        <div class="w-12 h-12 bg-red-500/20 text-red-400 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-pizza-slice"></i>
                         </div>
-                        <div class="p-6 md:p-8" id="startScreen">
-                            <div id="quizStartGreeting" class="text-xl font-bold text-gray-800 mb-4"></div>
-                            <div class="flex justify-between items-center mb-6">
-                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="quiz_start_confirm_details">Please confirm your details.</h2>
-                                <button class="bg-purple-600 hover:bg-purple-700 text-white text-sm px-3 py-2 rounded-lg font-semibold shadow-md transition duration-150 ease-in-out" id="viewHistoryButton" data-i18n="quiz_start_view_history">View History</button>
-                            </div>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700" for="firstName" data-i18n="label_first_name">First Name</label>
-                                    <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="firstName" placeholder="John" required="" type="text" />
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700" for="surname" data-i18n="label_surname">Surname</label>
-                                    <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="surname" placeholder="DOE" required="" type="text" />
-                                </div>
-                                <div class="pt-2 flex items-center">
-                                    <input class="h-4 w-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500" id="timeLimitToggle" type="checkbox" />
-                                    <label class="ml-2 block text-sm font-medium text-gray-700" for="timeLimitToggle" data-i18n="quiz_start_enable_timer">Enable 2-Minute Time Limit (Challenge Mode)</label>
-                                </div>
-                                <!-- Review Mode Toggle -->
-                                <div class="pt-2 flex items-center">
-                                    <input class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" id="reviewModeToggle" type="checkbox" />
-                                    <label class="ml-2 block text-sm font-medium text-gray-700" for="reviewModeToggle" data-i18n="quiz_start_review_mode">Enable Review Mode (No immediate feedback)</label>
-                                </div>
-                            </div>
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4 mt-8" data-i18n="quiz_start_select_level">Select Your CEFR Level</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="cefrSelectionContainer">
-                                <div class="cefr-button cefr-button-A" onclick="showLevelModal('A1 & A2')">
-                                    <div class="text-3xl font-extrabold text-teal-600">A1 & A2</div>
-                                    <div class="text-sm font-semibold text-teal-700 mt-1" data-i18n="level_a_desc">Beginner/Elementary</div>
-                                    <div class="text-xs text-gray-600 mt-2" data-i18n="test_number_1">Tests 1-10</div>
-                                </div>
-                                <div class="cefr-button cefr-button-B" onclick="showLevelModal('B1 & B2')">
-                                    <div class="text-3xl font-extrabold text-blue-600">B1 & B2</div>
-                                    <div class="text-sm font-semibold text-blue-700 mt-1" data-i18n="level_b_desc">Intermediate/Upper-Intermediate</div>
-                                    <div class="text-xs text-gray-600 mt-2" data-i18n="test_number_11">Tests 11-20</div>
-                                </div>
-                                <div class="cefr-button cefr-button-C" onclick="showLevelModal('C1 & C2')">
-                                    <div class="text-3xl font-extrabold text-purple-600">C1 & C2</div>
-                                    <div class="text-sm font-semibold text-purple-700 mt-1" data-i18n="level_c_desc">Advanced/Proficiency</div>
-                                    <div class="text-xs text-gray-600 mt-2" data-i18n="test_number_21">Tests 21-30</div>
-                                </div>
-                            </div>
-                            <div class="mt-4 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden bg-yellow-100 text-yellow-800" id="startFeedbackMessage"></div>
-                        </div>
-                        <div class="p-6 md:p-8 hidden" id="quizScreen">
-                            <div class="mb-4 hidden" id="quizStatusBar">
-                                <div class="text-sm font-medium text-gray-700 mb-1 flex justify-between">
-                                    <span class="font-bold" id="timerDisplay" data-i18n-prefix="quiz_status_time_remaining">02:00 Remaining</span>
-                                    <!-- Quit Test Button -->
-                                    <button class="bg-red-600 hover:bg-red-700 text-white text-xs px-2 py-1 rounded font-semibold shadow-md transition duration-150 ease-in-out" onclick="quitTest()" data-i18n="quiz_quit_button">Quit Test</button>
-                                </div>
-                                <div class="h-2 rounded-full overflow-hidden bg-gray-200">
-                                    <div class="h-2 transition-all duration-300 ease-linear" id="progressBar" style="width: 100%;"></div>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center mb-6">
-                                <div class="text-lg font-medium text-teal-600" id="questionCounter" data-i18n-prefix="quiz_counter">Question 1 of 10</div>
-                                <button class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded-lg font-semibold shadow-md transition duration-150 ease-in-out" onclick="togglePanel(true)" data-i18n="quiz_overview_button">Question Overview</button>
-                                <div class="text-lg font-medium text-gray-500" id="quizScore" data-i18n-prefix="quiz_score">Score: 0</div>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
-                                <p class="text-xl font-bold text-gray-800" id="currentQuestion"></p>
-                            </div>
-                            <div class="space-y-3" id="optionsContainer"></div>
-                            <div class="mt-6 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden" id="feedbackMessage"></div>
-                            <div class="mt-4 flex justify-between space-x-4">
-                                <button class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out disabled:opacity-50" id="prevButton" onclick="previousQuestion()" data-i18n="quiz_prev_button">← Previous</button>
-                                <button class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out disabled:opacity-50" id="nextButton" onclick="nextQuestion()" data-i18n="quiz_next_button">Next Question →</button>
-                            </div>
-                        </div>
-                        <div class="p-6 md:p-8 hidden text-center" id="resultsScreen">
-                            <h2 class="text-3xl font-bold text-gray-800 mb-4" data-i18n="results_title">Test Completed!</h2>
-                            <p class="text-xl text-gray-600 mb-8" id="userGreeting"></p>
-                            <div class="space-y-3">
-                                <div class="bg-green-100 text-green-800 p-4 rounded-lg font-semibold border-2 border-green-300" data-i18n-prefix="results_final_score">Final Score: <span class="text-2xl ml-2" id="finalScore"></span></div>
-                                <div class="bg-blue-100 text-blue-800 p-4 rounded-lg font-semibold border-2 border-blue-300" data-i18n-prefix="results_percentage">Percentage: <span class="text-2xl ml-2" id="finalPercentage"></span></div>
-                            </div>
-                            <div class="mt-8 text-left hidden border rounded-xl overflow-hidden shadow-lg" id="summaryContainer">
-                                <h3 class="p-4 bg-gray-100 text-xl font-bold text-gray-800 mb-0 border-b" data-i18n="results_review_header">Detailed Test Review</h3>
-                            </div>
-                            <!-- UPDATED BUTTON GROUP -->
-                            <div class="mt-8 grid grid-cols-3 gap-3">
-                                <!-- RESTART BUTTON -->
-                                <button class="col-span-3 sm:col-span-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="restartCurrentQuiz()" data-i18n="results_restart_test">Restart This Test</button>
-                                <!-- View Review -->
-                                <button class="col-span-3 sm:col-span-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="showDirectReview()" id="viewReviewShortcut" data-i18n="results_view_review">View Review</button>
-                                <!-- Choose Another Test -->
-                                <button class="col-span-3 sm:col-span-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="resetQuiz()" data-i18n="results_another_test">Choose Another Test</button>
-                                <!-- View History -->
-                                <button class="col-span-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out mt-3" id="viewHistoryFromResults" data-i18n="results_view_history">View History</button>
-                            </div>
-                        </div>
+                        <span class="text-[10px] uppercase tracking-wider font-bold bg-white/5 text-slate-300 px-2.5 py-1 rounded border border-white/10">Italian</span>
                     </div>
-                </div>
-            </section>
-            
-            <!-- Support Section -->
-            <section id="support-section" class="content-section hidden p-4 md:p-8">
-                <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100 text-center max-w-md mx-auto">
-                    <h2 class="text-4xl font-extrabold text-gray-800 mb-4 border-b pb-2" data-i18n="support_title">Support Our Mission</h2>
-                    <p class="text-lg text-gray-600 mb-6" data-i18n="support_intro">If you find our quizzes helpful, consider supporting our work! Your contribution helps us maintain the site and create more high-quality educational content.</p>
-                    <div class="space-y-4">
-                        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out" onclick="copyToClipboard('https://buymeacoffee.com/musabikbal', 'supportFeedback', langData[currentLang].support_copy_success)" data-i18n="support_copy_button">Copy Buy Me a Coffee Link</button>
-                        <a href="https://buymeacoffee.com/musabikbal" target="_blank" rel="noopener noreferrer" class="block w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out" data-i18n="support_coffee_button">Buy us a Coffee!</a>
-                        <div id="supportFeedback" class="hidden p-3 rounded-lg text-center font-semibold text-sm"></div>
-                        <p class="text-sm text-gray-500 pt-2" data-i18n="support_thank_you">Thank you for helping us keep English learning accessible!</p>
+                    <h3 class="text-xl font-bold mb-3 text-white group-hover:text-red-400 transition-colors">Parliamo</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        <span class="en-text">Curated resources and interactive tools for learning Italian.</span>
+                        <span class="tr-text">İtalyanca öğrenimi için seçilmiş kaynaklar ve interaktif araçlar.</span>
+                    </p>
+                </a>
+
+                <!-- Speakeasy -->
+                <a href="https://musabikbal206.github.io/Speakeasy" class="glass-card rounded-xl p-7 group block h-full">
+                    <div class="flex justify-between items-start mb-5">
+                        <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-microphone-alt"></i>
+                        </div>
+                        <span class="text-[10px] uppercase tracking-wider font-bold bg-white/5 text-slate-300 px-2.5 py-1 rounded border border-white/10">Tool</span>
                     </div>
-                </div>
-            </section>
-        </main>
-        
-        <div class="bee-row bee-row-3 mt-auto bg-white border-t border-gray-200">
-            <div class="bee-row-content max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-                <div class="bee-col bee-col-w12">
-                    <div class="bee-block bee-paragraph text-center text-sm text-gray-500">
-                        <p>© Copyright <strong>EngQuizzesForAll</strong> All Rights Reserved</p>
-                        <p>Designed by Musab İKBAL SUBAŞI</p>
+                    <h3 class="text-xl font-bold mb-3 text-white group-hover:text-purple-400 transition-colors">Speakeasy</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        <span class="en-text">Digital tools designed specifically to facilitate speaking practice.</span>
+                        <span class="tr-text">Konuşma pratiğini kolaylaştırmak için özel tasarlanmış araçlar.</span>
+                    </p>
+                </a>
+                
+                 <!-- Irregular Verbs -->
+                 <a href="https://musabikbal206.github.io/Irregular" class="glass-card rounded-xl p-7 group block h-full">
+                    <div class="flex justify-between items-start mb-5">
+                        <div class="w-12 h-12 bg-orange-500/20 text-orange-400 rounded-lg flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-spell-check"></i>
+                        </div>
+                        <span class="text-[10px] uppercase tracking-wider font-bold bg-white/5 text-slate-300 px-2.5 py-1 rounded border border-white/10">Grammar</span>
                     </div>
-                </div>
+                    <h3 class="text-xl font-bold mb-3 text-white group-hover:text-orange-400 transition-colors">Irregular Verbs</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        <span class="en-text">Master irregular verbs through focused, repetitive drills.</span>
+                        <span class="tr-text">Odaklanmış alıştırmalarla düzensiz fiilleri öğrenin.</span>
+                    </p>
+                </a>
             </div>
         </div>
-    </div>
-    
-    <!-- Modals -->
-    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="levelSelectionModal">
-        <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-md">
-            <div class="flex justify-between items-center mb-4 border-b pb-3">
-                <h3 class="text-xl font-bold text-gray-800" id="modalLevelTitle"></h3>
-                <button class="text-gray-500 hover:text-gray-800" onclick="hideLevelModal()">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                    </svg>
-                </button>
+
+        <!-- Section: Game Dev -->
+        <div class="mb-24">
+            <div class="section-header flex flex-col md:flex-row md:items-end gap-2 md:gap-4">
+                <h2 class="text-3xl font-bold text-white tracking-tight">
+                    <span class="en-text">Game Development</span>
+                    <span class="tr-text">Oyun Geliştirme</span>
+                </h2>
+                <span class="text-slate-400 text-sm font-medium pb-1.5">
+                    <span class="en-text">Web-based Interactive Experiences</span>
+                    <span class="tr-text">Web Tabanlı İnteraktif Deneyimler</span>
+                </span>
             </div>
-            <p class="text-sm text-gray-600 mb-4" id="modalLevelDescription"></p>
-            <div class="grid grid-cols-3 sm:grid-cols-4 gap-3 overflow-y-auto max-h-96" id="testSelectionContainer"></div>
-            <button class="mt-6 w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="hideLevelModal()" data-i18n="modal_back_to_levels">Back to Level Selection</button>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                 <!-- Astroverbs -->
+                 <a href="https://musabikbal206.github.io/Astroverbs" class="glass-card rounded-xl p-6 group block h-full">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 bg-indigo-500/20 text-indigo-400 rounded-lg flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-white group-hover:text-indigo-400 transition-colors">Astroverbs</h3>
+                    <p class="text-slate-400 text-sm">
+                        <span class="en-text">Gamified verb learning in space.</span>
+                        <span class="tr-text">Uzayda oyunlaştırılmış fiil öğrenimi.</span>
+                    </p>
+                </a>
+                
+                 <!-- Aquaverbs -->
+                 <a href="https://musabikbal206.github.io/Aquaverbs" class="glass-card rounded-xl p-6 group block h-full">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 bg-cyan-500/20 text-cyan-400 rounded-lg flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white transition-colors">
+                            <i class="fas fa-water"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-white group-hover:text-cyan-400 transition-colors">Aquaverbs</h3>
+                    <p class="text-slate-400 text-sm">
+                        <span class="en-text">Underwater verb learning adventure.</span>
+                        <span class="tr-text">Su altı fiil öğrenme macerası.</span>
+                    </p>
+                </a>
+
+                <!-- Autowords -->
+                <a href="https://musabikbal206.github.io/Autowords" class="glass-card rounded-xl p-6 group block h-full">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 bg-yellow-500/20 text-yellow-400 rounded-lg flex items-center justify-center group-hover:bg-yellow-500 group-hover:text-white transition-colors">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-white group-hover:text-yellow-400 transition-colors">Autowords</h3>
+                    <p class="text-slate-400 text-sm">
+                        <span class="en-text">Fast-paced, reflex-based word game.</span>
+                        <span class="tr-text">Hızlı tempolu, refleks tabanlı kelime oyunu.</span>
+                    </p>
+                </a>
+
+                <!-- Sudoku -->
+                <a href="https://musabikbal206.github.io/sudoku" class="glass-card rounded-xl p-6 group block h-full">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 bg-amber-500/20 text-amber-400 rounded-lg flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                            <i class="fas fa-border-all"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-white group-hover:text-amber-400 transition-colors">Classic Sudoku</h3>
+                    <p class="text-slate-400 text-sm">
+                        <span class="en-text">Clean, responsive logic puzzle.</span>
+                        <span class="tr-text">Temiz, responsive mantık bulmacası.</span>
+                    </p>
+                </a>
+
+                <!-- Sudoku 3D -->
+                <a href="https://musabikbal206.github.io/sudoku3d" class="glass-card rounded-xl p-6 group block h-full">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 bg-teal-500/20 text-teal-400 rounded-lg flex items-center justify-center group-hover:bg-teal-500 group-hover:text-white transition-colors">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-white group-hover:text-teal-400 transition-colors">Sudoku 3D</h3>
+                    <p class="text-slate-400 text-sm">
+                        <span class="en-text">A 3-dimensional twist on Sudoku.</span>
+                        <span class="tr-text">Sudoku'ya 3 boyutlu bir dokunuş.</span>
+                    </p>
+                </a>
+
+                <!-- Chess -->
+                <a href="https://musabikbal206.github.io/chess" class="glass-card rounded-xl p-6 group block h-full">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 bg-stone-500/20 text-stone-400 rounded-lg flex items-center justify-center group-hover:bg-stone-500 group-hover:text-white transition-colors">
+                            <i class="fas fa-chess-knight"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-white group-hover:text-stone-400 transition-colors">Chess</h3>
+                    <p class="text-slate-400 text-sm">
+                        <span class="en-text">Full-featured browser chess engine.</span>
+                        <span class="tr-text">Tam kapsamlı tarayıcı satranç motoru.</span>
+                    </p>
+                </a>
+
+                <!-- Maze -->
+                <a href="https://musabikbal206.github.io/maze" class="glass-card rounded-xl p-6 group block h-full">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 bg-lime-500/20 text-lime-400 rounded-lg flex items-center justify-center group-hover:bg-lime-500 group-hover:text-white transition-colors">
+                            <i class="fas fa-dungeon"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-white group-hover:text-lime-400 transition-colors">3D Maze</h3>
+                    <p class="text-slate-400 text-sm">
+                        <span class="en-text">Procedural 3D maze exploration.</span>
+                        <span class="tr-text">Prosedürel 3D labirent keşfi.</span>
+                    </p>
+                </a>
+                
+                 <!-- Recycle -->
+                <a href="https://musabikbal206.github.io/recyclegame" class="glass-card rounded-xl p-6 group block h-full">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 bg-green-500/20 text-green-400 rounded-lg flex items-center justify-center group-hover:bg-green-500 group-hover:text-white transition-colors">
+                            <i class="fas fa-recycle"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-white group-hover:text-green-400 transition-colors">Recycle Game</h3>
+                    <p class="text-slate-400 text-sm">
+                        <span class="en-text">Educational environmental game.</span>
+                        <span class="tr-text">Eğitici çevre bilinci oyunu.</span>
+                    </p>
+                </a>
+            </div>
         </div>
-    </div>
-    
-    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="questionPanelModal">
-        <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-lg">
-            <div class="flex justify-between items-center mb-4 border-b pb-3">
-                <h3 class="text-xl font-bold text-gray-800" data-i18n="modal_overview_title">Question Overview (Jump to...)</h3>
-                <button class="text-gray-500 hover:text-gray-800" onclick="togglePanel(false)">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                    </svg>
-                </button>
+
+        <!-- Section: Tools & Utils -->
+        <div class="mb-24">
+            <div class="section-header flex flex-col md:flex-row md:items-end gap-2 md:gap-4">
+                <h2 class="text-3xl font-bold text-white tracking-tight">
+                    <span class="en-text">Tools & Utilities</span>
+                    <span class="tr-text">Araçlar & Gereçler</span>
+                </h2>
+                <span class="text-slate-400 text-sm font-medium pb-1.5">
+                    <span class="en-text">Productivity Enhancers</span>
+                    <span class="tr-text">Üretkenlik Artırıcılar</span>
+                </span>
             </div>
-            <div class="grid grid-cols-6 sm:grid-cols-8 gap-2 overflow-y-auto max-h-96" id="questionPanel"></div>
-            <button class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="togglePanel(false)" data-i18n="modal_close_panel">Close Panel</button>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                 <a href="https://musabikbal206.github.io/zincirikirma" class="glass-card rounded-lg p-5 hover:border-blue-500/40 transition-colors flex items-center gap-5">
+                    <div class="w-12 h-12 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-lg">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Zinciri Kırma</h4>
+                        <p class="text-xs text-slate-400 mt-1">
+                            <span class="en-text">Habit tracking visualization.</span>
+                            <span class="tr-text">Alışkanlık takibi görselleştirme.</span>
+                        </p>
+                    </div>
+                </a>
+                
+                 <a href="https://musabikbal206.github.io/ydstool" class="glass-card rounded-lg p-5 hover:border-blue-500/40 transition-colors flex items-center gap-5">
+                    <div class="w-12 h-12 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-lg">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">YDS Authoring</h4>
+                        <p class="text-xs text-slate-400 mt-1">
+                            <span class="en-text">Exam question generator.</span>
+                            <span class="tr-text">Sınav soru üreticisi.</span>
+                        </p>
+                    </div>
+                </a>
+
+                <a href="https://musabikbal206.github.io/PersonasBot" class="glass-card rounded-lg p-5 hover:border-blue-500/40 transition-colors flex items-center gap-5">
+                    <div class="w-12 h-12 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-lg">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">PersonasBot</h4>
+                        <p class="text-xs text-slate-400 mt-1">
+                            <span class="en-text">AI interaction experiments.</span>
+                            <span class="tr-text">Yapay zeka etkileşim deneyleri.</span>
+                        </p>
+                    </div>
+                </a>
+
+                <a href="https://musabikbal206.github.io/WebEditor" class="glass-card rounded-lg p-5 hover:border-blue-500/40 transition-colors flex items-center gap-5">
+                    <div class="w-12 h-12 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-lg">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Web Editor</h4>
+                        <p class="text-xs text-slate-400 mt-1">
+                            <span class="en-text">Browser-based coding.</span>
+                            <span class="tr-text">Tarayıcı tabanlı kodlama.</span>
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Excel to CSV -->
+                <a href="https://musabikbal206.github.io/exceltocsv" class="glass-card rounded-lg p-5 hover:border-blue-500/40 transition-colors flex items-center gap-5">
+                    <div class="w-12 h-12 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-lg">
+                        <i class="fas fa-file-csv"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Excel to CSV</h4>
+                        <p class="text-xs text-slate-400 mt-1">
+                            <span class="en-text">Format converter utility.</span>
+                            <span class="tr-text">Format dönüştürücü araç.</span>
+                        </p>
+                    </div>
+                </a>
+            </div>
         </div>
-    </div>
-    
-    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="historyModal">
-        <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-4xl history-modal">
-            <div class="flex justify-between items-center mb-4 border-b pb-3">
-                <h3 class="text-xl font-bold text-gray-800" data-i18n="modal_history_title">Quiz History</h3>
-                <button class="text-gray-500 hover:text-gray-800" onclick="toggleHistoryModal(false)">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="mb-4 flex justify-between items-end">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1" for="historyFilter" data-i18n="modal_history_filter">Filter by Test:</label>
-                    <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="historyFilter">
-                        <option value="all" data-i18n="modal_history_all_tests">All Tests</option>
-                    </select>
-                </div>
-                <div>
-                    <button class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" id="clearHistoryButton" data-i18n="modal_history_clear">Clear History</button>
-                </div>
-            </div>
-            <div class="overflow-y-auto max-h-96" id="historyContainer"></div>
-            <div class="mt-6 flex justify-between">
-                <div class="text-sm text-gray-600" id="historyStats"></div>
-                <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="toggleHistoryModal(false)" data-i18n="modal_close">Close</button>
+
+        <!-- Section: Archive/Other -->
+        <div class="border-t border-white/10 pt-12 text-center">
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-8">
+                <span class="en-text">Experiments & Prototypes</span>
+                <span class="tr-text">Deneyler & Prototipler</span>
+            </h3>
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="https://musabikbal206.github.io/infinitewords" class="px-5 py-2.5 bg-slate-800/50 hover:bg-slate-700/80 rounded text-xs font-medium text-slate-400 hover:text-white transition-colors border border-white/5 hover:border-white/20">Infinite Words</a>
+                <a href="https://musabikbal206.github.io/mathdoku" class="px-5 py-2.5 bg-slate-800/50 hover:bg-slate-700/80 rounded text-xs font-medium text-slate-400 hover:text-white transition-colors border border-white/5 hover:border-white/20">Mathdoku</a>
+                <a href="https://musabikbal206.github.io/questionwheel" class="px-5 py-2.5 bg-slate-800/50 hover:bg-slate-700/80 rounded text-xs font-medium text-slate-400 hover:text-white transition-colors border border-white/5 hover:border-white/20">Question Wheel</a>
+                <a href="https://musabikbal206.github.io/20questions" class="px-5 py-2.5 bg-slate-800/50 hover:bg-slate-700/80 rounded text-xs font-medium text-slate-400 hover:text-white transition-colors border border-white/5 hover:border-white/20">20 Questions</a>
+                <a href="https://musabikbal206.github.io/meb" class="px-5 py-2.5 bg-slate-800/50 hover:bg-slate-700/80 rounded text-xs font-medium text-slate-400 hover:text-white transition-colors border border-white/5 hover:border-white/20">MEB Projects</a>
             </div>
         </div>
-    </div>
-    
-    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="reviewDetailsModal">
-        <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-6xl history-modal">
-            <div class="flex justify-between items-center mb-4 border-b pb-3">
-                <h3 class="text-xl font-bold text-gray-800" id="reviewModalTitle" data-i18n="modal_review_title">Detailed Review</h3>
-                <button class="text-gray-500 hover:text-gray-800" onclick="toggleReviewDetailsModal(false)">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="overflow-y-auto max-h-[70vh] text-left border rounded-xl shadow-inner" id="reviewDetailsContainer"></div>
-            <button class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="toggleReviewDetailsModal(false)" data-i18n="modal_close_review">Close Review</button>
-        </div>
-    </div>
-    
-    <script src="script.js"></script>
+
+    </main>
+
+    <footer class="bg-[#080c17] text-slate-500 py-12 text-center border-t border-white/5 mt-auto">
+        <p class="text-sm font-medium">&copy; 2026 Musab İkbal SUBAŞI. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function toggleLanguage() {
+            const body = document.getElementById('mainBody');
+            if (body.classList.contains('lang-en')) {
+                body.classList.remove('lang-en');
+                body.classList.add('lang-tr');
+            } else {
+                body.classList.remove('lang-tr');
+                body.classList.add('lang-en');
+            }
+        }
+    </script>
 </body>
 </html>
+
+
+
