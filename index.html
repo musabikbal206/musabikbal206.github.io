@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Musab İkbal SUBAŞI - Teacher & Developer Portfolio">
-    <title>Musab İkbal SUBAŞI | Portfolio</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
-    <link rel="alternate icon" href="favicon.svg?v=2">
-    <link rel="apple-touch-icon" href="favicon.svg?v=2">
+    <meta name="description" content="Linguamis Hub - Musab İkbal SUBAŞI Portfolio">
+    <title>Linguamis | Central Hub</title>
     
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,23 +28,23 @@
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
                     },
                     colors: {
-                        main: '#030712', /* Almost black */
-                        card: '#111827',
+                        darkBg: '#050505', 
+                        glassBg: 'rgba(255, 255, 255, 0.03)',
+                        glassBorder: 'rgba(255, 255, 255, 0.08)',
                     },
                     animation: {
-                        'float': 'float 8s ease-in-out infinite',
-                        'blob': 'blob 10s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'aurora': 'aurora 15s infinite alternate',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
+                            '50%': { transform: 'translateY(-12px)' },
                         },
-                        blob: {
-                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        aurora: {
+                            '0%': { transform: 'translate(0, 0) scale(1)' },
+                            '50%': { transform: 'translate(50px, -50px) scale(1.2)' },
+                            '100%': { transform: 'translate(-50px, 50px) scale(0.9)' },
                         }
                     }
                 }
@@ -56,946 +53,735 @@
     </script>
 
     <style>
-        /* --- SCROLL SNAP SETUP --- */
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden; /* Prevent default scroll */
-            background-color: #030712;
-            color: #e2e8f0;
-        }
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+        body { background-color: #050505; color: #e2e8f0; overflow-x: hidden; }
 
-        .snap-container {
-            height: 100%;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
+        /* Abstract Aurora Background */
+        .aurora-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden; pointer-events: none;
+            background: radial-gradient(circle at top left, #050505 40%, #0a0a0a 100%);
         }
+        .aurora-blob-1, .aurora-blob-2, .aurora-blob-3 {
+            position: absolute; border-radius: 50%; filter: blur(100px);
+            opacity: 0.15; animation: aurora 15s infinite alternate ease-in-out;
+        }
+        .aurora-blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #06b6d4; }
+        .aurora-blob-2 { bottom: -10%; right: -10%; width: 600px; height: 600px; background: #a855f7; animation-delay: -5s; }
+        .aurora-blob-3 { top: 40%; left: 40%; width: 400px; height: 400px; background: #3b82f6; animation-delay: -10s; }
 
-        section {
-            height: 100vh; /* Full viewport height */
-            width: 100%;
-            scroll-snap-align: start;
-            scroll-snap-stop: always; /* Force stop at each section */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            overflow: hidden; /* Keep content inside section */
-        }
-
-        /* Animated Background Mesh */
-        .bg-mesh {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.15), transparent 25%), 
-                radial-gradient(circle at 85% 30%, rgba(14, 165, 233, 0.15), transparent 25%);
-            pointer-events: none;
-        }
-        
-        /* Glass Card with Spotlight Effect */
+        /* Modern Glass Card */
         .glass-card {
-            background: rgba(17, 24, 39, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            position: relative;
+            background: var(--glassBg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glassBorder);
+            border-radius: 24px;
             overflow: hidden;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            border-radius: 1.5rem; /* Smoother corners */
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                        border-color 0.3s ease, 
-                        box-shadow 0.3s ease;
-            will-change: transform;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column; height: 100%;
         }
+        .glass-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 20px 40px -10px rgba(6, 182, 212, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .card-image-wrapper { position: relative; width: 100%; height: 200px; overflow: hidden; }
+        .card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+        .glass-card:hover .card-image-wrapper img { transform: scale(1.08); }
+        .card-image-wrapper::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, #050505 5%, transparent 60%);
+        }
+
+        .card-content {
+            padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;
+            position: relative; z-index: 2; margin-top: -30px;
+        }
+
+        /* Swiper Adjustments */
+        .swiper { width: 100%; padding: 40px 20px 60px 20px !important; }
+        .swiper-slide { width: 300px; height: auto; }
+        @media (min-width: 768px) { .swiper-slide { width: 340px; } }
         
-        /* Hover Effect: Lift & Glow */
-        .swiper-slide:hover .glass-card {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(96, 165, 250, 0.3);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
-        }
+        .swiper-pagination-bullet { background: rgba(255, 255, 255, 0.3); transition: all 0.3s; }
+        .swiper-pagination-bullet-active { background: #06b6d4; width: 24px; border-radius: 6px; }
 
-        .glass-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: radial-gradient(
-                800px circle at var(--mouse-x) var(--mouse-y),
-                rgba(255, 255, 255, 0.1),
-                transparent 40%
-            );
-            -webkit-mask: 
-                linear-gradient(#fff 0 0) content-box, 
-                linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-            z-index: 2;
-        }
-        .glass-card:hover::before { opacity: 1; }
-
-        /* Integrated Image (No Gap Fix) */
-        .card-content-wrapper {
-            padding: 1.5rem;
-            flex-grow: 0; /* Don't grow text area unnecessarily */
-            display: flex;
-            flex-direction: column;
-            z-index: 10;
-        }
-
-        .card-image-bottom {
-            width: 100%;
-            /* Flex grow fills remaining space, eliminating gap */
-            flex-grow: 1; 
-            min-height: 180px;
-            position: relative;
-            overflow: hidden;
-            display: flex; /* Helps vertically align img if needed */
-            align-items: flex-end; /* Align image to bottom */
-        }
-        
-        /* Gradient Overlay for Smooth Transition */
-        .card-image-bottom::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 40%;
-            background: linear-gradient(to bottom, rgba(17, 24, 39, 1), transparent);
-            pointer-events: none;
-        }
-
-        .card-image-bottom img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center; /* Center image content */
-            transition: transform 0.7s ease;
-            opacity: 0.7;
-        }
-
-        .glass-card:hover .card-image-bottom img {
-            transform: scale(1.1);
-            opacity: 1;
-        }
-
-        /* Typewriter Cursor */
-        .cursor {
-            display: inline-block;
-            width: 3px;
-            background-color: #60a5fa;
-            animation: blink 1s infinite;
-        }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        /* Language Logic */
+        /* Language Logic & UI Elements */
         body.lang-tr .en-text { display: none; }
         body.lang-en .tr-text { display: none; }
+        
+        .cursor { display: inline-block; width: 2px; background-color: #06b6d4; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* --- SWIPER CUSTOM STYLES --- */
-        .swiper {
-            width: 100%;
-            /* Optimized padding for full-screen layout */
-            padding-top: 20px;
-            padding-bottom: 40px;
-            overflow: visible !important;
+        section {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; padding: 80px 0; position: relative;
         }
 
-        .swiper-slide {
-            background-position: center;
-            background-size: cover;
-            width: 300px;
-            height: 500px; /* Standard height */
+        .gradient-text {
+            background-clip: text; -webkit-background-clip: text;
+            color: transparent; display: inline-block; padding-bottom: 0.1em;
+        }
+
+        /* SCROLL REVEAL ANIMATIONS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
             opacity: 1;
-            transition: transform 0.3s;
+            transform: translateY(0);
         }
-
-        @media (min-width: 768px) {
-            .swiper-slide {
-                width: 380px;
-            }
-        }
-
-        .swiper-pagination-bullet {
-            background: rgba(255,255,255,0.5);
-            width: 10px;
-            height: 10px;
-            transition: all 0.3s;
-        }
-        .swiper-pagination-bullet-active {
-            background: #60a5fa;
-            width: 25px;
-            border-radius: 5px;
-        }
-
-        .swiper-button-prev, .swiper-button-next {
-            color: white;
-            background: rgba(17, 24, 39, 0.6);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            z-index: 50;
-        }
-        .swiper-button-prev:hover, .swiper-button-next:hover {
-            background: rgba(59, 130, 246, 0.8);
-            border-color: rgba(59, 130, 246, 0.5);
-            transform: scale(1.1);
-        }
-        .swiper-button-prev:after, .swiper-button-next:after {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        /* Scroll Indicators */
-        .scroll-down-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-            opacity: 0.7;
-            z-index: 20;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-            40% {transform: translateX(-50%) translateY(-10px);}
-            60% {transform: translateX(-50%) translateY(-5px);}
-        }
-
-        /* Gradient Text Fix for Cut-off Descenders */
-        .gradient-title {
-            padding-bottom: 0.2em; /* Add space for descenders */
-            line-height: 1.3;      /* Increase line height */
-            background-clip: text;
-            -webkit-background-clip: text;
-            /* Ensure the block is displayed to respect padding */
-            display: inline-block; 
-        }
-
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
     </style>
 </head>
-<body class="antialiased lang-en" id="mainBody">
+<body class="antialiased lang-en">
 
-    <!-- Background Elements (Fixed) -->
-    <div class="bg-mesh"></div>
-    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-900/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
-        <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-blue-900/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob" style="animation-delay: 2s"></div>
-        <div class="absolute bottom-[-10%] left-[20%] w-96 h-96 bg-indigo-900/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob" style="animation-delay: 4s"></div>
+    <!-- Background Elements -->
+    <div class="aurora-bg">
+        <div class="aurora-blob-1"></div>
+        <div class="aurora-blob-2"></div>
+        <div class="aurora-blob-3"></div>
     </div>
 
     <!-- Language Toggle (Fixed) -->
     <div class="fixed top-6 right-6 z-50">
-        <button onclick="toggleLanguage()" class="group bg-white/5 hover:bg-white/10 text-white px-5 py-2.5 rounded-full border border-white/10 transition-all duration-300 backdrop-blur-md flex items-center gap-2 hover:scale-105 hover:shadow-[0_0_15px_rgba(96,165,250,0.5)]">
-            <i class="fas fa-globe text-blue-400 group-hover:rotate-180 transition-transform duration-500"></i>
+        <button onclick="toggleLanguage()" class="group bg-white/5 hover:bg-white/10 text-white px-5 py-2.5 rounded-full border border-white/10 transition-all duration-300 backdrop-blur-md flex items-center gap-2 hover:scale-105 shadow-lg">
+            <i class="fas fa-globe text-cyan-400 group-hover:rotate-180 transition-transform duration-500"></i>
             <span class="en-text font-bold text-sm tracking-wide">TR</span>
             <span class="tr-text font-bold text-sm tracking-wide">EN</span>
         </button>
     </div>
 
-    <!-- Scroll Container -->
-    <div class="snap-container">
+    <!-- SECTION 0: HERO (HUB ENTRANCE) -->
+    <section id="hero" class="items-center text-center px-6">
+        <div class="max-w-4xl mx-auto relative z-10 w-full reveal active">
+            <!-- Logo / Emblem -->
+            <div class="mb-8 flex justify-center">
+                <img src="https://placehold.co/120x120/050505/06b6d4?text=LOGO" alt="Linguamis Emblem" class="w-24 h-24 md:w-32 md:h-32 object-contain animate-float drop-shadow-[0_0_25px_rgba(6,182,212,0.4)]">
+            </div>
+            
+            <h1 class="text-5xl md:text-8xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-cyan-400 to-purple-500 gradient-text drop-shadow-sm pb-2">
+                linguamis
+            </h1>
+            
+            <div class="h-8 mb-10 text-lg md:text-2xl text-slate-400 font-medium font-mono">
+                <span id="typewriter"></span><span class="cursor">&nbsp;</span>
+            </div>
 
-        <!-- SECTION 0: HERO -->
-        <section id="hero">
-            <div class="max-w-4xl mx-auto text-center px-6 relative z-10">
-                <div class="relative inline-block mb-8 group">
-                    <div class="absolute inset-0 bg-blue-600/30 rounded-full blur-2xl group-hover:bg-blue-600/50 transition-colors duration-500"></div>
-                    <div class="relative p-1.5 rounded-full bg-gradient-to-tr from-blue-500 via-indigo-500 to-purple-500 shadow-2xl animate-float">
-                        <img src="photo.jpg" alt="Musab İkbal" class="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-[#030712] bg-slate-800" onerror="this.src='https://placehold.co/200x200/1e293b/cbd5e1?text=Profile'">
+            <div class="flex justify-center mt-4">
+                <a href="#education" class="group relative px-8 py-4 bg-transparent overflow-hidden rounded-full font-semibold text-white tracking-wide border border-white/20 transition-all hover:border-cyan-400/50">
+                    <div class="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    <span class="relative z-10 flex items-center gap-2">
+                        <span class="en-text">Explore Projects</span>
+                        <span class="tr-text">Projeleri Keşfet</span>
+                        <i class="fas fa-arrow-down text-cyan-400 group-hover:translate-y-1 transition-transform"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SECTION 1: EDUCATION & LANGUAGE (Featured) -->
+    <section id="education" class="overflow-hidden min-h-0 py-20">
+        <div class="w-full max-w-7xl mx-auto px-4">
+            <div class="mb-10 text-center md:text-left px-4 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 gradient-text mb-2">
+                    <span class="en-text">Language & Education</span>
+                    <span class="tr-text">Dil ve Eğitim</span>
+                </h2>
+                <p class="text-slate-400 font-light text-lg">
+                    <span class="en-text">EdTech tools and resources for effective learning.</span>
+                    <span class="tr-text">Etkili öğrenim için EdTech araçları ve kaynaklar.</span>
+                </p>
+            </div>
+            
+            <div class="swiper mySwiper reveal delay-200">
+                <div class="swiper-wrapper">
+                    <!-- YDS -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/yds" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/0ea5e9?text=E-YDS" alt="YDS App"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-cyan-400 mb-3 shadow-lg"><i class="fas fa-graduation-cap"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">E-YDS Sim</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">YDS exam simulation.</span>
+                                    <span class="tr-text">YDS sınav simülasyonu.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Eng Quizzes -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/EngQuizzesForAll" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/10b981?text=Quizzes" alt="Eng Quizzes"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-emerald-400 mb-3 shadow-lg"><i class="fas fa-book-open"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Eng Quizzes</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Massive repository of English quizzes.</span>
+                                    <span class="tr-text">Geniş kapsamlı İngilizce quiz arşivi.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Student Picker -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/studentpicker" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/6366f1?text=Picker" alt="Student Picker"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-indigo-400 mb-3 shadow-lg"><i class="fas fa-users"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Student Picker</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Random student selection tool.</span>
+                                    <span class="tr-text">Rastgele öğrenci seçme aracı.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Student Rubrics -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/studentrubrics" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/3b82f6?text=Rubrics" alt="Student Rubrics"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-blue-400 mb-3 shadow-lg"><i class="fas fa-clipboard-check"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Student Rubrics</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Assessment and grading rubrics.</span>
+                                    <span class="tr-text">Değerlendirme ve notlandırma rubrikleri.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- ConvoCards -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/convocards" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/f43f5e?text=ConvoCards" alt="ConvoCards"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-rose-400 mb-3 shadow-lg"><i class="fas fa-comments"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">ConvoCards</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Interactive conversation prompts.</span>
+                                    <span class="tr-text">İnteraktif konuşma kartları.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Parliamo -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/parliamo" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/ef4444?text=Parliamo" alt="Parliamo"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-red-400 mb-3 shadow-lg"><i class="fas fa-pizza-slice"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Parliamo</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Resources for learning Italian.</span>
+                                    <span class="tr-text">İtalyanca öğrenim kaynakları.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Irregular -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/Irregular" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/f97316?text=Verbs" alt="Irregular"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-orange-400 mb-3 shadow-lg"><i class="fas fa-spell-check"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Irregular Verbs</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Focused drills for irregular verbs.</span>
+                                    <span class="tr-text">Düzensiz fiiller için odaklanmış alıştırmalar.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Speakeasy -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/Speakeasy" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Speakeasy" alt="Speakeasy"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-purple-400 mb-3 shadow-lg"><i class="fas fa-microphone"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Speakeasy</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Tools for speaking practice.</span>
+                                    <span class="tr-text">Konuşma pratiği için araçlar.</span>
+                                </p>
+                            </div>
+                        </a>
                     </div>
                 </div>
-                
-                <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-4 text-white leading-tight">
-                    Musab İkbal <span class="text-white">SUBAŞI</span>
-                </h1>
-                
-                <div class="h-8 mb-8 text-lg md:text-2xl text-slate-300 font-medium font-mono">
-                    <span id="typewriter"></span><span class="cursor">&nbsp;</span>
-                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
 
-                <div class="flex justify-center gap-4">
-                    <a href="https://github.com/musabikbal206" target="_blank" class="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-blue-500/50 text-white px-8 py-3.5 rounded-full transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] group">
-                        <i class="fab fa-github text-2xl group-hover:scale-110 transition-transform"></i> 
+    <!-- SECTION 2: INTERACTIVE GAMES (Featured) -->
+    <section id="games" class="overflow-hidden min-h-0 py-20">
+        <div class="w-full max-w-7xl mx-auto px-4">
+             <div class="mb-10 text-center md:text-left px-4 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 gradient-text mb-2">
+                    <span class="en-text">Interactive Games</span>
+                    <span class="tr-text">İnteraktif Oyunlar</span>
+                </h2>
+                <p class="text-slate-400 font-light text-lg">
+                    <span class="en-text">Playful experiences built with HTML, JS, and Three.js.</span>
+                    <span class="tr-text">HTML, JS ve Three.js ile geliştirilmiş oyun deneyimleri.</span>
+                </p>
+            </div>
+            
+            <div class="swiper mySwiper reveal delay-200">
+                <div class="swiper-wrapper">
+                    <!-- Astroverbs -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/Astroverbs" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Astroverbs" alt="Astroverbs"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-purple-400 mb-3"><i class="fas fa-rocket"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Astroverbs</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Gamified verb learning in space.</span>
+                                    <span class="tr-text">Uzayda oyunlaştırılmış fiil öğrenimi.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Aquaverbs -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/Aquaverbs" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/06b6d4?text=Aquaverbs" alt="Aquaverbs"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-cyan-400 mb-3"><i class="fas fa-water"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Aquaverbs</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Underwater verb learning adventure.</span>
+                                    <span class="tr-text">Sualtı fiil öğrenme macerası.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Sniper -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/sniper" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/ef4444?text=Sniper" alt="Sniper"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-red-400 mb-3"><i class="fas fa-crosshairs"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Sniper Game</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">3D aim and shooting game.</span>
+                                    <span class="tr-text">3D nişan ve atış oyunu.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Chess -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/chess" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/94a3b8?text=Chess" alt="Chess"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-slate-400 mb-3"><i class="fas fa-chess"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Chess</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Classic chess game implementation.</span>
+                                    <span class="tr-text">Klasik satranç oyunu uygulaması.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Sudoku 3D -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/sudoku3d" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/14b8a6?text=Sudoku3D" alt="Sudoku 3D"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-teal-400 mb-3"><i class="fas fa-cube"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Sudoku 3D</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">A 3-dimensional twist on Sudoku.</span>
+                                    <span class="tr-text">Sudoku'ya 3 boyutlu bir dokunuş.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Sudoku -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/sudoku" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/2dd4bf?text=Sudoku" alt="Sudoku"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-teal-400 mb-3"><i class="fas fa-table-cells"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Sudoku</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Logic-based number placement puzzle.</span>
+                                    <span class="tr-text">Mantık tabanlı sayı yerleştirme bulmacası.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Maze -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/maze" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/84cc16?text=3D+Maze" alt="3D Maze"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-lime-400 mb-3"><i class="fas fa-dungeon"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">3D Maze</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Procedural 3D maze exploration.</span>
+                                    <span class="tr-text">Prosedürel 3D labirent keşfi.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Recycle Game -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/recyclegame" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/22c55e?text=Recycle" alt="Recycle"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-green-400 mb-3"><i class="fas fa-recycle"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Recycle Game</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Educational environmental game.</span>
+                                    <span class="tr-text">Eğitici çevre oyunu.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: TOOLS & UTILITIES (Featured) -->
+    <section id="tools" class="overflow-hidden min-h-0 py-20">
+        <div class="w-full max-w-7xl mx-auto px-4">
+            <div class="mb-10 text-center md:text-left px-4 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-400 to-orange-500 gradient-text mb-2">
+                    <span class="en-text">Tools & Utilities</span>
+                    <span class="tr-text">Araçlar & Uygulamalar</span>
+                </h2>
+                <p class="text-slate-400 font-light text-lg">
+                    <span class="en-text">Productivity apps, AI integrations, and web utilities.</span>
+                    <span class="tr-text">Üretkenlik uygulamaları, yapay zeka entegrasyonları ve araçlar.</span>
+                </p>
+            </div>
+            
+            <div class="swiper mySwiper reveal delay-200">
+                <div class="swiper-wrapper">
+                    <!-- WebEditor -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/WebEditor" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/3b82f6?text=WebEditor" alt="WebEditor"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-blue-400 mb-3"><i class="fas fa-code"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Web Editor</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Browser-based coding editor.</span>
+                                    <span class="tr-text">Tarayıcı tabanlı kod editörü.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Optik Okuyucu -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/optikokuyucu" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/f59e0b?text=Optik+Reader" alt="Optik Okuyucu"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-amber-400 mb-3"><i class="fas fa-tasks"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Optik Okuyucu</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Optical mark recognition tool.</span>
+                                    <span class="tr-text">Optik form okuma aracı.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- HTML Splitter -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/htmlsplitter" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/fb923c?text=Splitter" alt="HTML Splitter"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-orange-400 mb-3"><i class="fas fa-file-code"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">HTML Splitter</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Tool for breaking down HTML files.</span>
+                                    <span class="tr-text">HTML dosyalarını ayrıştırma aracı.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Excel to CSV -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/exceltocsv" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/4ade80?text=Excel2CSV" alt="Excel to CSV"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-green-400 mb-3"><i class="fas fa-file-excel"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Excel to CSV</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Format conversion utility.</span>
+                                    <span class="tr-text">Format dönüştürme aracı.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Watermark Remover -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/watermarkremover" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Watermark" alt="Watermark Remover"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-purple-400 mb-3"><i class="fas fa-eraser"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Watermark Remover</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Image processing utility.</span>
+                                    <span class="tr-text">Görüntü işleme aracı.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- PersonasBot -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/PersonasBot" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/10b981?text=PersonasBot" alt="PersonasBot"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-emerald-400 mb-3"><i class="fas fa-robot"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">PersonasBot</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">AI interaction experiments.</span>
+                                    <span class="tr-text">Yapay zeka etkileşim deneyleri.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Zinciri Kırma -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/zincirikirma" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/ef4444?text=Habits" alt="Zinciri Kirma"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-red-400 mb-3"><i class="fas fa-link"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Zinciri Kırma</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Habit tracking visualizer.</span>
+                                    <span class="tr-text">Alışkanlık takip görselleştirici.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Planner -->
+                    <div class="swiper-slide">
+                        <a href="https://musabikbal206.github.io/planner" class="glass-card">
+                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/3b82f6?text=Planner" alt="Planner"></div>
+                            <div class="card-content">
+                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-blue-400 mb-3"><i class="fas fa-calendar-alt"></i></div>
+                                <h3 class="text-xl font-bold text-white mb-2">Planner</h3>
+                                <p class="text-slate-400 text-sm font-light">
+                                    <span class="en-text">Daily and weekly planning tool.</span>
+                                    <span class="tr-text">Günlük ve haftalık planlama aracı.</span>
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: ALL PROJECTS DIRECTORY (Grid) -->
+    <section id="all-projects" class="px-4 py-20 min-h-0">
+        <div class="max-w-6xl mx-auto w-full reveal">
+            <div class="mb-12 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-200 to-slate-400 gradient-text mb-4">
+                    <span class="en-text">Full Project Directory</span>
+                    <span class="tr-text">Tüm Projeler Dizini</span>
+                </h2>
+                <p class="text-slate-400 font-light text-sm md:text-base max-w-2xl mx-auto">
+                    <span class="en-text">A complete list of all my public repositories, sub-sites, and experiments hosted on GitHub Pages.</span>
+                    <span class="tr-text">GitHub Pages üzerinde barındırılan tüm public repolarımın, alt sitelerimin ve deneylerimin tam listesi.</span>
+                </p>
+            </div>
+            
+            <!-- Directory Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 reveal delay-100">
+                <a href="https://musabikbal206.github.io/sec" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">sec</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/mybattery" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">mybattery</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/skills" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">skills</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/holiday" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">holiday</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/holidays" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">holidays</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/Zincir1" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">Zincir1</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/Zincir" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">Zincir</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/reading" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">reading</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/mimar" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">mimar</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/randevu" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">randevu</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/botanica" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">botanica</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/wikiread" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">wikiread</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/ydstopic" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">ydstopic</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/Speakeasydemo" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">Speakeasydemo</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/ydstool" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">ydstool</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/mathdoku" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">mathdoku</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/Autowords" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">Autowords</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/clashy" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">clashy</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/privateyusuf" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">privateyusuf</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/questionwheel" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">questionwheel</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/20questionswin" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">20questionswin</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/20questions" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">20questions</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/private" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">private</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+                <a href="https://musabikbal206.github.io/meb" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
+                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">meb</span>
+                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: ABOUT ME -->
+    <section id="about" class="px-6 py-20 bg-gradient-to-b from-transparent to-[#030303] min-h-0">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-12 z-10 w-full reveal delay-100">
+            
+            <!-- Profile Image -->
+            <div class="relative group w-48 h-48 md:w-72 md:h-72 shrink-0">
+                <div class="absolute inset-0 bg-gradient-to-tr from-cyan-400 to-purple-500 rounded-[2rem] md:rounded-[3rem] rotate-6 group-hover:rotate-12 opacity-30 transition-transform duration-500 blur-sm"></div>
+                <img src="photo.jpg" alt="Musab İkbal SUBAŞI" class="relative w-full h-full rounded-[2rem] md:rounded-[3rem] object-cover border border-white/10 shadow-2xl z-10 transition-transform duration-500 group-hover:-translate-y-2" onerror="this.src='https://placehold.co/400x400/1e293b/cbd5e1?text=Profile'">
+            </div>
+
+            <!-- Bio Info -->
+            <div class="text-center md:text-left max-w-2xl">
+                <h2 class="text-3xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 gradient-text mb-2">Musab İkbal SUBAŞI</h2>
+                <h3 class="text-xl md:text-2xl text-purple-400 mb-6 font-mono font-medium">
+                    <span class="en-text">Creator & Developer</span>
+                    <span class="tr-text">Yapımcı & Geliştirici</span>
+                </h3>
+                
+                <p class="text-slate-300 text-base md:text-lg leading-relaxed mb-8 font-light">
+                    <span class="en-text">
+                        As an English Language Teaching (ELT) graduate and TEFL instructor, I blend my passion for education with frontend development. From designing interactive 3D web games using HTML, CSS, JavaScript, and Three.js, to developing EdTech classroom tools and evaluating AI models, this central hub connects all my digital workspaces.
+                    </span>
+                    <span class="tr-text">
+                        İngilizce Öğretmenliği (ELT) mezunu ve bir TEFL eğitmeni olarak, eğitime olan tutkumu frontend geliştirme ile harmanlıyorum. HTML, CSS, JavaScript ve Three.js kullanarak interaktif 3D web oyunları tasarlamaktan, eğitim teknolojileri sınıf araçları geliştirmeye ve yapay zeka modellerini değerlendirmeye kadar tüm dijital çalışma alanlarım burada.
+                    </span>
+                </p>
+
+                <div class="flex justify-center md:justify-start gap-4">
+                    <a href="https://github.com/musabikbal206" target="_blank" class="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/50 text-white px-6 py-3 rounded-xl transition-all duration-300">
+                        <i class="fab fa-github text-xl text-cyan-100"></i> 
                         <span class="font-semibold">GitHub</span>
                     </a>
                 </div>
             </div>
-            
-            <div class="scroll-down-indicator" onclick="document.querySelector('#education').scrollIntoView({behavior: 'smooth'})">
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </section>
-        
-        <!-- SECTION 1: EDUCATION -->
-        <section id="education">
-            <div class="w-full max-w-7xl mx-auto px-4 flex flex-col justify-center h-full">
-                <div class="text-center mb-6">
-                    <!-- Added gradient-title class to fix cut-off letters -->
-                    <h2 class="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-white mb-2 gradient-title">
-                        <span class="en-text">Language & Education</span>
-                        <span class="tr-text">Dil ve Eğitim</span>
-                    </h2>
-                    <p class="text-slate-400">
-                        <span class="en-text">Tools and resources for learning languages</span>
-                        <span class="tr-text">Dil öğrenimi için araçlar ve kaynaklar</span>
-                    </p>
-                </div>
-                
-                <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-                        <!-- YDS -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/yds" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex justify-between items-start mb-4">
-                                        <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-xl text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
-                                            <i class="fas fa-graduation-cap"></i>
-                                        </div>
-                                        <span class="text-[10px] font-bold tracking-widest text-slate-500 border border-slate-800 px-2 py-1 rounded-full uppercase">Exam</span>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">E-YDS Sim</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Professional YDS exam simulation and preparation.</span>
-                                        <span class="tr-text">Profesyonel YDS sınav simülasyonu ve hazırlık.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/60a5fa?text=YDS+Simulation" alt="YDS App">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- EngQuizzesForAll -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/EngQuizzesForAll" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex justify-between items-start mb-4">
-                                        <div class="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center text-xl text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
-                                            <i class="fas fa-book-open"></i>
-                                        </div>
-                                        <span class="text-[10px] font-bold tracking-widest text-slate-500 border border-slate-800 px-2 py-1 rounded-full uppercase">Repo</span>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">Eng Quizzes</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">A massive repository of quizzes for English learners.</span>
-                                        <span class="tr-text">İngilizce öğrencileri için kapsamlı quiz arşivi.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/34d399?text=English+Quizzes" alt="Eng Quizzes">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- ConvoCards -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/convocards" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex justify-between items-start mb-4">
-                                        <div class="w-12 h-12 bg-pink-500/10 rounded-xl flex items-center justify-center text-xl text-pink-400 group-hover:bg-pink-500 group-hover:text-white transition-all duration-300">
-                                            <i class="fas fa-comments"></i>
-                                        </div>
-                                        <span class="text-[10px] font-bold tracking-widest text-slate-500 border border-slate-800 px-2 py-1 rounded-full uppercase">Speak</span>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-pink-400 transition-colors">ConvoCards</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Interactive conversation prompts for fluency.</span>
-                                        <span class="tr-text">Akıcılık için interaktif konuşma kartları.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/f472b6?text=Convo+Cards" alt="Convo Cards">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Parliamo -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/parliamo" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex justify-between items-start mb-4">
-                                        <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center text-xl text-red-400 group-hover:bg-red-500 group-hover:text-white transition-all duration-300">
-                                            <i class="fas fa-pizza-slice"></i>
-                                        </div>
-                                        <span class="text-[10px] font-bold tracking-widest text-slate-500 border border-slate-800 px-2 py-1 rounded-full uppercase">IT</span>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">Parliamo</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Curated resources for learning Italian.</span>
-                                        <span class="tr-text">İtalyanca öğrenimi için seçilmiş kaynaklar.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/ef4444?text=Parliamo" alt="Parliamo">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Speakeasy -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/Speakeasy" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex justify-between items-start mb-4">
-                                        <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center text-xl text-purple-400 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300">
-                                            <i class="fas fa-microphone-alt"></i>
-                                        </div>
-                                        <span class="text-[10px] font-bold tracking-widest text-slate-500 border border-slate-800 px-2 py-1 rounded-full uppercase">Tool</span>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">Speakeasy</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Digital tools specifically for speaking practice.</span>
-                                        <span class="tr-text">Konuşma pratiği için dijital araçlar.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/a855f7?text=Speakeasy" alt="Speakeasy">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Irregular Verbs -->
-                        <div class="swiper-slide">
-                             <a href="https://musabikbal206.github.io/Irregular" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex justify-between items-start mb-4">
-                                        <div class="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center text-xl text-orange-400 group-hover:bg-orange-500 group-hover:text-white transition-all duration-300">
-                                            <i class="fas fa-spell-check"></i>
-                                        </div>
-                                        <span class="text-[10px] font-bold tracking-widest text-slate-500 border border-slate-800 px-2 py-1 rounded-full uppercase">Grammar</span>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors">Irregular Verbs</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Master irregular verbs through focused drills.</span>
-                                        <span class="tr-text">Düzensiz fiilleri odaklanmış alıştırmalarla öğrenin.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/f97316?text=Verbs" alt="Irregular Verbs">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- WikiRead -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/wikiread" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex justify-between items-start mb-4">
-                                        <div class="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center text-xl text-cyan-400 group-hover:bg-cyan-500 group-hover:text-white transition-all duration-300">
-                                            <i class="fas fa-book-atlas"></i>
-                                        </div>
-                                        <span class="text-[10px] font-bold tracking-widest text-slate-500 border border-slate-800 px-2 py-1 rounded-full uppercase">Read</span>
-                                    </div>
-                                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">WikiRead</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Read Wikipedia articles in a simplified format.</span>
-                                        <span class="tr-text">Wikipedia makalelerini basitleştirilmiş formatta okuyun.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/06b6d4?text=WikiRead" alt="WikiRead">
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
-            
-            <div class="scroll-down-indicator" onclick="document.querySelector('#games').scrollIntoView({behavior: 'smooth'})">
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- SECTION 2: GAMES -->
-        <section id="games">
-            <div class="w-full max-w-7xl mx-auto px-4 flex flex-col justify-center h-full">
-                 <div class="text-center mb-6">
-                    <h2 class="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-white mb-2 gradient-title">
-                        <span class="en-text">Interactive Games</span>
-                        <span class="tr-text">İnteraktif Oyunlar</span>
-                    </h2>
-                    <p class="text-slate-400">
-                        <span class="en-text">Fun and educational game projects</span>
-                        <span class="tr-text">Eğlenceli ve öğretici oyun projeleri</span>
-                    </p>
-                </div>
-                
-                <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-                         <!-- Astroverbs -->
-                         <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/Astroverbs" class="glass-card group block">
-                                <div class="card-content-wrapper">
-                                    <div class="w-12 h-12 mb-4 bg-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-400 text-xl group-hover:text-white group-hover:bg-indigo-500 transition-all duration-500 group-hover:rotate-12">
-                                        <i class="fas fa-rocket"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold mb-2 text-white group-hover:text-indigo-400 transition-colors">Astroverbs</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Gamified verb learning in space.</span>
-                                        <span class="tr-text">Uzayda oyunlaştırılmış fiil öğrenimi.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/6366f1?text=Astroverbs" alt="Astroverbs">
-                                </div>
-                            </a>
-                        </div>
-                         <!-- Aquaverbs -->
-                         <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/Aquaverbs" class="glass-card group block">
-                                <div class="card-content-wrapper">
-                                    <div class="w-12 h-12 mb-4 bg-cyan-500/20 rounded-xl flex items-center justify-center text-cyan-400 text-xl group-hover:text-white group-hover:bg-cyan-500 transition-all duration-500 group-hover:rotate-12">
-                                        <i class="fas fa-water"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold mb-2 text-white group-hover:text-cyan-400 transition-colors">Aquaverbs</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Underwater verb learning adventure.</span>
-                                        <span class="tr-text">Su altı fiil öğrenme macerası.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/06b6d4?text=Aquaverbs" alt="Aquaverbs">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Autowords -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/Autowords" class="glass-card group block">
-                                <div class="card-content-wrapper">
-                                    <div class="w-12 h-12 mb-4 bg-yellow-500/20 rounded-xl flex items-center justify-center text-yellow-400 text-xl group-hover:text-white group-hover:bg-yellow-500 transition-all duration-500 group-hover:rotate-12">
-                                        <i class="fas fa-bolt"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold mb-2 text-white group-hover:text-yellow-400 transition-colors">Autowords</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Fast-paced, reflex-based word game.</span>
-                                        <span class="tr-text">Hızlı tempolu, refleks tabanlı kelime oyunu.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/eab308?text=Autowords" alt="Autowords">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Sudoku -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/sudoku" class="glass-card group block">
-                                <div class="card-content-wrapper">
-                                    <div class="w-12 h-12 mb-4 bg-amber-500/20 rounded-xl flex items-center justify-center text-amber-400 text-xl group-hover:text-white group-hover:bg-amber-500 transition-all duration-500 group-hover:rotate-12">
-                                        <i class="fas fa-border-all"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold mb-2 text-white group-hover:text-amber-400 transition-colors">Classic Sudoku</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Clean, responsive logic puzzle.</span>
-                                        <span class="tr-text">Temiz, responsive mantık bulmacası.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/f59e0b?text=Sudoku" alt="Sudoku">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Sudoku 3D -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/sudoku3d" class="glass-card group block">
-                                <div class="card-content-wrapper">
-                                    <div class="w-12 h-12 mb-4 bg-teal-500/20 rounded-xl flex items-center justify-center text-teal-400 text-xl group-hover:text-white group-hover:bg-teal-500 transition-all duration-500 group-hover:rotate-12">
-                                        <i class="fas fa-cube"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold mb-2 text-white group-hover:text-teal-400 transition-colors">Sudoku 3D</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">A 3-dimensional twist on Sudoku.</span>
-                                        <span class="tr-text">Sudoku'ya 3 boyutlu bir dokunuş.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/14b8a6?text=Sudoku+3D" alt="Sudoku 3D">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Chess -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/chess" class="glass-card group block">
-                                <div class="card-content-wrapper">
-                                    <div class="w-12 h-12 mb-4 bg-stone-500/20 rounded-xl flex items-center justify-center text-stone-400 text-xl group-hover:text-white group-hover:bg-stone-500 transition-all duration-500 group-hover:rotate-12">
-                                        <i class="fas fa-chess-knight"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold mb-2 text-white group-hover:text-stone-400 transition-colors">Chess</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Full-featured browser chess engine.</span>
-                                        <span class="tr-text">Tam kapsamlı tarayıcı satranç motoru.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/78716c?text=Chess" alt="Chess">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Maze -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/maze" class="glass-card group block">
-                                <div class="card-content-wrapper">
-                                    <div class="w-12 h-12 mb-4 bg-lime-500/20 rounded-xl flex items-center justify-center text-lime-400 text-xl group-hover:text-white group-hover:bg-lime-500 transition-all duration-500 group-hover:rotate-12">
-                                        <i class="fas fa-dungeon"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold mb-2 text-white group-hover:text-lime-400 transition-colors">3D Maze</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Procedural 3D maze exploration.</span>
-                                        <span class="tr-text">Prosedürel 3D labirent keşfi.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/84cc16?text=3D+Maze" alt="3D Maze">
-                                </div>
-                            </a>
-                        </div>
-                         <!-- Recycle -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/recyclegame" class="glass-card group block">
-                                <div class="card-content-wrapper">
-                                    <div class="w-12 h-12 mb-4 bg-green-500/20 rounded-xl flex items-center justify-center text-green-400 text-xl group-hover:text-white group-hover:bg-green-500 transition-all duration-500 group-hover:rotate-12">
-                                        <i class="fas fa-recycle"></i>
-                                    </div>
-                                    <h3 class="text-xl font-bold mb-2 text-white group-hover:text-green-400 transition-colors">Recycle Game</h3>
-                                    <p class="text-slate-400 text-xs leading-relaxed">
-                                        <span class="en-text">Educational environmental game.</span>
-                                        <span class="tr-text">Eğitici çevre bilinci oyunu.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/22c55e?text=Recycle" alt="Recycle Game">
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
-             <div class="scroll-down-indicator" onclick="document.querySelector('#tools').scrollIntoView({behavior: 'smooth'})">
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </section>
-
-        <!-- SECTION 3: TOOLS -->
-        <section id="tools">
-            <div class="w-full max-w-7xl mx-auto px-4 flex flex-col justify-center h-full">
-                <div class="text-center mb-6">
-                    <h2 class="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-white mb-2 gradient-title">
-                        <span class="en-text">Utilities & Tools</span>
-                        <span class="tr-text">Faydalı Araçlar</span>
-                    </h2>
-                    <p class="text-slate-400">
-                        <span class="en-text">Helpful utilities for productivity and dev</span>
-                        <span class="tr-text">Üretkenlik ve geliştirme için yardımcı araçlar</span>
-                    </p>
-                </div>
-
-                <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-                         <!-- Zinciri Kırma -->
-                         <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/zincirikirma" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex items-center gap-4 mb-2">
-                                        <div class="w-14 h-14 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-2xl group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                            <i class="fas fa-link"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-white text-xl">Zinciri Kırma</h4>
-                                            <p class="text-[10px] text-slate-400 uppercase tracking-wider">Habit Tracker</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-slate-400 mt-2">
-                                        <span class="en-text">Habit tracking visualization tool.</span>
-                                        <span class="tr-text">Alışkanlık takibi görselleştirme.</span>
-                                    </p>
-                                </div>
-                                 <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/3b82f6?text=Zinciri+Kirma" alt="Zinciri Kırma">
-                                </div>
-                            </a>
-                        </div>
-                         <!-- YDS Authoring -->
-                         <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/ydstool" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex items-center gap-4 mb-2">
-                                        <div class="w-14 h-14 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-2xl group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                            <i class="fas fa-pen-fancy"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-white text-xl">YDS Authoring</h4>
-                                            <p class="text-[10px] text-slate-400 uppercase tracking-wider">Question Gen</p>
-                                        </div>
-                                    </div>
-                                     <p class="text-sm text-slate-400 mt-2">
-                                        <span class="en-text">Exam question generator tool.</span>
-                                        <span class="tr-text">Sınav soru üreticisi aracı.</span>
-                                    </p>
-                                </div>
-                                 <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/3b82f6?text=YDS+Tool" alt="YDS Authoring">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- YDS Topic -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/ydstopic" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex items-center gap-4 mb-2">
-                                        <div class="w-14 h-14 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-2xl group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                            <i class="fas fa-list-ul"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-white text-xl">YDS Topic Bank</h4>
-                                            <p class="text-[10px] text-slate-400 uppercase tracking-wider">Resource</p>
-                                        </div>
-                                    </div>
-                                     <p class="text-sm text-slate-400 mt-2">
-                                        <span class="en-text">Topic & vocabulary resource.</span>
-                                        <span class="tr-text">Konu ve kelime kaynağı.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/3b82f6?text=Topic+Bank" alt="Topic Bank">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- PersonasBot -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/PersonasBot" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex items-center gap-4 mb-2">
-                                        <div class="w-14 h-14 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-2xl group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                            <i class="fas fa-robot"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-white text-xl">PersonasBot</h4>
-                                            <p class="text-[10px] text-slate-400 uppercase tracking-wider">AI Experiment</p>
-                                        </div>
-                                    </div>
-                                     <p class="text-sm text-slate-400 mt-2">
-                                        <span class="en-text">AI interaction experiments.</span>
-                                        <span class="tr-text">Yapay zeka etkileşim deneyleri.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/3b82f6?text=PersonasBot" alt="PersonasBot">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Web Editor -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/WebEditor" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex items-center gap-4 mb-2">
-                                        <div class="w-14 h-14 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-2xl group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                            <i class="fas fa-code"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-white text-xl">Web Editor</h4>
-                                            <p class="text-[10px] text-slate-400 uppercase tracking-wider">Dev Tool</p>
-                                        </div>
-                                    </div>
-                                     <p class="text-sm text-slate-400 mt-2">
-                                        <span class="en-text">Browser-based coding editor.</span>
-                                        <span class="tr-text">Tarayıcı tabanlı kodlama editörü.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/3b82f6?text=Web+Editor" alt="Web Editor">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Excel to CSV -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/exceltocsv" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex items-center gap-4 mb-2">
-                                        <div class="w-14 h-14 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-2xl group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                            <i class="fas fa-file-csv"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-white text-xl">Excel to CSV</h4>
-                                            <p class="text-[10px] text-slate-400 uppercase tracking-wider">Converter</p>
-                                        </div>
-                                    </div>
-                                     <p class="text-sm text-slate-400 mt-2">
-                                        <span class="en-text">Format converter utility.</span>
-                                        <span class="tr-text">Format dönüştürücü araç.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/3b82f6?text=Excel2CSV" alt="Excel to CSV">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- Planner -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/planner" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex items-center gap-4 mb-2">
-                                        <div class="w-14 h-14 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-2xl group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                            <i class="fas fa-calendar-alt"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-white text-xl">Planner</h4>
-                                            <p class="text-[10px] text-slate-400 uppercase tracking-wider">Productivity</p>
-                                        </div>
-                                    </div>
-                                     <p class="text-sm text-slate-400 mt-2">
-                                        <span class="en-text">Daily and weekly planning tool.</span>
-                                        <span class="tr-text">Günlük ve haftalık planlama aracı.</span>
-                                    </p>
-                                </div>
-                                 <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/3b82f6?text=Planner" alt="Planner">
-                                </div>
-                            </a>
-                        </div>
-                        <!-- HTML Splitter -->
-                        <div class="swiper-slide">
-                            <a href="https://musabikbal206.github.io/htmlsplitter" class="glass-card group">
-                                <div class="card-content-wrapper">
-                                    <div class="flex items-center gap-4 mb-2">
-                                        <div class="w-14 h-14 rounded-full bg-slate-800/80 flex items-center justify-center text-blue-400 text-2xl group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                            <i class="fas fa-columns"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-bold text-white text-xl">HTML Splitter</h4>
-                                            <p class="text-[10px] text-slate-400 uppercase tracking-wider">Utility</p>
-                                        </div>
-                                    </div>
-                                     <p class="text-sm text-slate-400 mt-2">
-                                        <span class="en-text">Split HTML files easily.</span>
-                                        <span class="tr-text">HTML dosyalarını kolayca parçalara ayırın.</span>
-                                    </p>
-                                </div>
-                                <div class="card-image-bottom">
-                                    <img src="https://placehold.co/600x400/1e293b/3b82f6?text=HTML+Splitter" alt="HTML Splitter">
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
-            
-             <div class="scroll-down-indicator" onclick="document.querySelector('#archive').scrollIntoView({behavior: 'smooth'})">
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </section>
-
-        <!-- SECTION 4: ARCHIVE (Replaced footer links with a proper section) -->
-        <section id="archive">
-            <div class="max-w-7xl mx-auto px-4 flex flex-col justify-center h-full text-center">
-                <div class="mb-10">
-                    <h2 class="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-white gradient-title">
-                        <span class="en-text">Archive & Prototypes</span>
-                        <span class="tr-text">Arşiv ve Prototipler</span>
-                    </h2>
-                    <p class="text-slate-400 mt-4 text-lg">
-                        <span class="en-text">Older projects, experiments, and open-source contributions.</span>
-                        <span class="tr-text">Eski projeler, deneyler ve açık kaynak katkıları.</span>
-                    </p>
-                </div>
-                
-                <div class="flex flex-wrap justify-center gap-6 max-w-5xl mx-auto">
-                    <a href="https://musabikbal206.github.io/infinitewords" class="group relative px-8 py-5 bg-slate-800/50 rounded-2xl overflow-hidden transition-all hover:bg-slate-700 hover:scale-105 border border-white/5">
-                        <div class="absolute inset-0 bg-blue-500/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        <span class="relative z-10 font-bold text-xl text-slate-300 group-hover:text-white">Infinite Words</span>
-                    </a>
-                    <a href="https://musabikbal206.github.io/mathdoku" class="group relative px-8 py-5 bg-slate-800/50 rounded-2xl overflow-hidden transition-all hover:bg-slate-700 hover:scale-105 border border-white/5">
-                        <div class="absolute inset-0 bg-purple-500/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        <span class="relative z-10 font-bold text-xl text-slate-300 group-hover:text-white">Mathdoku</span>
-                    </a>
-                    <a href="https://musabikbal206.github.io/questionwheel" class="group relative px-8 py-5 bg-slate-800/50 rounded-2xl overflow-hidden transition-all hover:bg-slate-700 hover:scale-105 border border-white/5">
-                        <div class="absolute inset-0 bg-green-500/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        <span class="relative z-10 font-bold text-xl text-slate-300 group-hover:text-white">Question Wheel</span>
-                    </a>
-                    <a href="https://musabikbal206.github.io/20questions" class="group relative px-8 py-5 bg-slate-800/50 rounded-2xl overflow-hidden transition-all hover:bg-slate-700 hover:scale-105 border border-white/5">
-                        <div class="absolute inset-0 bg-red-500/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        <span class="relative z-10 font-bold text-xl text-slate-300 group-hover:text-white">20 Questions</span>
-                    </a>
-                    <a href="https://musabikbal206.github.io/meb" class="group relative px-8 py-5 bg-slate-800/50 rounded-2xl overflow-hidden transition-all hover:bg-slate-700 hover:scale-105 border border-white/5">
-                        <div class="absolute inset-0 bg-yellow-500/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        <span class="relative z-10 font-bold text-xl text-slate-300 group-hover:text-white">MEB Projects</span>
-                    </a>
-                </div>
-
-                <footer class="mt-20 text-slate-600 text-sm font-medium">
-                    <p>&copy; 2026 Musab İkbal SUBAŞI. All Rights Reserved.</p>
-                </footer>
-            </div>
-        </section>
-
-    </div>
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 bg-[#020202] py-8 text-center reveal">
+        <div class="max-w-7xl mx-auto px-6">
+            <p class="text-slate-500 text-sm font-medium leading-relaxed">
+                <span class="en-text">This site was created by Musab İkbal SUBAŞI with the help of AI.<br>&copy; 2026 linguamis.com All rights reserved.</span>
+                <span class="tr-text">Bu site Musab İkbal SUBAŞI tarafından yapay zeka yardımıyla oluşturulmuştur.<br>&copy; 2026 linguamis.com Tüm hakları saklıdır.</span>
+            </p>
+        </div>
+    </footer>
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-        /* Initialize Swiper */
+        /* Initialize Swiper - Slide Effect without Arrows */
         var swiperOptions = {
-            effect: "coverflow",
+            effect: "slide",
             grabCursor: true,
-            centeredSlides: true,
             slidesPerView: "auto",
-            loop: true,
-            speed: 800,
+            spaceBetween: 24, 
+            centeredSlides: false, 
+            loop: true, /* Kartların başa sarmasını sağlar */
             autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
+                delay: 20000, /* 20 saniyede bir kaydırır */
+                disableOnInteraction: false, /* Kullanıcı karta dokunsa bile kaymaya devam eder */
             },
-            coverflowEffect: {
-                rotate: 20,
-                stretch: 0,
-                depth: 200,
-                modifier: 1,
-                slideShadows: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
+            pagination: { 
+                el: ".swiper-pagination", 
                 clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
+                dynamicBullets: true
             },
             breakpoints: {
-                320: {
-                    coverflowEffect: { rotate: 30, depth: 150 }
-                },
-                768: {
-                    coverflowEffect: { rotate: 20, depth: 250 }
-                }
+                320: { spaceBetween: 16 },
+                768: { spaceBetween: 24 }
             }
         };
 
         var swipers = document.querySelectorAll('.mySwiper');
-        swipers.forEach(function(swiperEl) {
-            new Swiper(swiperEl, swiperOptions);
-        });
+        swipers.forEach(function(swiperEl) { new Swiper(swiperEl, swiperOptions); });
 
         /* Language Toggle */
         function toggleLanguage() {
@@ -1011,8 +797,8 @@
         }
 
         /* Typewriter Effect */
-        const textsEn = ["English Teacher", "Full Stack Developer", "EdTech Enthusiast"];
-        const textsTr = ["İngilizce Öğretmeni", "Full Stack Geliştirici", "Eğitim Teknolojisi Uzmanı"];
+        const textsEn = ["Central Workspace", "Explore EdTech", "Frontend & 3D Games"];
+        const textsTr = ["Merkezi Çalışma Alanı", "EdTech Projeleri", "Frontend & 3D Oyunlar"];
         let textIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
@@ -1033,37 +819,43 @@
                 charIndex++;
             }
 
-            let typeSpeed = 100;
-            if (isDeleting) typeSpeed = 50;
+            let typeSpeed = 80;
+            if (isDeleting) typeSpeed = 40;
 
             if (!isDeleting && charIndex === currentText.length) {
                 isDeleting = true;
-                typeSpeed = 2000;
+                typeSpeed = 2500; 
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 textIndex = (textIndex + 1) % currentTexts.length;
-                typeSpeed = 500;
+                typeSpeed = 500; 
             }
-
             typewriterTimeout = setTimeout(startTypewriter, typeSpeed);
         }
 
-        /* Spotlight Effect Update */
-        document.addEventListener('mousemove', e => {
-            const cards = document.querySelectorAll('.glass-card');
-            cards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                if(rect.top < window.innerHeight && rect.bottom > 0) {
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    card.style.setProperty('--mouse-x', `${x}px`);
-                    card.style.setProperty('--mouse-y', `${y}px`);
-                }
+        startTypewriter();
+
+        /* Scroll Reveal Animation Logic */
+        document.addEventListener('DOMContentLoaded', function() {
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.1, 
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); 
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => {
+                revealObserver.observe(el);
             });
         });
-
-        // Start
-        startTypewriter();
     </script>
 </body>
 </html>
