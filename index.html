@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +7,6 @@
     <title>Linguamis</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icon-192x192.png">
@@ -28,8 +26,18 @@
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
+    <!-- Theme Script (Prevents flash) -->
+    <script>
+        if (localStorage.getItem('theme') === 'light' || (!('theme' in localStorage) && !window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -63,51 +71,107 @@
     <style>
         /* Smooth Scrolling */
         html { scroll-behavior: smooth; }
-        body { background-color: #050505; color: #e2e8f0; overflow-x: hidden; }
+        body { overflow-x: hidden; }
 
         /* Abstract Aurora Background */
         .aurora-bg {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; overflow: hidden; pointer-events: none;
+            background: radial-gradient(circle at top left, #f8fafc 40%, #e2e8f0 100%);
+        }
+        .dark .aurora-bg {
             background: radial-gradient(circle at top left, #050505 40%, #0a0a0a 100%);
         }
         .aurora-blob-1, .aurora-blob-2, .aurora-blob-3 {
             position: absolute; border-radius: 50%; filter: blur(100px);
-            opacity: 0.15; animation: aurora 15s infinite alternate ease-in-out;
+            opacity: 0.25; animation: aurora 15s infinite alternate ease-in-out;
+        }
+        .dark .aurora-blob-1, .dark .aurora-blob-2, .dark .aurora-blob-3 {
+            opacity: 0.15;
         }
         .aurora-blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #06b6d4; }
         .aurora-blob-2 { bottom: -10%; right: -10%; width: 600px; height: 600px; background: #a855f7; animation-delay: -5s; }
         .aurora-blob-3 { top: 40%; left: 40%; width: 400px; height: 400px; background: #3b82f6; animation-delay: -10s; }
 
-        /* Modern Glass Card */
+        /* Clean Modern Card for Light Mode & Glass for Dark Mode */
         .glass-card {
-            background: var(--glassBg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glassBorder);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
             border-radius: 24px;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex; flex-direction: column; height: 100%;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            position: relative;
         }
+        .dark .glass-card {
+            background: var(--glassBg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glassBorder);
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+        }
+        
         .glass-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(6, 182, 212, 0.4);
-            box-shadow: 0 20px 40px -10px rgba(6, 182, 212, 0.15);
-            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-8px);
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .dark .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 20px 40px -10px rgba(6, 182, 212, 0.3);
         }
 
-        .card-image-wrapper { position: relative; width: 100%; height: 200px; overflow: hidden; }
+        .card-image-wrapper { position: relative; width: 100%; height: 180px; overflow: hidden; border-bottom: 1px solid #f1f5f9; cursor: pointer; }
+        .dark .card-image-wrapper { border-bottom: none; }
         .card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
         .glass-card:hover .card-image-wrapper img { transform: scale(1.08); }
-        .card-image-wrapper::after {
+        
+        /* Dark mode only subtle overlay - No gradient in light mode */
+        .dark .card-image-wrapper::after {
             content: ''; position: absolute; inset: 0;
-            background: linear-gradient(to top, #050505 5%, transparent 60%);
+            background: linear-gradient(to top, rgba(5,5,5,1) 0%, rgba(5,5,5,0.2) 40%, transparent 100%);
+            transition: background 0.4s ease;
+        }
+        .dark .glass-card:hover .card-image-wrapper::after {
+            background: linear-gradient(to top, rgba(12,12,12,1) 0%, rgba(12,12,12,0.3) 40%, transparent 100%);
+        }
+
+        /* Info Button on Image */
+        .info-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #334155;
+            z-index: 10;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .dark .info-btn {
+            background: rgba(0, 0, 0, 0.6);
+            color: #cbd5e1;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .info-btn:hover {
+            transform: scale(1.1);
+            background: #06b6d4;
+            color: white;
+            border-color: #06b6d4;
         }
 
         .card-content {
             padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column;
-            position: relative; z-index: 2; margin-top: -30px;
+            position: relative; z-index: 2;
         }
 
         /* Swiper Adjustments */
@@ -115,12 +179,14 @@
         .swiper-slide { width: 300px; height: auto; }
         @media (min-width: 768px) { .swiper-slide { width: 340px; } }
         
-        .swiper-pagination-bullet { background: rgba(255, 255, 255, 0.3); transition: all 0.3s; }
+        .swiper-pagination-bullet { background: rgba(0, 0, 0, 0.3); transition: all 0.3s; }
+        .dark .swiper-pagination-bullet { background: rgba(255, 255, 255, 0.3); }
         .swiper-pagination-bullet-active { background: #06b6d4; width: 24px; border-radius: 6px; }
+        .dark .swiper-pagination-bullet-active { background: #06b6d4; }
 
         /* Language Logic & UI Elements */
-        body.lang-tr .en-text { display: none; }
-        body.lang-en .tr-text { display: none; }
+        body.lang-tr .en-text { display: none !important; }
+        body.lang-en .tr-text { display: none !important; }
         
         .cursor { display: inline-block; width: 2px; background-color: #06b6d4; animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -147,9 +213,17 @@
         }
         .delay-100 { transition-delay: 100ms; }
         .delay-200 { transition-delay: 200ms; }
+
+        /* App Info Modal Base Styles */
+        #app-info-modal-content {
+            transition: all 0.3s ease-out;
+        }
+        .app-info-modal-open {
+            overflow: hidden;
+        }
     </style>
 </head>
-<body class="antialiased lang-en">
+<body class="antialiased lang-en bg-slate-50 dark:bg-[#050505] text-slate-900 dark:text-slate-200 transition-colors duration-300">
 
     <!-- Background Elements -->
     <div class="aurora-bg">
@@ -158,171 +232,374 @@
         <div class="aurora-blob-3"></div>
     </div>
 
-    <!-- Language Toggle (Fixed) -->
-    <div class="fixed top-6 right-6 z-50">
-        <button onclick="toggleLanguage()" class="group bg-white/5 hover:bg-white/10 text-white px-5 py-2.5 rounded-full border border-white/10 transition-all duration-300 backdrop-blur-md flex items-center gap-2 hover:scale-105 shadow-lg">
-            <i class="fas fa-globe text-cyan-400 group-hover:rotate-180 transition-transform duration-500"></i>
-            <span class="en-text font-bold text-sm tracking-wide">TR</span>
-            <span class="tr-text font-bold text-sm tracking-wide">EN</span>
-        </button>
-    </div>
+    <!-- MAIN HEADER -->
+    <header class="fixed top-0 w-full z-[60] transition-all duration-300" id="main-header">
+        <div class="absolute inset-0 bg-white/80 dark:bg-[#050505]/80 backdrop-blur-md border-b border-slate-200 dark:border-white/10 shadow-sm dark:shadow-none transition-colors duration-300"></div>
+        <div class="relative max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <img src="linguamis-logo.png" alt="Logo" class="w-8 h-8 object-contain group-hover:scale-110 transition-transform" onerror="this.src='https://placehold.co/100x100/0ea5e9/ffffff?text=L'">
+                <span class="font-bold text-xl text-slate-900 dark:text-white tracking-tight">Linguamis</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-6" id="desktop-nav">
+                <a href="#education" class="nav-item text-sm font-semibold text-slate-600 hover:text-cyan-600 dark:text-slate-300 dark:hover:text-cyan-400 transition-colors">
+                    <span class="en-text dynamic-nav-en-edu">Education</span>
+                    <span class="tr-text dynamic-nav-tr-edu">Eğitim</span>
+                </a>
+                <a href="#games" class="nav-item text-sm font-semibold text-slate-600 hover:text-purple-600 dark:text-slate-300 dark:hover:text-purple-400 transition-colors">
+                    <span class="en-text dynamic-nav-en-gam">Games</span>
+                    <span class="tr-text dynamic-nav-tr-gam">Oyunlar</span>
+                </a>
+                <a href="#tools" class="nav-item text-sm font-semibold text-slate-600 hover:text-amber-600 dark:text-slate-300 dark:hover:text-amber-400 transition-colors">
+                    <span class="en-text dynamic-nav-en-too">Apps & Tools</span>
+                    <span class="tr-text dynamic-nav-tr-too">Uygulamalar</span>
+                </a>
+            </nav>
+
+            <!-- Controls -->
+            <div class="flex items-center gap-2 md:gap-3">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-200 hover:bg-slate-300 dark:bg-white/10 dark:hover:bg-white/20 text-slate-700 dark:text-white transition-all" title="Toggle Theme">
+                    <i id="theme-icon" class="fas fa-sun"></i>
+                </button>
+                <!-- Language Toggle -->
+                <button onclick="toggleLanguage()" class="w-9 h-9 flex items-center justify-center rounded-full bg-slate-200 hover:bg-slate-300 dark:bg-white/10 dark:hover:bg-white/20 text-slate-700 dark:text-white transition-all font-bold text-xs" title="Toggle Language">
+                    <span class="en-text">TR</span>
+                    <span class="tr-text">EN</span>
+                </button>
+                <!-- Profile Toggle (Desktop) -->
+                <button onclick="openProfileModal(true)" class="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-100 hover:bg-cyan-200 dark:bg-cyan-900/30 dark:hover:bg-cyan-900/50 text-cyan-800 dark:text-cyan-100 transition-all border border-cyan-200 dark:border-cyan-800/50">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="current-profile-en" class="en-text font-bold text-xs">Profile</span>
+                    <span id="current-profile-tr" class="tr-text font-bold text-xs">Profil</span>
+                </button>
+                
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-white transition-colors">
+                    <i class="fas fa-bars" id="mobile-menu-icon"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Nav Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-lg border-b border-slate-200 dark:border-white/10 shadow-lg transition-all duration-300">
+            <nav class="flex flex-col p-4 gap-4" id="mobile-nav">
+                <a href="#education" onclick="toggleMobileMenu()" class="nav-item flex items-center gap-3 text-base font-semibold text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400">
+                    <i class="fas fa-graduation-cap w-5 text-center"></i> 
+                    <span class="en-text dynamic-nav-en-edu">Education</span>
+                    <span class="tr-text dynamic-nav-tr-edu">Eğitim</span>
+                </a>
+                <a href="#games" onclick="toggleMobileMenu()" class="nav-item flex items-center gap-3 text-base font-semibold text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400">
+                    <i class="fas fa-gamepad w-5 text-center"></i> 
+                    <span class="en-text dynamic-nav-en-gam">Games</span>
+                    <span class="tr-text dynamic-nav-tr-gam">Oyunlar</span>
+                </a>
+                <a href="#tools" onclick="toggleMobileMenu()" class="nav-item flex items-center gap-3 text-base font-semibold text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400">
+                    <i class="fas fa-tools w-5 text-center"></i> 
+                    <span class="en-text dynamic-nav-en-too">Apps & Tools</span>
+                    <span class="tr-text dynamic-nav-tr-too">Uygulamalar</span>
+                </a>
+                <div class="h-px w-full bg-slate-200 dark:bg-white/10 my-1"></div>
+                <button onclick="openProfileModal(true); toggleMobileMenu()" class="flex items-center gap-3 text-base font-semibold text-slate-700 dark:text-slate-300">
+                    <i class="fas fa-user-circle w-5 text-center text-cyan-600 dark:text-cyan-400"></i>
+                    <span class="en-text">Change Profile</span>
+                    <span class="tr-text">Profili Değiştir</span>
+                </button>
+            </nav>
+        </div>
+    </header>
 
     <!-- SECTION 0: HERO (HUB ENTRANCE) -->
-    <section id="hero" class="items-center text-center px-6">
+    <section id="hero" class="items-center text-center px-6 pt-32 pb-20">
         <div class="max-w-4xl mx-auto relative z-10 w-full reveal active">
             <!-- Logo / Emblem -->
             <div class="mb-8 flex justify-center">
-                <img src="linguamis-logo.png" alt="Linguamis Emblem" class="w-24 h-24 md:w-32 md:h-32 object-contain animate-float drop-shadow-[0_0_25px_rgba(6,182,212,0.4)]">
+                <img src="linguamis-logo.png" alt="Linguamis Emblem" class="w-24 h-24 md:w-32 md:h-32 object-contain animate-float drop-shadow-[0_0_25px_rgba(6,182,212,0.4)]" onerror="this.src='https://placehold.co/200x200/0ea5e9/ffffff?text=L'">
             </div>
             
-            <h1 class="text-5xl md:text-8xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-cyan-400 to-purple-500 gradient-text drop-shadow-sm pb-2">
-                Linguamis
+            <h1 data-dynamic-text data-student-en="Linguamis: Your Learning Playground" data-student-tr="Linguamis: Öğrenme Oyun Alanın" data-teacher-en="Linguamis: Your Teaching Toolkit" data-teacher-tr="Linguamis: Öğretmen Araç Kutun" data-developer-en="Linguamis: Your Developer Workspace" data-developer-tr="Linguamis: Geliştirici Çalışma Alanın" class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-400 dark:to-purple-500 gradient-text drop-shadow-sm pb-2">
+                <span class="en-text">Linguamis</span>
+                <span class="tr-text">Linguamis</span>
             </h1>
             
-            <div class="h-8 mb-10 text-lg md:text-2xl text-slate-400 font-medium font-mono">
+            <div class="h-8 mb-10 text-lg md:text-2xl text-slate-600 dark:text-slate-400 font-medium font-mono">
                 <span id="typewriter"></span><span class="cursor">&nbsp;</span>
             </div>
 
             <div class="flex justify-center mt-4">
-                <a href="#education" class="group relative px-8 py-4 bg-transparent overflow-hidden rounded-full font-semibold text-white tracking-wide border border-white/20 transition-all hover:border-cyan-400/50">
-                    <div class="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                    <span class="relative z-10 flex items-center gap-2">
+                <a href="#education" id="hero-cta" class="group relative px-8 py-4 bg-white/50 dark:bg-transparent overflow-hidden rounded-full font-semibold text-slate-800 dark:text-white tracking-wide border border-slate-300 dark:border-white/20 transition-all hover:border-cyan-500 hover:shadow-lg dark:hover:border-cyan-400/50">
+                    <div class="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-300"></div>
+                    <span class="relative z-10 flex items-center gap-2" data-dynamic-text data-student-en="Start Learning" data-student-tr="Öğrenmeye Başla" data-teacher-en="Explore Tools" data-teacher-tr="Araçları Keşfet" data-developer-en="Explore Code" data-developer-tr="Kodları Keşfet">
                         <span class="en-text">Explore Projects</span>
                         <span class="tr-text">Projeleri Keşfet</span>
-                        <i class="fas fa-arrow-down text-cyan-400 group-hover:translate-y-1 transition-transform"></i>
+                        <i class="fas fa-arrow-down text-cyan-600 dark:text-cyan-400 group-hover:translate-y-1 transition-transform"></i>
                     </span>
                 </a>
             </div>
         </div>
     </section>
     
-    <!-- SECTION 1: EDUCATION & LANGUAGE (Featured) -->
-    <section id="education" class="overflow-hidden min-h-0 py-20">
+    <!-- SECTION 1: EDUCATION (Students: Language Learning | Teachers: Education) -->
+    <section id="education" class="overflow-hidden min-h-0 py-24 swiper-section pt-24">
         <div class="w-full max-w-7xl mx-auto px-4">
             <div class="mb-10 text-center md:text-left px-4 reveal">
-                <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 gradient-text mb-2">
+                <h2 data-dynamic-text data-student-en="Language Learning" data-student-tr="Dil Öğrenimi" data-teacher-en="Education" data-teacher-tr="Eğitim" class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-500 gradient-text mb-2">
                     <span class="en-text">Language & Education</span>
                     <span class="tr-text">Dil ve Eğitim</span>
                 </h2>
-                <p class="text-slate-400 font-light text-lg">
+                <p data-dynamic-text data-student-en="Engaging tools and apps for effective language learning." data-student-tr="Etkili dil öğrenimi için ilgi çekici araçlar ve uygulamalar." data-teacher-en="EdTech utilities to streamline your teaching and assessment." data-teacher-tr="Öğretim ve değerlendirme süreçlerinizi kolaylaştıran EdTech araçları." class="text-slate-600 dark:text-slate-400 font-light text-lg">
                     <span class="en-text">EdTech tools and resources for effective learning.</span>
                     <span class="tr-text">Etkili öğrenim için EdTech araçları ve kaynaklar.</span>
                 </p>
             </div>
             
             <div class="swiper mySwiper reveal delay-200">
-                <div class="swiper-wrapper">
-                    <!-- YDS -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/yds" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/0ea5e9?text=E-YDS" alt="YDS App"></div>
+                <div class="swiper-wrapper" id="wrapper-education">
+                    
+                    <!-- STUDENT APPS -->
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="eyds">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('eyds')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/0ea5e9?text=E-YDS" alt="YDS App">
+                            </div>
                             <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-cyan-400 mb-3 shadow-lg"><i class="fas fa-graduation-cap"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">E-YDS Sim</h3>
-                                <p class="text-slate-400 text-sm font-light">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-cyan-600 dark:text-cyan-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-graduation-cap"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">E-YDS Sim</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
                                     <span class="en-text">YDS exam simulation.</span>
                                     <span class="tr-text">YDS sınav simülasyonu.</span>
                                 </p>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                    <!-- Eng Quizzes -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/EngQuizzesForAll" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/10b981?text=Quizzes" alt="Eng Quizzes"></div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="quizzes">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('quizzes')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/10b981?text=Quizzes" alt="Quizzes">
+                            </div>
                             <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-emerald-400 mb-3 shadow-lg"><i class="fas fa-book-open"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Eng Quizzes</h3>
-                                <p class="text-slate-400 text-sm font-light">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-emerald-600 dark:text-emerald-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-book-open"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Quizzes</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
                                     <span class="en-text">Massive repository of English quizzes.</span>
                                     <span class="tr-text">Geniş kapsamlı İngilizce quiz arşivi.</span>
                                 </p>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                    <!-- Student Picker -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/studentpicker" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/6366f1?text=Picker" alt="Student Picker"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-indigo-400 mb-3 shadow-lg"><i class="fas fa-users"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Student Picker</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">Random student selection tool.</span>
-                                    <span class="tr-text">Rastgele öğrenci seçme aracı.</span>
-                                </p>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="convocards">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('convocards')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/f43f5e?text=ConvoCards" alt="ConvoCards">
                             </div>
-                        </a>
-                    </div>
-                    <!-- Student Rubrics -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/studentrubrics" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/3b82f6?text=Rubrics" alt="Student Rubrics"></div>
                             <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-blue-400 mb-3 shadow-lg"><i class="fas fa-clipboard-check"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Student Rubrics</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">Assessment and grading rubrics.</span>
-                                    <span class="tr-text">Değerlendirme ve notlandırma rubrikleri.</span>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- ConvoCards -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/convocards" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/f43f5e?text=ConvoCards" alt="ConvoCards"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-rose-400 mb-3 shadow-lg"><i class="fas fa-comments"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">ConvoCards</h3>
-                                <p class="text-slate-400 text-sm font-light">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-rose-600 dark:text-rose-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-comments"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Convocards</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
                                     <span class="en-text">Interactive conversation prompts.</span>
                                     <span class="tr-text">İnteraktif konuşma kartları.</span>
                                 </p>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                    <!-- Parliamo -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/parliamo" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/ef4444?text=Parliamo" alt="Parliamo"></div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="parliamo">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('parliamo')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/ef4444?text=Parliamo" alt="Parliamo">
+                            </div>
                             <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-red-400 mb-3 shadow-lg"><i class="fas fa-pizza-slice"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Parliamo</h3>
-                                <p class="text-slate-400 text-sm font-light">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-red-600 dark:text-red-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-pizza-slice"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Parliamo</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
                                     <span class="en-text">Resources for learning Italian.</span>
                                     <span class="tr-text">İtalyanca öğrenim kaynakları.</span>
                                 </p>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                    <!-- Irregular -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/Irregular" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/f97316?text=Verbs" alt="Irregular"></div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="irregular">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('irregular')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/f97316?text=Verbs" alt="Irregular">
+                            </div>
                             <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-orange-400 mb-3 shadow-lg"><i class="fas fa-spell-check"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Irregular Verbs</h3>
-                                <p class="text-slate-400 text-sm font-light">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-orange-600 dark:text-orange-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-spell-check"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Irregular Verbs</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
                                     <span class="en-text">Focused drills for irregular verbs.</span>
                                     <span class="tr-text">Düzensiz fiiller için odaklanmış alıştırmalar.</span>
                                 </p>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                    <!-- Speakeasy -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/Speakeasy" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Speakeasy" alt="Speakeasy"></div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="speakeasy">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('speakeasy')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Speakeasy" alt="Speakeasy">
+                            </div>
                             <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-purple-400 mb-3 shadow-lg"><i class="fas fa-microphone"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Speakeasy</h3>
-                                <p class="text-slate-400 text-sm font-light">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-purple-600 dark:text-purple-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-microphone"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Speakeasy</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
                                     <span class="en-text">Tools for speaking practice.</span>
                                     <span class="tr-text">Konuşma pratiği için araçlar.</span>
                                 </p>
                             </div>
-                        </a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="wikiread">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('wikiread')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/64748b?text=Wikiread" alt="Wikiread">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-slate-600 dark:text-slate-300 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-book"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Wikiread</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Reading tool powered by Wiki.</span>
+                                    <span class="tr-text">Wiki destekli okuma aracı.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TEACHER APPS -->
+                    <div class="swiper-slide" data-audience="teacher">
+                        <div class="glass-card group" data-app-id="rubrics">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('rubrics')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/3b82f6?text=Rubrics" alt="Rubrics">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-blue-600 dark:text-blue-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-clipboard-check"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Rubrics</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Assessment and grading rubrics.</span>
+                                    <span class="tr-text">Değerlendirme ve notlandırma rubrikleri.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="teacher">
+                        <div class="glass-card group" data-app-id="studentpicker">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('studentpicker')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/6366f1?text=Picker" alt="Student Picker">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-indigo-600 dark:text-indigo-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-users"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Student Picker</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Random student selection tool.</span>
+                                    <span class="tr-text">Rastgele öğrenci seçme aracı.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="teacher">
+                        <div class="glass-card group" data-app-id="reading">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('reading')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/10b981?text=Reading" alt="Reading">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-emerald-600 dark:text-emerald-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-book-reader"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Reading</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Reading materials organizer.</span>
+                                    <span class="tr-text">Okuma materyalleri düzenleyici.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="teacher">
+                        <div class="glass-card group" data-app-id="ydstool">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('ydstool')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/0ea5e9?text=ydstool" alt="ydstool">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-cyan-600 dark:text-cyan-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-tools"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">ydstool</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">YDS preparation utilities.</span>
+                                    <span class="tr-text">YDS hazırlık araçları.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="teacher">
+                        <div class="glass-card group" data-app-id="ydstopic">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('ydstopic')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/8b5cf6?text=ydstopic" alt="ydstopic">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-purple-600 dark:text-purple-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-list"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">ydstopic</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Topic organization for YDS.</span>
+                                    <span class="tr-text">YDS için konu organizasyonu.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="teacher">
+                        <div class="glass-card group" data-app-id="questionwheel">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('questionwheel')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/f59e0b?text=Wheel" alt="Questionwheel">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-amber-600 dark:text-amber-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-dharmachakra"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Questionwheel</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Interactive question spinner.</span>
+                                    <span class="tr-text">İnteraktif soru çarkı.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="teacher">
+                        <div class="glass-card group" data-app-id="20questions">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('20questions')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/ef4444?text=20+Q" alt="20 Questions">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-red-600 dark:text-red-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-question-circle"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">20 Questions</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Classic guessing game format.</span>
+                                    <span class="tr-text">Klasik tahmin oyunu formatı.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="teacher">
+                        <div class="glass-card group" data-app-id="meb">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('meb')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/64748b?text=MEB" alt="meb">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-slate-600 dark:text-slate-300 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-school"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">meb</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Official curriculum integration tools.</span>
+                                    <span class="tr-text">Resmi müfredat entegrasyon araçları.</span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -330,133 +607,166 @@
         </div>
     </section>
 
-    <!-- SECTION 2: INTERACTIVE GAMES (Featured) -->
-    <section id="games" class="overflow-hidden min-h-0 py-20">
+    <!-- SECTION 2: GAMES (Students: Games) -->
+    <section id="games" class="overflow-hidden min-h-0 py-24 swiper-section pt-24">
         <div class="w-full max-w-7xl mx-auto px-4">
              <div class="mb-10 text-center md:text-left px-4 reveal">
-                <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 gradient-text mb-2">
-                    <span class="en-text">Interactive Games</span>
-                    <span class="tr-text">İnteraktif Oyunlar</span>
+                <h2 data-dynamic-text data-student-en="Games" data-student-tr="Oyunlar" class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-500 gradient-text mb-2">
+                    <span class="en-text">Games</span>
+                    <span class="tr-text">Oyunlar</span>
                 </h2>
-                <p class="text-slate-400 font-light text-lg">
+                <p data-dynamic-text data-student-en="Playful experiences built with HTML, JS, and Three.js." data-student-tr="HTML, JS ve Three.js ile geliştirilmiş oyun deneyimleri." class="text-slate-600 dark:text-slate-400 font-light text-lg">
                     <span class="en-text">Playful experiences built with HTML, JS, and Three.js.</span>
                     <span class="tr-text">HTML, JS ve Three.js ile geliştirilmiş oyun deneyimleri.</span>
                 </p>
             </div>
             
             <div class="swiper mySwiper reveal delay-200">
-                <div class="swiper-wrapper">
-                    <!-- Astroverbs -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/Astroverbs" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Astroverbs" alt="Astroverbs"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-purple-400 mb-3"><i class="fas fa-rocket"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Astroverbs</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">Gamified verb learning in space.</span>
-                                    <span class="tr-text">Uzayda oyunlaştırılmış fiil öğrenimi.</span>
-                                </p>
+                <div class="swiper-wrapper" id="wrapper-games">
+                    <!-- STUDENT GAMES -->
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="maze">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('maze')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/84cc16?text=Mazeamazing" alt="Mazeamazing">
                             </div>
-                        </a>
-                    </div>
-                    <!-- Aquaverbs -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/Aquaverbs" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/06b6d4?text=Aquaverbs" alt="Aquaverbs"></div>
                             <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-cyan-400 mb-3"><i class="fas fa-water"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Aquaverbs</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">Underwater verb learning adventure.</span>
-                                    <span class="tr-text">Sualtı fiil öğrenme macerası.</span>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Sniper -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/sniper" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/ef4444?text=Sniper" alt="Sniper"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-red-400 mb-3"><i class="fas fa-crosshairs"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Sniper Game</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">3D aim and shooting game.</span>
-                                    <span class="tr-text">3D nişan ve atış oyunu.</span>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Chess -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/chess" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/94a3b8?text=Chess" alt="Chess"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-slate-400 mb-3"><i class="fas fa-chess"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Chess</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">Classic chess game implementation.</span>
-                                    <span class="tr-text">Klasik satranç oyunu uygulaması.</span>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Sudoku 3D -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/sudoku3d" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/14b8a6?text=Sudoku3D" alt="Sudoku 3D"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-teal-400 mb-3"><i class="fas fa-cube"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Sudoku 3D</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">A 3-dimensional twist on Sudoku.</span>
-                                    <span class="tr-text">Sudoku'ya 3 boyutlu bir dokunuş.</span>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Sudoku -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/sudoku" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/2dd4bf?text=Sudoku" alt="Sudoku"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-teal-400 mb-3"><i class="fas fa-table-cells"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Sudoku</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">Logic-based number placement puzzle.</span>
-                                    <span class="tr-text">Mantık tabanlı sayı yerleştirme bulmacası.</span>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Maze -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/maze" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/84cc16?text=3D+Maze" alt="3D Maze"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-lime-400 mb-3"><i class="fas fa-dungeon"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">3D Maze</h3>
-                                <p class="text-slate-400 text-sm font-light">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-lime-600 dark:text-lime-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-dungeon"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Mazeamazing</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
                                     <span class="en-text">Procedural 3D maze exploration.</span>
                                     <span class="tr-text">Prosedürel 3D labirent keşfi.</span>
                                 </p>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                    <!-- Recycle Game -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/recyclegame" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/22c55e?text=Recycle" alt="Recycle"></div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="astrowords">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('astrowords')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Astrowords" alt="Astrowords">
+                            </div>
                             <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-green-400 mb-3"><i class="fas fa-recycle"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Recycle Game</h3>
-                                <p class="text-slate-400 text-sm font-light">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-purple-600 dark:text-purple-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-rocket"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Astrowords</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Gamified vocabulary learning in space.</span>
+                                    <span class="tr-text">Uzayda oyunlaştırılmış kelime öğrenimi.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="aquaverbs">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('aquaverbs')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/06b6d4?text=Acquaverbs" alt="Acquaverbs">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-cyan-600 dark:text-cyan-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-water"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Acquaverbs</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Underwater verb learning adventure.</span>
+                                    <span class="tr-text">Sualtı fiil öğrenme macerası.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="autowords">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('autowords')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/f59e0b?text=Autowords" alt="Autowords">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-amber-600 dark:text-amber-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-car"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Autowords</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Fast-paced word learning game.</span>
+                                    <span class="tr-text">Tempolu kelime öğrenme oyunu.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="sudoku">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('sudoku')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/2dd4bf?text=Sudoku" alt="Sudoku">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-teal-600 dark:text-teal-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-table-cells"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Sudoku</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Logic-based number placement puzzle.</span>
+                                    <span class="tr-text">Mantık tabanlı sayı yerleştirme bulmacası.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="mathdoku">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('mathdoku')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/f43f5e?text=Mathdoku" alt="Mathdoku">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-rose-600 dark:text-rose-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-square-root-alt"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Mathdoku</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Mathematical logic puzzle.</span>
+                                    <span class="tr-text">Matematiksel mantık bulmacası.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="chess">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('chess')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/94a3b8?text=Chess" alt="Chess">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-slate-600 dark:text-slate-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-chess"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Chess</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Classic chess game implementation.</span>
+                                    <span class="tr-text">Klasik satranç oyunu uygulaması.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="recyclegame">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('recyclegame')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/22c55e?text=Recycle" alt="Recycle">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-green-600 dark:text-green-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-recycle"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Recycle</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
                                     <span class="en-text">Educational environmental game.</span>
                                     <span class="tr-text">Eğitici çevre oyunu.</span>
                                 </p>
                             </div>
-                        </a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="sniper">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('sniper')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/ef4444?text=Sniper" alt="Sniper">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-red-600 dark:text-red-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-crosshairs"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Sniper</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">3D aim and shooting game.</span>
+                                    <span class="tr-text">3D nişan ve atış oyunu.</span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -464,237 +774,212 @@
         </div>
     </section>
 
-    <!-- SECTION 3: TOOLS & UTILITIES (Featured) -->
-    <section id="tools" class="overflow-hidden min-h-0 py-20">
+    <!-- SECTION 3: TOOLS & UTILITIES (Students: Useful Apps | Developers: Developer Tools) -->
+    <section id="tools" class="overflow-hidden min-h-0 py-24 swiper-section pt-24">
         <div class="w-full max-w-7xl mx-auto px-4">
             <div class="mb-10 text-center md:text-left px-4 reveal">
-                <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-400 to-orange-500 gradient-text mb-2">
-                    <span class="en-text">Tools & Utilities</span>
-                    <span class="tr-text">Araçlar & Uygulamalar</span>
+                <h2 data-dynamic-text data-student-en="Useful Apps" data-student-tr="Faydalı Uygulamalar" data-developer-en="Developer Tools" data-developer-tr="Geliştirici Araçları" class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-500 to-orange-500 dark:from-amber-400 dark:to-orange-500 gradient-text mb-2">
+                    <span class="en-text">Apps & Tools</span>
+                    <span class="tr-text">Uygulamalar</span>
                 </h2>
-                <p class="text-slate-400 font-light text-lg">
+                <p data-dynamic-text data-student-en="Helpful apps for planning and organizing your studies." data-student-tr="Çalışmalarınızı planlamak ve düzenlemek için faydalı uygulamalar." data-developer-en="Tools for coding, conversion, and workflow optimization." data-developer-tr="Kodlama, dönüştürme ve iş akışı optimizasyonu araçları." class="text-slate-600 dark:text-slate-400 font-light text-lg">
                     <span class="en-text">Productivity apps, AI integrations, and web utilities.</span>
                     <span class="tr-text">Üretkenlik uygulamaları, yapay zeka entegrasyonları ve araçlar.</span>
                 </p>
             </div>
             
             <div class="swiper mySwiper reveal delay-200">
-                <div class="swiper-wrapper">
-                    <!-- WebEditor -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/WebEditor" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/3b82f6?text=WebEditor" alt="WebEditor"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-blue-400 mb-3"><i class="fas fa-code"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Web Editor</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">Browser-based coding editor.</span>
-                                    <span class="tr-text">Tarayıcı tabanlı kod editörü.</span>
-                                </p>
+                <div class="swiper-wrapper" id="wrapper-tools">
+                    
+                    <!-- STUDENT USEFUL APPS -->
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="zincirikirma">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('zincirikirma')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/ef4444?text=Habits" alt="Zinciri Kirma">
                             </div>
-                        </a>
-                    </div>
-                    <!-- HTML Splitter -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/htmlsplitter" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/fb923c?text=Splitter" alt="HTML Splitter"></div>
                             <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-orange-400 mb-3"><i class="fas fa-file-code"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">HTML Splitter</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">Tool for breaking down HTML files.</span>
-                                    <span class="tr-text">HTML dosyalarını ayrıştırma aracı.</span>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Excel to CSV -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/exceltocsv" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/4ade80?text=Excel2CSV" alt="Excel to CSV"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-green-400 mb-3"><i class="fas fa-file-excel"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Excel to CSV</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">Format conversion utility.</span>
-                                    <span class="tr-text">Format dönüştürme aracı.</span>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Watermark Remover -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/watermarkremover" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Watermark" alt="Watermark Remover"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-purple-400 mb-3"><i class="fas fa-eraser"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Watermark Remover</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">Image processing utility.</span>
-                                    <span class="tr-text">Görüntü işleme aracı.</span>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- PersonasBot -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/PersonasBot" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/10b981?text=PersonasBot" alt="PersonasBot"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-emerald-400 mb-3"><i class="fas fa-robot"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">PersonasBot</h3>
-                                <p class="text-slate-400 text-sm font-light">
-                                    <span class="en-text">AI interaction experiments.</span>
-                                    <span class="tr-text">Yapay zeka etkileşim deneyleri.</span>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Zinciri Kırma -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/zincirikirma" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/ef4444?text=Habits" alt="Zinciri Kirma"></div>
-                            <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-red-400 mb-3"><i class="fas fa-link"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Zinciri Kırma</h3>
-                                <p class="text-slate-400 text-sm font-light">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-red-600 dark:text-red-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-link"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Habits - Zinciri Kırma</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
                                     <span class="en-text">Habit tracking visualizer.</span>
                                     <span class="tr-text">Alışkanlık takip görselleştirici.</span>
                                 </p>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                    <!-- Planner -->
-                    <div class="swiper-slide">
-                        <a href="https://musabikbal206.github.io/planner" class="glass-card">
-                            <div class="card-image-wrapper"><img src="https://placehold.co/600x400/0f172a/3b82f6?text=Planner" alt="Planner"></div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="planner">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('planner')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/3b82f6?text=Planner" alt="Planner">
+                            </div>
                             <div class="card-content">
-                                <div class="w-10 h-10 bg-[#050505] border border-white/10 rounded-xl flex items-center justify-center text-lg text-blue-400 mb-3"><i class="fas fa-calendar-alt"></i></div>
-                                <h3 class="text-xl font-bold text-white mb-2">Planner</h3>
-                                <p class="text-slate-400 text-sm font-light">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-blue-600 dark:text-blue-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-calendar-alt"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Planner</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
                                     <span class="en-text">Daily and weekly planning tool.</span>
                                     <span class="tr-text">Günlük ve haftalık planlama aracı.</span>
                                 </p>
                             </div>
-                        </a>
+                        </div>
                     </div>
+                    <div class="swiper-slide" data-audience="student">
+                        <div class="glass-card group" data-app-id="personas">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('personas')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/10b981?text=Personas" alt="Personas">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-emerald-600 dark:text-emerald-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-robot"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Personas</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">AI interaction experiments.</span>
+                                    <span class="tr-text">Yapay zeka etkileşim deneyleri.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DEVELOPER TOOLS -->
+                    <div class="swiper-slide" data-audience="developer">
+                        <div class="glass-card group" data-app-id="webeditor">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('webeditor')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/3b82f6?text=WebEditor" alt="WebEditor">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-blue-600 dark:text-blue-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-code"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">WebEditor</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Browser-based coding editor.</span>
+                                    <span class="tr-text">Tarayıcı tabanlı kod editörü.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="developer">
+                        <div class="glass-card group" data-app-id="htmlsplitter">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('htmlsplitter')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/fb923c?text=Splitter" alt="HTML Splitter">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-orange-600 dark:text-orange-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-file-code"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Html Splitter</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Tool for breaking down HTML files.</span>
+                                    <span class="tr-text">HTML dosyalarını ayrıştırma aracı.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="developer">
+                        <div class="glass-card group" data-app-id="exceltocsv">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('exceltocsv')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/4ade80?text=Excel2CSV" alt="Excel to CSV">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-green-600 dark:text-green-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-file-excel"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Excel to CSV</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Format conversion utility.</span>
+                                    <span class="tr-text">Format dönüştürme aracı.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="developer">
+                        <div class="glass-card group" data-app-id="watermarkremover">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('watermarkremover')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Watermark" alt="Watermarkremover">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-purple-600 dark:text-purple-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-eraser"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Watermarkremover</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Image processing utility.</span>
+                                    <span class="tr-text">Görüntü işleme aracı.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="developer">
+                        <div class="glass-card group" data-app-id="mimar">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('mimar')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/64748b?text=mimar" alt="mimar">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-slate-600 dark:text-slate-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-building"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">mimar</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Architecture structure tools.</span>
+                                    <span class="tr-text">Mimari yapı araçları.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="developer">
+                        <div class="glass-card group" data-app-id="mybattery">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('mybattery')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/10b981?text=mybattery" alt="mybattery">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-emerald-600 dark:text-emerald-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-battery-half"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">mybattery</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">System analytics tool.</span>
+                                    <span class="tr-text">Sistem analitik aracı.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" data-audience="developer">
+                        <div class="glass-card group" data-app-id="clashy">
+                            <div class="card-image-wrapper">
+                                <div class="info-btn" onclick="openAppInfo('clashy')"><i class="fas fa-info"></i></div>
+                                <img src="https://placehold.co/600x400/0f172a/f59e0b?text=clashy" alt="clashy">
+                            </div>
+                            <div class="card-content">
+                                <div class="w-12 h-12 bg-slate-50 border border-slate-100 dark:bg-black/60 dark:backdrop-blur-md dark:border-white/10 rounded-xl flex items-center justify-center text-xl text-amber-600 dark:text-amber-400 mb-3 shadow-sm group-hover:scale-110 transition-transform"><i class="fas fa-bolt"></i></div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">clashy</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm font-light">
+                                    <span class="en-text">Game logic and algorithm test.</span>
+                                    <span class="tr-text">Oyun mantığı ve algoritma testi.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 4: ALL PROJECTS DIRECTORY (Grid) -->
-    <section id="all-projects" class="px-4 py-20 min-h-0">
-        <div class="max-w-6xl mx-auto w-full reveal">
-            <div class="mb-12 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-200 to-slate-400 gradient-text mb-4">
-                    <span class="en-text">Full Project Directory</span>
-                    <span class="tr-text">Tüm Projeler Dizini</span>
-                </h2>
-                <p class="text-slate-400 font-light text-sm md:text-base max-w-2xl mx-auto">
-                    <span class="en-text">A complete list of all my public repositories, sub-sites, and experiments hosted on GitHub Pages.</span>
-                    <span class="tr-text">GitHub Pages üzerinde barındırılan tüm public repolarımın, alt sitelerimin ve deneylerimin tam listesi.</span>
-                </p>
-            </div>
-            
-            <!-- Directory Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 reveal delay-100">
-                <a href="https://musabikbal206.github.io/sec" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">sec</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/mybattery" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">mybattery</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/skills" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">skills</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/holiday" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">holiday</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/Zincir" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">Zincir</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/reading" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">reading</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/mimar" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">mimar</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/randevu" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">randevu</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/wikiread" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">wikiread</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/ydstopic" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">ydstopic</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/Speakeasydemo" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">Speakeasydemo</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/ydstool" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">ydstool</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/mathdoku" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">mathdoku</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/Autowords" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">Autowords</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/clashy" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">clashy</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/questionwheel" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">questionwheel</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/20questions" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">20questions</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-                <a href="https://musabikbal206.github.io/meb" class="group relative bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.06] hover:border-cyan-500/30 transition-all">
-                    <span class="font-medium text-slate-300 group-hover:text-white text-sm">meb</span>
-                    <i class="fas fa-external-link-alt text-slate-600 group-hover:text-cyan-400 text-xs transition-colors"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
     <!-- SECTION 5: ABOUT ME -->
-    <section id="about" class="px-6 py-20 bg-gradient-to-b from-transparent to-[#030303] min-h-0">
+    <section id="about" class="px-6 py-24 bg-gradient-to-b from-transparent to-slate-100 dark:to-[#030303] min-h-0">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-center gap-12 z-10 w-full reveal delay-100">
             
             <!-- Profile Image -->
             <div class="relative group w-48 h-48 md:w-72 md:h-72 shrink-0">
                 <div class="absolute inset-0 bg-gradient-to-tr from-cyan-400 to-purple-500 rounded-[2rem] md:rounded-[3rem] rotate-6 group-hover:rotate-12 opacity-30 transition-transform duration-500 blur-sm"></div>
-                <img src="photo.jpg" alt="Musab İkbal SUBAŞI" class="relative w-full h-full rounded-[2rem] md:rounded-[3rem] object-cover border border-white/10 shadow-2xl z-10 transition-transform duration-500 group-hover:-translate-y-2" onerror="this.src='https://placehold.co/400x400/1e293b/cbd5e1?text=Profile'">
+                <img src="photo.jpg" alt="Musab İkbal SUBAŞI" class="relative w-full h-full rounded-[2rem] md:rounded-[3rem] object-cover border border-white/50 dark:border-white/10 shadow-xl z-10 transition-transform duration-500 group-hover:-translate-y-2" onerror="this.src='https://placehold.co/400x400/1e293b/cbd5e1?text=Profile'">
             </div>
 
             <!-- Bio Info -->
             <div class="text-center md:text-left max-w-2xl">
-                <h2 class="text-3xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 gradient-text mb-2">Musab İkbal SUBAŞI</h2>
-                <h3 class="text-xl md:text-2xl text-purple-400 mb-6 font-mono font-medium">
+                <h2 class="text-3xl md:text-5xl font-bold bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-400 dark:to-purple-500 gradient-text mb-2">Musab İkbal SUBAŞI</h2>
+                <h3 class="text-xl md:text-2xl text-purple-600 dark:text-purple-400 mb-6 font-mono font-medium">
                     <span class="en-text">Creator & Developer</span>
                     <span class="tr-text">Yapımcı & Geliştirici</span>
                 </h3>
                 
-                <p class="text-slate-300 text-base md:text-lg leading-relaxed mb-8 font-light">
+                <p class="text-slate-700 dark:text-slate-300 text-base md:text-lg leading-relaxed mb-8 font-light">
                     <span class="en-text">
                         As an English Language Teacher, I blend my passion for education with frontend development. From designing interactive 3D web games using HTML, CSS, JavaScript, and Three.js, to developing EdTech classroom tools and evaluating AI models, here is the central hub that connects all my digital workspaces.
                     </span>
@@ -704,8 +989,8 @@
                 </p>
 
                 <div class="flex justify-center md:justify-start gap-4">
-                    <a href="https://github.com/musabikbal206" target="_blank" class="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/50 text-white px-6 py-3 rounded-xl transition-all duration-300">
-                        <i class="fab fa-github text-xl text-cyan-100"></i> 
+                    <a href="https://github.com/musabikbal206" target="_blank" class="flex items-center gap-3 bg-white dark:bg-white/5 hover:bg-slate-50 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 hover:border-cyan-500/50 text-slate-800 dark:text-white px-6 py-3 rounded-xl transition-all duration-300 shadow-sm dark:shadow-none">
+                        <i class="fab fa-github text-xl text-cyan-600 dark:text-cyan-100"></i> 
                         <span class="font-semibold">GitHub</span>
                     </a>
                 </div>
@@ -714,7 +999,7 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="border-t border-white/5 bg-[#020202] py-8 text-center reveal">
+    <footer class="border-t border-slate-200 dark:border-white/5 bg-slate-100 dark:bg-[#020202] py-8 text-center reveal">
         <div class="max-w-7xl mx-auto px-6">
             <p class="text-slate-500 text-sm font-medium leading-relaxed">
                 <span class="en-text">This site was created by Musab İkbal SUBAŞI with the help of AI.<br>&copy; 2026 linguamis.com All rights reserved.</span>
@@ -723,21 +1008,521 @@
         </div>
     </footer>
 
+    <!-- APP INFO MODAL -->
+    <div id="app-info-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-slate-900/80 dark:bg-black/80 backdrop-blur-md p-4 transition-all duration-500 opacity-0">
+        <div class="glass-card max-w-4xl w-full relative scale-95 transition-transform duration-500 max-h-[90vh] overflow-hidden flex flex-col md:flex-row" id="app-info-modal-content">
+            
+            <button onclick="closeAppInfoModal()" class="absolute top-4 right-4 text-white hover:text-slate-200 bg-slate-900/50 hover:bg-slate-900 w-8 h-8 rounded-full flex items-center justify-center transition-colors z-[120]">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            
+            <!-- Left Side: Image -->
+            <div class="w-full md:w-1/2 h-48 md:h-auto bg-slate-800 relative">
+                <img id="app-modal-img" src="" alt="App Screenshot" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                    <div id="app-modal-icon-container" class="w-14 h-14 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl flex items-center justify-center text-2xl text-white shadow-lg">
+                        <i id="app-modal-icon" class="fas fa-rocket"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Side: Content -->
+            <div class="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center bg-white dark:bg-[#0f0f0f] overflow-y-auto">
+                <h2 id="app-modal-title" class="text-3xl font-bold text-slate-900 dark:text-white mb-2"></h2>
+                <div class="h-1 w-12 bg-cyan-500 rounded-full mb-6"></div>
+                
+                <p id="app-modal-desc-en" class="text-slate-600 dark:text-slate-300 text-base leading-relaxed en-text mb-8"></p>
+                <p id="app-modal-desc-tr" class="text-slate-600 dark:text-slate-300 text-base leading-relaxed tr-text mb-8"></p>
+                
+                <div class="mt-auto">
+                    <a id="app-modal-link" href="#" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-3 w-full sm:w-auto bg-cyan-600 hover:bg-cyan-700 dark:bg-cyan-600 dark:hover:bg-cyan-500 text-white rounded-xl font-semibold transition-colors shadow-md hover:shadow-lg">
+                        <span class="en-text">Open App</span>
+                        <span class="tr-text">Uygulamaya Git</span>
+                        <i class="fas fa-external-link-alt text-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- PROFILE SELECTION MODAL -->
+    <div id="profile-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/80 dark:bg-black/80 backdrop-blur-md p-4 transition-all duration-500 opacity-0">
+        <div class="glass-card max-w-6xl w-full p-6 md:p-12 relative scale-95 transition-transform duration-500 max-h-[90vh] overflow-y-auto" id="profile-modal-content">
+            <button onclick="closeProfileModal()" id="modal-close-btn" class="absolute top-6 right-6 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors hidden z-10">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            
+            <div class="text-center mb-8 md:mb-10">
+                <h2 class="text-3xl md:text-5xl font-bold bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-400 dark:to-purple-500 gradient-text mb-4 pb-1">
+                    <span class="en-text">What brings you to Linguamis?</span>
+                    <span class="tr-text">Linguamis'e hangi rüzgar attı?</span>
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 text-lg md:text-xl font-light">
+                    <span class="en-text">Pick your path. I'll keep the hub focused, so you see the projects that actually fit you.</span>
+                    <span class="tr-text">Yolunu seç. Sadece sana uygun projeleri görebilmen için içeriği odaklı tutacağım.</span>
+                </p>
+            </div>
+            
+            <!-- 3 Column Grid -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Student Card -->
+                <button onclick="setProfile('student')" class="group relative bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.1] rounded-3xl p-6 md:p-8 text-left hover:bg-white dark:hover:bg-white/[0.08] hover:border-cyan-400/60 dark:hover:border-cyan-400/60 transition-all duration-300 shadow-sm dark:shadow-2xl hover:shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 dark:from-cyan-500/20 dark:to-blue-500/20 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3">
+                        <span class="en-text">For Students</span>
+                        <span class="tr-text">Öğrenciler İçin</span>
+                    </h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        <span class="en-text">Games, quizzes, language practice and learning experiences.</span>
+                        <span class="tr-text">Oyunlar, quizler, dil pratiği ve öğrenme deneyimleri.</span>
+                    </p>
+                </button>
+                
+                <!-- Teacher Card -->
+                <button onclick="setProfile('teacher')" class="group relative bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.1] rounded-3xl p-6 md:p-8 text-left hover:bg-white dark:hover:bg-white/[0.08] hover:border-purple-400/60 transition-all duration-300 shadow-sm dark:shadow-2xl hover:shadow-lg hover:shadow-purple-500/20 hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20 border border-purple-500/30 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3">
+                        <span class="en-text">For Teachers</span>
+                        <span class="tr-text">Öğretmenler İçin</span>
+                    </h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        <span class="en-text">Classroom tools, productivity helpers, and practical teaching utilities.</span>
+                        <span class="tr-text">Sınıf araçları, üretkenlik yardımcıları ve pratik öğretim araçları.</span>
+                    </p>
+                </button>
+
+                <!-- Developer Card -->
+                <button onclick="setProfile('developer')" class="group relative bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.1] rounded-3xl p-6 md:p-8 text-left hover:bg-white dark:hover:bg-white/[0.08] hover:border-emerald-400/60 dark:hover:border-emerald-400/60 transition-all duration-300 shadow-sm dark:shadow-2xl hover:shadow-lg hover:shadow-emerald-500/20 hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3">
+                        <span class="en-text">For Developers</span>
+                        <span class="tr-text">Geliştiriciler İçin</span>
+                    </h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        <span class="en-text">Code repos, advanced tools, and web development projects.</span>
+                        <span class="tr-text">Kod depoları, gelişmiş araçlar ve web geliştirme projeleri.</span>
+                    </p>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-        /* Initialize Swiper - Slide Effect without Arrows */
-        var swiperOptions = {
+        /* Theme Management */
+        function toggleTheme() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                icon.className = isDark ? 'fas fa-sun text-amber-500' : 'fas fa-moon text-indigo-400';
+            }
+        }
+        
+        // Initial Theme Setup
+        document.addEventListener('DOMContentLoaded', () => {
+            updateThemeIcon();
+        });
+
+        /* Mobile Menu Management */
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        /* Data structure for apps */
+        const appData = {
+            // Student Apps
+            'eyds': {
+                title: 'E-YDS Sim',
+                icon: 'fa-graduation-cap',
+                img: 'https://placehold.co/600x400/0f172a/0ea5e9?text=E-YDS',
+                link: 'https://musabikbal206.github.io/yds',
+                descEn: "E-YDS Sim is an exam simulation application designed to help candidates practice under realistic conditions. It strictly follows the format of the Turkish Foreign Language Proficiency Exam (YDS).",
+                descTr: "E-YDS Sim, adayların sınav pratiği yapabilmesi için tasarlanmış, Yabancı Dil Bilgisi Seviye Tespit Sınavı (YDS) formatına uygun, gerçekçi bir sınav simülasyonu uygulamasıdır."
+            },
+            'quizzes': {
+                title: 'Quizzes',
+                icon: 'fa-book-open',
+                img: 'https://placehold.co/600x400/0f172a/10b981?text=Quizzes',
+                link: 'https://musabikbal206.github.io/EngQuizzesForAll',
+                descEn: "A massive repository of English quizzes covering various proficiency levels and topics. Perfect for testing and reinforcing your language skills.",
+                descTr: "Dil becerilerini test etmek isteyenler için çeşitli seviyelerde ve konularda geniş kapsamlı, zengin içerikli bir İngilizce quiz arşividir."
+            },
+            'convocards': {
+                title: 'Convocards',
+                icon: 'fa-comments',
+                img: 'https://placehold.co/600x400/0f172a/f43f5e?text=ConvoCards',
+                link: 'https://musabikbal206.github.io/convocards',
+                descEn: "Interactive conversation prompts and flashcards designed specifically to improve speaking skills and encourage natural dialogue among language learners.",
+                descTr: "Etkileşimli konuşma kartları ve yönlendirmeleri ile dil öğrenenlerin karşılıklı diyalog kurma becerilerini geliştirmeye odaklanan pratik bir araçtır."
+            },
+            'parliamo': {
+                title: 'Parliamo',
+                icon: 'fa-pizza-slice',
+                img: 'https://placehold.co/600x400/0f172a/ef4444?text=Parliamo',
+                link: 'https://musabikbal206.github.io/parliamo',
+                descEn: "A focused learning hub providing specialized educational resources, materials, and exercises tailored for individuals learning Italian.",
+                descTr: "İtalyanca öğrenmek isteyen kullanıcılara özel olarak hazırlanmış, odaklı eğitim kaynakları, materyaller ve alıştırmalar sağlayan bir öğrenim merkezidir."
+            },
+            'irregular': {
+                title: 'Irregular Verbs',
+                icon: 'fa-spell-check',
+                img: 'https://placehold.co/600x400/0f172a/f97316?text=Verbs',
+                link: 'https://musabikbal206.github.io/Irregular',
+                descEn: "An application featuring intensive drills to help learners memorize and easily recall irregular verbs in the English language.",
+                descTr: "İngilizcedeki düzensiz fiillerin (irregular verbs) daha hızlı ezberlenmesi ve akılda kalması için yoğunlaştırılmış pratik alıştırmaları içerir."
+            },
+            'speakeasy': {
+                title: 'Speakeasy',
+                icon: 'fa-microphone',
+                img: 'https://placehold.co/600x400/0f172a/8b5cf6?text=Speakeasy',
+                link: 'https://musabikbal206.github.io/Speakeasy',
+                descEn: "A speaking practice utility providing audio tools and prompts designed to improve correct pronunciation and verbal fluency.",
+                descTr: "Doğru telaffuz ve akıcılığı geliştirmek amacıyla tasarlanmış, konuşma pratiğine yönelik sesli araçlar ve yönlendirmeler barındırır."
+            },
+            'wikiread': {
+                title: 'Wikiread',
+                icon: 'fa-book',
+                img: 'https://placehold.co/600x400/0f172a/64748b?text=Wikiread',
+                link: 'https://musabikbal206.github.io/wikiread',
+                descEn: "A unique reading tool powered by Wikipedia that helps users acquire new knowledge while simultaneously improving their English reading comprehension skills.",
+                descTr: "Wikipedia altyapısıyla desteklenen; kullanıcıların yeni bilgiler edinirken aynı zamanda İngilizce okuma (reading) yeteneklerini geliştirmelerini sağlayan özel bir okuma aracıdır."
+            },
+            
+            // Teacher Apps
+            'rubrics': {
+                title: 'Rubrics',
+                icon: 'fa-clipboard-check',
+                img: 'https://placehold.co/600x400/0f172a/3b82f6?text=Rubrics',
+                link: 'https://musabikbal206.github.io/studentrubrics',
+                descEn: "A tool enabling teachers to generate clear assessment and grading rubrics, ensuring objective evaluation for exams, projects, and performance tasks.",
+                descTr: "Öğretmenlerin sınavları, projeleri ve performans ödevlerini objektif bir şekilde notlandırabilmesi için dereceli puanlama anahtarları oluşturmasını sağlar."
+            },
+            'studentpicker': {
+                title: 'Student Picker',
+                icon: 'fa-users',
+                img: 'https://placehold.co/600x400/0f172a/6366f1?text=Picker',
+                link: 'https://musabikbal206.github.io/studentpicker',
+                descEn: "A classroom management utility for random student selection, designed to ensure fairness and increase engagement during classroom activities.",
+                descTr: "Sınıf içinde söz hakkı verirken adaleti sağlamak ve etkileşimi artırmak amacıyla kullanılan pratik, rastgele öğrenci seçme aracıdır."
+            },
+            'reading': {
+                title: 'Reading',
+                icon: 'fa-book-reader',
+                img: 'https://placehold.co/600x400/0f172a/10b981?text=Reading',
+                link: 'https://musabikbal206.github.io/reading',
+                descEn: "An organizational management tool created to help educators classify, arrange, and distribute reading materials for lessons or homework.",
+                descTr: "Derslerde veya ödevlerde kullanılacak okuma materyallerini sınıflandırmak ve organize etmek için tasarlanmış düzenleyici bir yönetim aracıdır."
+            },
+            'ydstool': {
+                title: 'ydstool',
+                icon: 'fa-tools',
+                img: 'https://placehold.co/600x400/0f172a/0ea5e9?text=ydstool',
+                link: 'https://musabikbal206.github.io/ydstool',
+                descEn: "A suite of useful extensions and utilities that streamline the resource preparation process for teachers guiding students through YDS preparation.",
+                descTr: "Öğrencilerini YDS'ye hazırlayan öğretmenler için kaynak hazırlama süreçlerini kolaylaştıran, verimliliği artıran eklentiler ve araçlar sunar."
+            },
+            'ydstopic': {
+                title: 'ydstopic',
+                icon: 'fa-list',
+                img: 'https://placehold.co/600x400/0f172a/8b5cf6?text=ydstopic',
+                link: 'https://musabikbal206.github.io/ydstopic',
+                descEn: "An organizational tool developed to help teachers efficiently categorize and track grammar, vocabulary, and question types across the extensive YDS curriculum.",
+                descTr: "YDS'nin geniş müfredatındaki gramer, kelime ve soru tiplerini daha verimli bir şekilde sınıflandırmak ve takip etmek için geliştirilmiş konu organizasyon aracıdır."
+            },
+            'questionwheel': {
+                title: 'Questionwheel',
+                icon: 'fa-dharmachakra',
+                img: 'https://placehold.co/600x400/0f172a/f59e0b?text=Wheel',
+                link: 'https://musabikbal206.github.io/questionwheel',
+                descEn: "An interactive, randomized question spinner app aimed at gamifying classroom sessions and making lessons more entertaining.",
+                descTr: "Dersleri oyunlaştırarak daha eğlenceli hale getirmeyi hedefleyen, öğrencilere sorulacak soruların seçimini rastgele yapan etkileşimli bir çark uygulamasıdır."
+            },
+            '20questions': {
+                title: '20 Questions',
+                icon: 'fa-question-circle',
+                img: 'https://placehold.co/600x400/0f172a/ef4444?text=20+Q',
+                link: 'https://musabikbal206.github.io/20questions',
+                descEn: "A digital adaptation of the classic '20 Questions' guessing game format, tailored for engaging in-class vocabulary activities.",
+                descTr: "Sınıf içi kelime ve tahmin etkinlikleri için klasik '20 Soru' mantığını dijital ekrana taşıyan, oyunlaştırılmış etkileşimli bir formattır."
+            },
+            'meb': {
+                title: 'meb',
+                icon: 'fa-school',
+                img: 'https://placehold.co/600x400/0f172a/64748b?text=MEB',
+                link: 'https://musabikbal206.github.io/meb',
+                descEn: "Integration tools that assist teachers in synchronizing their educational content seamlessly with the official curriculum of the Ministry of National Education.",
+                descTr: "Öğretmenlerin hazırladıkları eğitim içeriklerini Milli Eğitim Bakanlığı'nın (MEB) resmi müfredatıyla uyumlu bir şekilde senkronize etmesine yardımcı olan entegrasyon araçlarıdır."
+            },
+
+            // Games
+            'maze': {
+                title: 'Mazeamazing',
+                icon: 'fa-dungeon',
+                img: 'https://placehold.co/600x400/0f172a/84cc16?text=Mazeamazing',
+                link: 'https://musabikbal206.github.io/maze',
+                descEn: "A 3D puzzle game where players explore and navigate through complex, procedurally generated labyrinths.",
+                descTr: "Oyuncuların üç boyutlu (3D) ortamda, prosedürel algoritmalarla oluşturulmuş karmaşık labirentleri keşfedip çıkışı aradığı bir bulmaca oyunudur."
+            },
+            'astrowords': {
+                title: 'Astrowords',
+                icon: 'fa-rocket',
+                img: 'https://placehold.co/600x400/0f172a/8b5cf6?text=Astrowords',
+                link: 'https://musabikbal206.github.io/Astrowords',
+                descEn: "A gamified educational adventure that combines the process of vocabulary memorization with an engaging outer space theme to prevent boredom.",
+                descTr: "Kelime ezberleme sürecini uzay temasıyla birleştirerek, öğrenmeyi sıkıcılıktan kurtaran oyunlaştırılmış ve sürükleyici bir kelime macerasıdır."
+            },
+            'aquaverbs': {
+                title: 'Acquaverbs',
+                icon: 'fa-water',
+                img: 'https://placehold.co/600x400/0f172a/06b6d4?text=Acquaverbs',
+                link: 'https://musabikbal206.github.io/Aquaverbs',
+                descEn: "An interactive learning game that blends vocabulary and verb acquisition with an immersive underwater atmosphere.",
+                descTr: "Fiil ve kelime öğrenimini su altı atmosferiyle harmanlayan, etkileşimli ve görsel olarak zengin bir öğrenme oyunudur."
+            },
+            'autowords': {
+                title: 'Autowords',
+                icon: 'fa-car',
+                img: 'https://placehold.co/600x400/0f172a/f59e0b?text=Autowords',
+                link: 'https://musabikbal206.github.io/Autowords',
+                descEn: "A fast-paced word racing game designed to improve students' quick thinking abilities and instant word recall reflexes.",
+                descTr: "Öğrencilerin hızlı düşünme ve anında kelime hatırlama reflekslerini geliştirmeye yönelik, yüksek tempolu yarış dinamiklerine sahip bir kelime oyunudur."
+            },
+            'sudoku': {
+                title: 'Sudoku',
+                icon: 'fa-table-cells',
+                img: 'https://placehold.co/600x400/0f172a/2dd4bf?text=Sudoku',
+                link: 'https://musabikbal206.github.io/sudoku',
+                descEn: "A logic-based, traditional number placement puzzle that enhances analytical thinking and focus.",
+                descTr: "Analitik düşünmeyi, problem çözme yeteneğini ve odaklanmayı artıran, mantık tabanlı geleneksel bir sayı yerleştirme bulmacasıdır."
+            },
+            'mathdoku': {
+                title: 'Mathdoku',
+                icon: 'fa-square-root-alt',
+                img: 'https://placehold.co/600x400/0f172a/f43f5e?text=Mathdoku',
+                link: 'https://musabikbal206.github.io/mathdoku',
+                descEn: "A challenging brain teaser that combines classic Sudoku mechanics with mathematical logic problems requiring basic arithmetic operations.",
+                descTr: "Sudoku dinamiklerini, dört işlem gerektiren matematiksel mantık problemleri ile birleştiren, hesaplama becerisini ölçen zorlayıcı bir zeka oyunudur."
+            },
+            'chess': {
+                title: 'Chess',
+                icon: 'fa-chess',
+                img: 'https://placehold.co/600x400/0f172a/94a3b8?text=Chess',
+                link: 'https://musabikbal206.github.io/chess',
+                descEn: "A classic chess application playable directly in the browser without any installation, designed to support strategy and planning skills.",
+                descTr: "Strateji ve planlama becerilerini destekleyen, tarayıcı üzerinde herhangi bir kurulum gerektirmeden oynanabilen klasik satranç uygulamasıdır."
+            },
+            'recyclegame': {
+                title: 'Recycle',
+                icon: 'fa-recycle',
+                img: 'https://placehold.co/600x400/0f172a/22c55e?text=Recycle',
+                link: 'https://musabikbal206.github.io/recyclegame',
+                descEn: "An eco-friendly educational game for children and students, illustrating the importance of waste management and recycling through engaging mechanics.",
+                descTr: "Atık yönetimi ve geri dönüşümün önemini oyun mekanikleri üzerinden anlatan, öğrencilere yönelik çevre dostu eğitici bir oyundur."
+            },
+            'sniper': {
+                title: 'Sniper',
+                icon: 'fa-crosshairs',
+                img: 'https://placehold.co/600x400/0f172a/ef4444?text=Sniper',
+                link: 'https://musabikbal206.github.io/sniper',
+                descEn: "A 3D action and marksmanship simulation designed to test aiming, reflexes, and shooting skills.",
+                descTr: "Oyuncuların nişan alma, refleks ve atış becerilerini ölçmeye yönelik geliştirilmiş, üç boyutlu (3D) aksiyon ve nişancılık simülasyonudur."
+            },
+
+            // Tools & Utilities
+            'zincirikirma': {
+                title: 'Habits - Zinciri Kırma',
+                icon: 'fa-link',
+                img: 'https://placehold.co/600x400/0f172a/ef4444?text=Habits',
+                link: 'https://musabikbal206.github.io/zincirikirma',
+                descEn: "A motivational habit-tracking visualizer designed to help users establish routines by graphing daily progress and maintaining uninterrupted streaks.",
+                descTr: "Düzenli çalışma ve rutin oluşturmayı sağlamak amacıyla, kullanıcıların günlük alışkanlıklarını grafiksel olarak görselleştirip takip eden (zinciri kırmama) motivasyon aracıdır."
+            },
+            'planner': {
+                title: 'Planner',
+                icon: 'fa-calendar-alt',
+                img: 'https://placehold.co/600x400/0f172a/3b82f6?text=Planner',
+                link: 'https://musabikbal206.github.io/planner',
+                descEn: "A productivity tool allowing students and teachers to manage their time effectively by creating daily and weekly schedules.",
+                descTr: "Öğrencilerin ve öğretmenlerin zamanlarını daha verimli yönetebilmeleri için sunulan; günlük ve haftalık iş/ders programı yapabilme olanağı tanıyan planlama aracıdır."
+            },
+            'personas': {
+                title: 'Personas',
+                icon: 'fa-robot',
+                img: 'https://placehold.co/600x400/0f172a/10b981?text=Personas',
+                link: 'https://musabikbal206.github.io/PersonasBot',
+                descEn: "An environment for AI interaction experiments, allowing users to converse with various artificial intelligence models adopting different personalities in diverse scenarios.",
+                descTr: "Çeşitli yapay zeka modelleri ve kişilikleriyle farklı senaryolarda konuşabilmeyi sağlayan, yapay zeka etkileşim deneyleri (AI experiments) ortamıdır."
+            },
+            'webeditor': {
+                title: 'WebEditor',
+                icon: 'fa-code',
+                img: 'https://placehold.co/600x400/0f172a/3b82f6?text=WebEditor',
+                link: 'https://musabikbal206.github.io/WebEditor',
+                descEn: "A browser-based coding editor that enables programmers to write, view, and edit code seamlessly without installing additional software.",
+                descTr: "Programcıların bilgisayara hiçbir ek program kurmadan sadece web tarayıcısı üzerinden kod yazmasına, görüntülemesine ve düzenlemesine izin veren pratik kodlama editörüdür."
+            },
+            'htmlsplitter': {
+                title: 'Html Splitter',
+                icon: 'fa-file-code',
+                img: 'https://placehold.co/600x400/0f172a/fb923c?text=Splitter',
+                link: 'https://musabikbal206.github.io/htmlsplitter',
+                descEn: "A software tool designed to break down large, complex HTML files into smaller, more manageable and modular components.",
+                descTr: "Karmaşık yapılı, uzun boyutlu HTML dosyalarını daha yönetilebilir, düzenlemesi kolay modüler (küçük) yapı taşlarına ayrıştırmayı sağlayan yazılım aracıdır."
+            },
+            'exceltocsv': {
+                title: 'Excel to CSV',
+                icon: 'fa-file-excel',
+                img: 'https://placehold.co/600x400/0f172a/4ade80?text=Excel2CSV',
+                link: 'https://musabikbal206.github.io/exceltocsv',
+                descEn: "A format conversion utility that smoothly transforms complex Excel files (.xlsx/.xls) into raw CSV (comma-separated values) format for easier database processing.",
+                descTr: "Veritabanı ve yazılım sistemlerinde daha kolay işlenebilmesi için karmaşık Excel dosyalarını (.xlsx/.xls) ham veri tabanlı CSV formatına sorunsuz dönüştüren araçtır."
+            },
+            'watermarkremover': {
+                title: 'Watermarkremover',
+                icon: 'fa-eraser',
+                img: 'https://placehold.co/600x400/0f172a/8b5cf6?text=Watermark',
+                link: 'https://musabikbal206.github.io/watermarkremover',
+                descEn: "An image processing utility aimed at conveniently cleaning up unwanted marks, logos, or watermarks from digital images.",
+                descTr: "Dijital görseller üzerindeki istenmeyen işaretleri, logoları veya filigranları (watermark) pratik bir şekilde temizlemeyi amaçlayan görüntü işleme aracıdır."
+            },
+            'mimar': {
+                title: 'mimar',
+                icon: 'fa-building',
+                img: 'https://placehold.co/600x400/0f172a/64748b?text=mimar',
+                link: 'https://musabikbal206.github.io/mimar',
+                descEn: "A technical drawing and structuring tool developed to design architectural layouts, plan structural adjustments, and optimize design systems.",
+                descTr: "Mimari yapıları tasarlamak, yapısal düzenlemeleri planlamak ve dizayn sistemlerini optimize etmek üzere geliştirilmiş teknik çizim/yapı aracıdır."
+            },
+            'mybattery': {
+                title: 'mybattery',
+                icon: 'fa-battery-half',
+                img: 'https://placehold.co/600x400/0f172a/10b981?text=mybattery',
+                link: 'https://musabikbal206.github.io/mybattery',
+                descEn: "A system analytics dashboard allowing users to monitor their device or system performance data directly within the browser environment.",
+                descTr: "Kullandığınız cihazın ya da sistemin performans ve verilerini tarayıcı ortamında incelemeye olanak tanıyan bir sistem analitik göstergesidir."
+            },
+            'clashy': {
+                title: 'clashy',
+                icon: 'fa-bolt',
+                img: 'https://placehold.co/600x400/0f172a/f59e0b?text=clashy',
+                link: 'https://musabikbal206.github.io/clashy',
+                descEn: "A specialized testing and simulation environment for coding and evaluating basic game logic, logical systems, and software architectures.",
+                descTr: "Temel oyun algoritmalarının, mantıksal sistemlerin (game logic) ve yazılım kurgularının kodlanarak test edildiği özel bir simülasyon ve algoritma sınama ortamıdır."
+            }
+        };
+
+        /* App Info Modal Management */
+        function openAppInfo(appId) {
+            const data = appData[appId];
+            if (!data) return;
+
+            // Populate Modal
+            document.getElementById('app-modal-title').textContent = data.title;
+            document.getElementById('app-modal-icon').className = `fas ${data.icon}`;
+            document.getElementById('app-modal-img').src = data.img;
+            document.getElementById('app-modal-img').alt = data.title;
+            document.getElementById('app-modal-desc-en').textContent = data.descEn;
+            document.getElementById('app-modal-desc-tr').textContent = data.descTr;
+            document.getElementById('app-modal-link').href = data.link;
+
+            // Apply slight tint to icon container based on app category color
+            // This is a simple logic to match the existing icon colors roughly
+            let colorClass = 'text-cyan-500';
+            if(['astrowords','speakeasy','ydstopic','watermarkremover'].includes(appId)) colorClass = 'text-purple-500';
+            if(['quizzes','reading','personas','exceltocsv','mybattery'].includes(appId)) colorClass = 'text-emerald-500';
+            if(['convocards','parliamo','20questions','mathdoku','sniper','zincirikirma'].includes(appId)) colorClass = 'text-rose-500';
+            if(['autowords','questionwheel','clashy'].includes(appId)) colorClass = 'text-amber-500';
+            if(['irregular','htmlsplitter'].includes(appId)) colorClass = 'text-orange-500';
+            if(['maze','recyclegame'].includes(appId)) colorClass = 'text-lime-500';
+            if(['sudoku'].includes(appId)) colorClass = 'text-teal-500';
+            
+            document.getElementById('app-modal-icon').className = `fas ${data.icon} ${colorClass}`;
+
+            // Show Modal
+            const modal = document.getElementById('app-info-modal');
+            const modalContent = document.getElementById('app-info-modal-content');
+            
+            document.body.classList.add('app-info-modal-open');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Trigger animation
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeAppInfoModal() {
+            const modal = document.getElementById('app-info-modal');
+            const modalContent = document.getElementById('app-info-modal-content');
+            
+            modal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.classList.remove('app-info-modal-open');
+            }, 300);
+        }
+
+        // Close app info modal when clicking outside
+        document.getElementById('app-info-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAppInfoModal();
+            }
+        });
+
+
+        /* Profile Management Variables */
+        let currentProfile = localStorage.getItem('linguamis_profile') || null;
+        let originalSwiperContents = [];
+        window.swipersInstances = [];
+        
+        /* Swiper Configuration */
+        const swiperOptions = {
             effect: "slide",
             grabCursor: true,
             slidesPerView: "auto",
             spaceBetween: 24, 
             centeredSlides: false, 
-            loop: true, /* Kartların başa sarmasını sağlar */
+            loop: true,
             autoplay: {
-                delay: 20000, /* 20 saniyede bir kaydırır */
-                disableOnInteraction: false, /* Kullanıcı karta dokunsa bile kaymaya devam eder */
+                delay: 20000,
+                disableOnInteraction: false,
             },
             pagination: { 
                 el: ".swiper-pagination", 
@@ -750,8 +1535,179 @@
             }
         };
 
-        var swipers = document.querySelectorAll('.mySwiper');
-        swipers.forEach(function(swiperEl) { new Swiper(swiperEl, swiperOptions); });
+        /* Typewriter Configuration */
+        const textsStudentEn = ["Interactive Games", "Language Practice", "Fun Quizzes"];
+        const textsStudentTr = ["İnteraktif Oyunlar", "Dil Pratiği", "Eğlenceli Quizler"];
+        const textsTeacherEn = ["Classroom Tools", "Education Material", "Assessment Apps"];
+        const textsTeacherTr = ["Sınıf Araçları", "Eğitim Materyali", "Değerlendirme Uygulamaları"];
+        const textsDevEn = ["Coding Projects", "Web Development", "Developer Tools"];
+        const textsDevTr = ["Kodlama Projeleri", "Web Geliştirme", "Geliştirici Araçları"];
+        
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typewriterTimeout;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const swiperWrappers = document.querySelectorAll('.swiper-wrapper');
+            originalSwiperContents = Array.from(swiperWrappers).map(w => w.innerHTML);
+            
+            initReveal();
+            initProfile();
+        });
+
+        /* Setup Profile System */
+        function initProfile() {
+            if (!currentProfile) {
+                openProfileModal(false); 
+            } else {
+                applyProfile(currentProfile);
+            }
+        }
+
+        function openProfileModal(canClose = true) {
+            const modal = document.getElementById('profile-modal');
+            const closeBtn = document.getElementById('modal-close-btn');
+            
+            document.body.style.overflow = 'hidden';
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            if (canClose && currentProfile) {
+                closeBtn.classList.remove('hidden');
+            } else {
+                closeBtn.classList.add('hidden');
+            }
+
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                document.getElementById('profile-modal-content').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            modal.classList.add('opacity-0');
+            document.getElementById('profile-modal-content').classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+            }, 500);
+        }
+
+        function setProfile(profile) {
+            currentProfile = profile;
+            localStorage.setItem('linguamis_profile', profile);
+            closeProfileModal();
+            applyProfile(profile);
+        }
+
+        function updateNavLabels(profile) {
+            // Define titles by profile and language
+            const labels = {
+                student: { eduEn: "Education", eduTr: "Eğitim", gamEn: "Games", gamTr: "Oyunlar", tooEn: "Apps", tooTr: "Uygulamalar" },
+                teacher: { eduEn: "Education", eduTr: "Eğitim", gamEn: "Games", gamTr: "Oyunlar", tooEn: "Tools", tooTr: "Araçlar" },
+                developer: { eduEn: "Education", eduTr: "Eğitim", gamEn: "Games", gamTr: "Oyunlar", tooEn: "Dev Tools", tooTr: "Geliştirici" }
+            };
+
+            const data = labels[profile];
+            document.querySelectorAll('.dynamic-nav-en-edu').forEach(el => el.textContent = data.eduEn);
+            document.querySelectorAll('.dynamic-nav-tr-edu').forEach(el => el.textContent = data.eduTr);
+            document.querySelectorAll('.dynamic-nav-en-gam').forEach(el => el.textContent = data.gamEn);
+            document.querySelectorAll('.dynamic-nav-tr-gam').forEach(el => el.textContent = data.gamTr);
+            document.querySelectorAll('.dynamic-nav-en-too').forEach(el => el.textContent = data.tooEn);
+            document.querySelectorAll('.dynamic-nav-tr-too').forEach(el => el.textContent = data.tooTr);
+        }
+
+        function applyProfile(profile) {
+            const isTr = document.body.classList.contains('lang-tr');
+
+            // Update Profile Button
+            const profileLabelEn = document.getElementById('current-profile-en');
+            const profileLabelTr = document.getElementById('current-profile-tr');
+            if (profileLabelEn && profileLabelTr) {
+                if (profile === 'student') {
+                    profileLabelEn.textContent = 'Student';
+                    profileLabelTr.textContent = 'Öğrenci';
+                } else if (profile === 'teacher') {
+                    profileLabelEn.textContent = 'Teacher';
+                    profileLabelTr.textContent = 'Öğretmen';
+                } else if (profile === 'developer') {
+                    profileLabelEn.textContent = 'Developer';
+                    profileLabelTr.textContent = 'Geliştirici';
+                }
+            }
+
+            // Update dynamic text and nav labels
+            updateNavLabels(profile);
+
+            document.querySelectorAll('[data-dynamic-text]').forEach(el => {
+                const enText = el.getAttribute(`data-${profile}-en`);
+                const trText = el.getAttribute(`data-${profile}-tr`);
+                
+                const enSpan = el.querySelector('.en-text');
+                const trSpan = el.querySelector('.tr-text');
+                
+                if (enSpan && enText) enSpan.textContent = enText;
+                if (trSpan && trText) trSpan.textContent = trText;
+            });
+
+            // Rebuild and filter sliders
+            const swiperWrappers = document.querySelectorAll('.swiper-wrapper');
+            swiperWrappers.forEach((wrapper, index) => {
+                wrapper.innerHTML = originalSwiperContents[index];
+                const slides = wrapper.querySelectorAll('.swiper-slide');
+                slides.forEach(slide => {
+                    const audience = slide.getAttribute('data-audience');
+                    if (audience !== profile) {
+                        slide.remove(); 
+                    }
+                });
+            });
+
+            if (window.swipersInstances.length > 0) {
+                window.swipersInstances.forEach(s => s.destroy(true, true));
+            }
+            window.swipersInstances = [];
+            
+            // Manage Section Visibilities
+            let firstVisibleSection = null;
+
+            document.querySelectorAll('.mySwiper').forEach(function(swiperEl) {
+                const slideCount = swiperEl.querySelectorAll('.swiper-slide').length;
+                const section = swiperEl.closest('section');
+                const desktopNav = document.querySelector(`#desktop-nav a[href="#${section.id}"]`);
+                const mobileNav = document.querySelector(`#mobile-nav a[href="#${section.id}"]`);
+                
+                if (slideCount === 0) {
+                    section.style.display = 'none';
+                    if(desktopNav) desktopNav.style.display = 'none';
+                    if(mobileNav) mobileNav.style.display = 'none';
+                } else {
+                    section.style.display = '';
+                    if(desktopNav) desktopNav.style.display = '';
+                    if(mobileNav) mobileNav.style.display = '';
+                    window.swipersInstances.push(new Swiper(swiperEl, swiperOptions));
+                    
+                    if(!firstVisibleSection) firstVisibleSection = section.id;
+                }
+            });
+
+            // Update Hero button target to first visible section
+            const heroCTA = document.getElementById('hero-cta');
+            if(heroCTA && firstVisibleSection) {
+                heroCTA.href = `#${firstVisibleSection}`;
+            }
+
+            // Reset typewriter
+            textIndex = 0;
+            charIndex = 0;
+            isDeleting = false;
+            startTypewriter();
+        }
 
         /* Language Toggle */
         function toggleLanguage() {
@@ -763,24 +1719,37 @@
                 body.classList.remove('lang-tr');
                 body.classList.add('lang-en');
             }
-            startTypewriter();
+            
+            if(currentProfile) {
+                textIndex = 0;
+                charIndex = 0;
+                isDeleting = false;
+                startTypewriter();
+            }
         }
 
         /* Typewriter Effect */
-        const textsEn = ["Central Workspace", "Explore EdTech", "Frontend & 3D Games"];
-        const textsTr = ["Merkezi Çalışma Alanı", "EdTech Projeleri", "Frontend & 3D Oyunlar"];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typewriterTimeout;
-
         function startTypewriter() {
             clearTimeout(typewriterTimeout);
             const isTr = document.body.classList.contains('lang-tr');
-            const currentTexts = isTr ? textsTr : textsEn;
-            const currentText = currentTexts[textIndex];
+            
+            let currentTexts = [];
+            if (currentProfile === 'student') {
+                currentTexts = isTr ? textsStudentTr : textsStudentEn;
+            } else if (currentProfile === 'teacher') {
+                currentTexts = isTr ? textsTeacherTr : textsTeacherEn;
+            } else if (currentProfile === 'developer') {
+                currentTexts = isTr ? textsDevTr : textsDevEn;
+            } else {
+                currentTexts = isTr ? textsStudentTr : textsStudentEn; 
+            }
+
+            if (textIndex >= currentTexts.length) textIndex = 0;
+            const currentText = currentTexts[textIndex] || "";
             const element = document.getElementById('typewriter');
             
+            if (!element) return;
+
             if (isDeleting) {
                 element.textContent = currentText.substring(0, charIndex - 1);
                 charIndex--;
@@ -803,10 +1772,8 @@
             typewriterTimeout = setTimeout(startTypewriter, typeSpeed);
         }
 
-        startTypewriter();
-
         /* Scroll Reveal Animation Logic */
-        document.addEventListener('DOMContentLoaded', function() {
+        function initReveal() {
             const revealElements = document.querySelectorAll('.reveal');
             
             const revealOptions = {
@@ -824,20 +1791,6 @@
 
             revealElements.forEach(el => {
                 revealObserver.observe(el);
-            });
-        });
-    </script>
-    <script>
-        // Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then((registration) => {
-                        console.log('ServiceWorker başarıyla kaydedildi: ', registration.scope);
-                    })
-                    .catch((error) => {
-                        console.log('ServiceWorker kayıt hatası: ', error);
-                    });
             });
         }
     </script>
