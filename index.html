@@ -1805,19 +1805,12 @@
         const easterEggLogo = document.getElementById('easter-egg-logo');
         let pressTimer;
         
-        // Uzun basma algılayıcı
         function startPress(e) {
-            if(e.type === 'touchstart') {
-                if(e.touches.length > 1) return;
-            }
-            pressTimer = setTimeout(() => {
-                openEasterEgg();
-            }, 1500); 
+            if(e.type === 'touchstart' && e.touches.length > 1) return;
+            pressTimer = setTimeout(() => { openEasterEgg(); }, 1500); 
         }
 
-        function cancelPress() {
-            clearTimeout(pressTimer);
-        }
+        function cancelPress() { clearTimeout(pressTimer); }
 
         if (easterEggLogo) {
             easterEggLogo.addEventListener('mousedown', startPress);
@@ -1828,7 +1821,6 @@
             easterEggLogo.oncontextmenu = function(e) { e.preventDefault(); return false; };
         }
 
-        // Modal Yönetimi
         let gameLoopId;
         function openEasterEgg() {
             const modal = document.getElementById('easter-egg-modal');
@@ -1848,40 +1840,40 @@
             }, 300);
         }
 
-        // Gelişmiş Linguamis Run Oyunu
+        // Gelişmiş Linguamis Run Oyunu (Dünya Hedefli, Ay ve Meteor Engelli)
         function initDinoGame() {
             const canvas = document.getElementById('dino-game');
-            
-            // Olay dinleyicilerini temizlemek için clone yöntemi
             const oldCanvas = canvas;
             const newCanvas = oldCanvas.cloneNode(true);
             oldCanvas.parentNode.replaceChild(newCanvas, oldCanvas);
             
             const activeCanvas = document.getElementById('dino-game');
             const activeCtx = activeCanvas.getContext('2d');
-            
             if(gameLoopId) cancelAnimationFrame(gameLoopId);
 
-            let isGameOver = false;
-            let mergeProgress = 0; // Birleşme animasyonu için
-            let score = 0;
+            // Oyun Durumları: PLAYING, GAME_OVER, MERGING, MERGED_PAUSED
+            let gameState = 'PLAYING'; 
+            let distance = 0; 
+            let nextMilestone = 200; // Dünya Çıkacak Metreler (Kazanma noktası)
+            let nextSpawnDistance = 20; 
+            let lastThemeToggleMilestone = 0;
+            let mergeProgress = 0; 
+            
             let highScore = localStorage.getItem('linguamis_hi_score') || 0;
             const hiScoreDisplay = document.getElementById('hi-score-display');
-            if(hiScoreDisplay) hiScoreDisplay.textContent = highScore;
+            if(hiScoreDisplay) hiScoreDisplay.textContent = Math.floor(highScore) + 'm';
             
-            // Görseller (Senin png dosyaların)
-            const smileyImg = new Image();
-            smileyImg.src = 'smile.png';
-            
-            const globeImg = new Image();
-            globeImg.src = 'world.png';
+            // Görseller
+            const smileyImg = new Image(); smileyImg.src = 'smile.png';
+            const globeImg = new Image(); globeImg.src = 'world.png';
+            const finalLogoImg = new Image(); finalLogoImg.src = 'linguamis-logo.png';
 
-            // Fizik, Objeler ve Zemin
+            // Fizik & Zemin
             const groundY = 180;
-            const player = { x: 60, y: groundY - 45, width: 45, height: 45, dy: 0, gravity: 0.65, jumpPower: -11, isGrounded: true };
-            const obstacle = { x: activeCanvas.width, y: groundY - 45, width: 45, height: 45, speed: 5.5 }; 
+            const player = { x: 60, y: groundY - 45, width: 45, height: 45, dy: 0, gravity: 0.7, jumpPower: -11.5, isGrounded: true };
+            let obstacles = []; // Ay, Meteor ve Dünya nesneleri
             
-            // Arka plan için kayan zemin çizgileri ve parçacıklar
+            // Arka plan Parçacıkları
             let groundX = 0;
             let particles = Array.from({length: 20}, () => ({
                 x: Math.random() * activeCanvas.width,
@@ -1890,41 +1882,78 @@
                 speed: Math.random() * 1 + 0.5
             }));
 
+            let lastTime = performance.now();
+
+            function resetGame() {
+                distance = 0;
+                nextMilestone = 200;
+                nextSpawnDistance = 20;
+                obstacles = [];
+                gameState = 'PLAYING';
+                lastTime = performance.now();
+                gameLoopId = requestAnimationFrame(gameLoop);
+            }
+
+            function continueGame() {
+                mergeProgress = 0;
+                obstacles = [];
+                nextSpawnDistance = distance + 40; 
+                gameState = 'PLAYING';
+                lastTime = performance.now();
+                gameLoopId = requestAnimationFrame(gameLoop);
+            }
+
             function jump() {
-                if (player.isGrounded && !isGameOver) {
-                    player.dy = player.jumpPower;
-                    player.isGrounded = false;
-                } else if (isGameOver && mergeProgress >= 1) {
-                    // Oyun Bitti Ekranını Geç ve Yeniden Başlat
-                    isGameOver = false;
-                    mergeProgress = 0;
-                    score = 0;
-                    obstacle.x = activeCanvas.width;
-                    obstacle.speed = 5.5;
-                    gameLoop();
+                if (gameState === 'PLAYING') {
+                    if (player.isGrounded) {
+                        player.dy = player.jumpPower;
+                        player.isGrounded = false;
+                    }
+                } else if (gameState === 'GAME_OVER') {
+                    resetGame(); // Yandığında tamamen sıfırla
+                } else if (gameState === 'MERGED_PAUSED') {
+                    continueGame(); // Dünya ile birleşince kaldığı yerden devam et
                 }
             }
 
             window.addEventListener('keydown', (e) => { 
                 if(e.code === 'Space' && !document.getElementById('easter-egg-modal').classList.contains('hidden')) { 
-                    e.preventDefault(); 
-                    jump(); 
+                    e.preventDefault(); jump(); 
                 } 
             });
             activeCanvas.addEventListener('mousedown', jump);
             activeCanvas.addEventListener('touchstart', (e) => { e.preventDefault(); jump(); }, {passive: false});
 
-            function update() {
-                if (isGameOver) {
-                    // Çarpışma olunca her şey donar, sinematik animasyon başlar
-                    if (mergeProgress < 1) {
-                        mergeProgress += 0.02; // Animasyonun akış hızı
-                    }
+            function update(timeScale) {
+                if (gameState === 'MERGING') {
+                    if (mergeProgress < 1) mergeProgress += 0.02 * timeScale;
+                    else gameState = 'MERGED_PAUSED';
                     return;
                 }
+                if (gameState !== 'PLAYING') return;
 
-                player.dy += player.gravity;
-                player.y += player.dy;
+                // FPS Bağımsız Hız ve Metre Artışı
+                let currentSpeed = 5.5 + (distance / 800) * 1.5; 
+                let distIncrement = (currentSpeed * timeScale) * 0.1;
+                distance += distIncrement;
+
+                // Her 500 Metrede Tema (Gece/Gündüz) Değiştir
+                let currentThemeMilestone = Math.floor(distance / 500);
+                if (currentThemeMilestone > lastThemeToggleMilestone) {
+                    lastThemeToggleMilestone = currentThemeMilestone;
+                    toggleTheme(); 
+                }
+
+                // Skor Kaydetme
+                if(distance > highScore) {
+                    highScore = distance;
+                    localStorage.setItem('linguamis_hi_score', highScore);
+                    if(hiScoreDisplay) hiScoreDisplay.textContent = Math.floor(highScore) + 'm';
+                }
+
+                // Fizik İşlemleri
+                player.dy += player.gravity * timeScale;
+                player.y += player.dy * timeScale;
 
                 if (player.y + player.height >= groundY) {
                     player.y = groundY - player.height;
@@ -1932,109 +1961,174 @@
                     player.isGrounded = true;
                 }
 
-                obstacle.x -= obstacle.speed;
-                if (obstacle.x + obstacle.width < 0) {
-                    obstacle.x = activeCanvas.width + Math.random() * 200; 
-                    score += 10;
-                    obstacle.speed += 0.15; // Hızlanma 
+                // Engel veya Hedef Oluşturma Sistemi
+                if (distance >= nextSpawnDistance) {
+                    let type = 'moon'; 
                     
-                    if(score > highScore) {
-                        highScore = score;
-                        localStorage.setItem('linguamis_hi_score', highScore);
-                        if(hiScoreDisplay) hiScoreDisplay.textContent = highScore;
+                    // Dünya hedefine (200, 400, 600... 1000, 2000...) ulaştık mı?
+                    if (distance >= nextMilestone - 30) {
+                        type = 'world'; 
+                        nextMilestone += (nextMilestone < 1000) ? 200 : 1000;
+                        nextSpawnDistance = distance + 100; // Hedefe ulaştıktan sonra boşluk bırak
+                    } else {
+                        // %30 Meteor (Hava), %70 Ay (Yerde)
+                        type = Math.random() > 0.7 ? 'meteor' : 'moon';
+                        nextSpawnDistance = distance + 35 + Math.random() * 40; 
                     }
+
+                    obstacles.push({
+                        type: type,
+                        x: activeCanvas.width,
+                        width: type === 'world' ? 45 : (type === 'meteor' ? 40 : 40),
+                        height: type === 'world' ? 45 : (type === 'meteor' ? 25 : 40),
+                        y: type === 'world' ? groundY - 45 : (type === 'meteor' ? groundY - 100 : groundY - 40)
+                    });
                 }
 
-                groundX -= obstacle.speed;
+                // Engelleri Hareket Ettir ve Çarpışma Denetle
+                for (let i = obstacles.length - 1; i >= 0; i--) {
+                    let obs = obstacles[i];
+                    obs.x -= currentSpeed * timeScale;
+                    
+                    const hitX = 6; const hitY = 6; 
+                    if (player.x + hitX < obs.x + obs.width - hitX &&
+                        player.x + player.width - hitX > obs.x + hitX &&
+                        player.y + hitY < obs.y + obs.height - hitY &&
+                        player.y + player.height - hitY > obs.y + hitY) {
+                        
+                        // ÇARPIŞMA: Dünya = Kazanma/Birleşme, Ay/Meteor = Kaybetme
+                        if (obs.type === 'world') {
+                            gameState = 'MERGING'; 
+                        } else {
+                            gameState = 'GAME_OVER'; 
+                        }
+                    }
+
+                    if (obs.x + obs.width < 0) obstacles.splice(i, 1);
+                }
+
+                // Zemin Efektleri
+                groundX -= currentSpeed * timeScale;
                 if (groundX <= -activeCanvas.width) groundX = 0;
                 
                 particles.forEach(p => {
-                    p.x -= p.speed;
+                    p.x -= p.speed * timeScale;
                     if (p.x < 0) p.x = activeCanvas.width;
                 });
+            }
 
-                // HASSAS ÇARPIŞMA (Hitbox 10'dan 5'e düşürüldü, birbirine girmesi engellendi)
-                const hitX = 5; const hitY = 5; 
-                if (player.x + hitX < obstacle.x + obstacle.width - hitX &&
-                    player.x + player.width - hitX > obstacle.x + hitX &&
-                    player.y + hitY < obstacle.y + obstacle.height - hitY &&
-                    player.y + player.height - hitY > obstacle.y + hitY) {
-                    isGameOver = true;
-                }
+            // Çizim Fonksiyonları
+            function drawMeteor(ctx, obs) {
+                ctx.save();
+                ctx.fillStyle = 'rgba(245, 158, 11, 0.8)'; // Turuncu Alev
+                ctx.beginPath();
+                ctx.moveTo(obs.x + obs.width/2, obs.y + 5);
+                ctx.lineTo(obs.x + obs.width + 25, obs.y - 10);
+                ctx.lineTo(obs.x + obs.width + 10, obs.y + obs.height/2);
+                ctx.lineTo(obs.x + obs.width + 25, obs.y + obs.height + 10);
+                ctx.lineTo(obs.x + obs.width/2, obs.y + obs.height - 5);
+                ctx.fill();
+                
+                ctx.fillStyle = '#ef4444'; // Kırmızı Kaya
+                ctx.beginPath(); ctx.arc(obs.x + obs.width/2, obs.y + obs.height/2, obs.height/2, 0, Math.PI * 2); ctx.fill();
+                
+                ctx.fillStyle = '#fef08a'; // Sarı Kor
+                ctx.beginPath(); ctx.arc(obs.x + obs.width/2 - 2, obs.y + obs.height/2 + 2, obs.height/4, 0, Math.PI * 2); ctx.fill();
+                ctx.restore();
+            }
+
+            function drawMoon(ctx, obs) {
+                ctx.save();
+                ctx.fillStyle = '#e2e8f0'; // Açık Gri Ay Gövdesi
+                ctx.beginPath(); ctx.arc(obs.x + obs.width/2, obs.y + obs.height/2, obs.height/2, 0, Math.PI*2); ctx.fill();
+                
+                ctx.fillStyle = '#94a3b8'; // Koyu Gri Kraterler
+                ctx.beginPath(); ctx.arc(obs.x + 10, obs.y + 10, 5, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(obs.x + 25, obs.y + 20, 8, 0, Math.PI*2); ctx.fill();
+                ctx.beginPath(); ctx.arc(obs.x + 15, obs.y + 30, 4, 0, Math.PI*2); ctx.fill();
+                ctx.restore();
             }
 
             function draw() {
                 activeCtx.clearRect(0, 0, activeCanvas.width, activeCanvas.height);
                 const isDark = document.documentElement.classList.contains('dark');
                 
-                // Parçacıkları Çiz
                 activeCtx.fillStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)';
                 particles.forEach(p => {
-                    activeCtx.beginPath();
-                    activeCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    activeCtx.fill();
+                    activeCtx.beginPath(); activeCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2); activeCtx.fill();
                 });
 
-                // Zemin Çizgisi
                 activeCtx.strokeStyle = isDark ? '#334155' : '#cbd5e1';
                 activeCtx.lineWidth = 2;
-                activeCtx.beginPath();
-                activeCtx.moveTo(0, groundY);
-                activeCtx.lineTo(activeCanvas.width, groundY);
-                activeCtx.stroke();
+                activeCtx.beginPath(); activeCtx.moveTo(0, groundY); activeCtx.lineTo(activeCanvas.width, groundY); activeCtx.stroke();
                 
-                // Zemin Detayları
                 activeCtx.fillStyle = isDark ? '#475569' : '#94a3b8';
                 for(let i = 0; i < 5; i++) {
                     activeCtx.fillRect(((groundX + i * 150) % activeCanvas.width + activeCanvas.width) % activeCanvas.width, groundY + 5, 20, 2);
                 }
 
-                // Oyun çalışırken karakterleri normal yerlerinde çiz
-                if (!isGameOver) {
-                    try {
-                        activeCtx.drawImage(globeImg, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-                        activeCtx.drawImage(smileyImg, player.x, player.y, player.width, player.height);
-                    } catch(e) {
-                        activeCtx.fillStyle = '#ef4444'; activeCtx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-                        activeCtx.fillStyle = '#06b6d4'; activeCtx.fillRect(player.x, player.y, player.width, player.height);
-                    }
+                if (gameState === 'PLAYING' || gameState === 'GAME_OVER') {
+                    obstacles.forEach(obs => {
+                        if (obs.type === 'world') {
+                            try { activeCtx.drawImage(globeImg, obs.x, obs.y, obs.width, obs.height); } catch(e){}
+                        } else if (obs.type === 'meteor') {
+                            drawMeteor(activeCtx, obs);
+                        } else if (obs.type === 'moon') {
+                            drawMoon(activeCtx, obs);
+                        }
+                    });
+                    
+                    try { activeCtx.drawImage(smileyImg, player.x, player.y, player.width, player.height); } catch(e) {}
                 }
 
-                // Skor Yazısı
                 activeCtx.fillStyle = isDark ? '#e2e8f0' : '#1e293b';
                 activeCtx.font = 'bold 22px "Plus Jakarta Sans", sans-serif';
-                activeCtx.fillText(`Skor: ${score}`, 20, 40);
+                activeCtx.fillText(`Mesafe: ${Math.floor(distance)}m`, 20, 40);
 
-                // OYUN BİTTİ & BİRLEŞME ANİMASYONU EKRANI
-                if (isGameOver) {
-                    // Ekranı Karart
+                // --- KAYBETME EKRANI (Ay veya Meteora Çarpınca) ---
+                if (gameState === 'GAME_OVER') {
                     activeCtx.fillStyle = isDark ? 'rgba(5, 5, 5, 0.7)' : 'rgba(255, 255, 255, 0.8)';
                     activeCtx.fillRect(0, 0, activeCanvas.width, activeCanvas.height);
                     
-                    // Merkeze Doğru Kayarak Birleşme Animasyonu
+                    activeCtx.textAlign = 'center';
+                    activeCtx.fillStyle = '#ef4444';
+                    activeCtx.font = '900 32px "Plus Jakarta Sans", sans-serif';
+                    activeCtx.fillText('Oyun Bitti!', activeCanvas.width / 2, activeCanvas.height / 2);
+                    
+                    activeCtx.font = '500 16px "Plus Jakarta Sans", sans-serif';
+                    activeCtx.fillStyle = isDark ? '#94a3b8' : '#64748b';
+                    activeCtx.fillText('(Baştan başlamak için Space veya Tıkla)', activeCanvas.width / 2, activeCanvas.height / 2 + 30);
+                    activeCtx.textAlign = 'left'; 
+                }
+
+                // --- BİRLEŞME (KAZANMA) EKRANI (Dünyaya Çarpınca) ---
+                if (gameState === 'MERGING' || gameState === 'MERGED_PAUSED') {
+                    activeCtx.fillStyle = isDark ? 'rgba(5, 5, 5, 0.85)' : 'rgba(255, 255, 255, 0.9)';
+                    activeCtx.fillRect(0, 0, activeCanvas.width, activeCanvas.height);
+                    
                     const centerX = activeCanvas.width / 2;
                     const centerY = activeCanvas.height / 2 - 20;
-                    
                     const finalSmileX = centerX - 35;
-                    const finalGlobeX = finalSmileX + 26; // İki ikonun üst üste geçtiği tam mesafe
+                    const finalGlobeX = finalSmileX + 26; 
                     
-                    // Ekranın sağından ve solundan merkeze gelme formülü
                     const smX = (centerX - 150) + ((finalSmileX) - (centerX - 150)) * mergeProgress;
                     const glX = (centerX + 150) + ((finalGlobeX) - (centerX + 150)) * mergeProgress;
                     
-                    // Büyütülmüş logoları ekranın ortasında birleşirken çiz
                     try {
-                        activeCtx.drawImage(globeImg, glX, centerY - 35, 70, 70);
-                        activeCtx.drawImage(smileyImg, smX, centerY - 35, 70, 70);
+                        if (mergeProgress >= 1) {
+                            // Gerçek Linguamis Logosu (Genişletilmiş)
+                            activeCtx.drawImage(finalLogoImg, centerX - 50, centerY - 35, 100, 70);
+                        } else {
+                            // Dünya ve Smile Birleşiyor
+                            activeCtx.drawImage(globeImg, glX, centerY - 35, 70, 70);
+                            activeCtx.drawImage(smileyImg, smX, centerY - 35, 70, 70);
+                        }
                     } catch(e) {}
                     
-                    // Birleşme tamamlandığında Yazıları Çıkar
-                    if (mergeProgress >= 1) {
+                    if (gameState === 'MERGED_PAUSED') {
                         activeCtx.textAlign = 'center';
-                        
                         const gradient = activeCtx.createLinearGradient(activeCanvas.width/2 - 100, 0, activeCanvas.width/2 + 100, 0);
-                        gradient.addColorStop(0, '#06b6d4');
-                        gradient.addColorStop(1, '#a855f7');
+                        gradient.addColorStop(0, '#06b6d4'); gradient.addColorStop(1, '#a855f7');
                         
                         activeCtx.fillStyle = gradient;
                         activeCtx.font = '900 32px "Plus Jakarta Sans", sans-serif';
@@ -2042,24 +2136,34 @@
                         
                         activeCtx.font = '500 16px "Plus Jakarta Sans", sans-serif';
                         activeCtx.fillStyle = isDark ? '#94a3b8' : '#64748b';
-                        activeCtx.fillText('(Tekrar oynamak için Space veya Tıkla)', activeCanvas.width / 2, activeCanvas.height / 2 + 80);
-                        
+                        activeCtx.fillText(`Tebrikler! ${Math.floor(distance)}. Metreye Ulaştın!`, activeCanvas.width / 2, activeCanvas.height / 2 + 75);
+                        activeCtx.fillText('(Kaldığın yerden devam etmek için Zıpla)', activeCanvas.width / 2, activeCanvas.height / 2 + 95);
                         activeCtx.textAlign = 'left'; 
                     }
                 }
             }
 
-            function gameLoop() {
-                update();
+            function gameLoop(timestamp) {
+                // FPS Bağımsız çalışması için Delta Time hesabı
+                let current = timestamp || performance.now();
+                let deltaTime = current - lastTime;
+                
+                if (deltaTime > 1000) deltaTime = 16.66; 
+                lastTime = current;
+                
+                let timeScale = Math.min(deltaTime / 16.66, 3); 
+                
+                update(timeScale);
                 draw();
-                if (!isGameOver || mergeProgress < 1) {
+                
+                if (gameState === 'PLAYING' || gameState === 'MERGING') {
                     gameLoopId = requestAnimationFrame(gameLoop);
                 } else {
-                    draw(); // Animasyon bitince ekranı dondur
+                    draw(); // Menüde dondur
                 }
             }
             
-            setTimeout(gameLoop, 150);
+            requestAnimationFrame(gameLoop);
         }
     </script>
     <!-- EASTER EGG GAME MODAL -->
