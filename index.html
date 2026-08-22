@@ -103,6 +103,7 @@
             display: flex; flex-direction: column; height: 100%;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
             position: relative;
+            cursor: pointer;
         }
         .dark .glass-card {
             background: var(--glassBg);
@@ -123,7 +124,7 @@
             box-shadow: 0 20px 40px -10px rgba(6, 182, 212, 0.3);
         }
 
-        .card-image-wrapper { position: relative; width: 100%; height: 180px; overflow: hidden; border-bottom: 1px solid #f1f5f9; cursor: pointer; }
+        .card-image-wrapper { position: relative; width: 100%; height: 180px; overflow: hidden; border-bottom: 1px solid #f1f5f9; }
         .dark .card-image-wrapper { border-bottom: none; }
         .card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
         .glass-card:hover .card-image-wrapper img { transform: scale(1.08); }
@@ -360,9 +361,9 @@
                     
                     <!-- STUDENT APPS -->
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="eyds">
+                        <a href="https://musabikbal206.github.io/yds" class="glass-card group" data-app-id="eyds">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('eyds')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'eyds')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/0ea5e9?text=E-YDS" alt="YDS App">
                             </div>
                             <div class="card-content">
@@ -373,12 +374,12 @@
                                     <span class="tr-text">YDS sınav simülasyonu.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="quizzes">
+                        <a href="https://musabikbal206.github.io/EngQuizzesForAll" class="glass-card group" data-app-id="quizzes">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('quizzes')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'quizzes')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/10b981?text=Quizzes" alt="Quizzes">
                             </div>
                             <div class="card-content">
@@ -389,12 +390,12 @@
                                     <span class="tr-text">Geniş kapsamlı İngilizce quiz arşivi.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="convocards">
+                        <a href="https://musabikbal206.github.io/convocards" class="glass-card group" data-app-id="convocards">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('convocards')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'convocards')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/f43f5e?text=ConvoCards" alt="ConvoCards">
                             </div>
                             <div class="card-content">
@@ -405,12 +406,12 @@
                                     <span class="tr-text">İnteraktif konuşma kartları.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="parliamo">
+                        <a href="https://musabikbal206.github.io/parliamo" class="glass-card group" data-app-id="parliamo">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('parliamo')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'parliamo')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/ef4444?text=Parliamo" alt="Parliamo">
                             </div>
                             <div class="card-content">
@@ -421,12 +422,12 @@
                                     <span class="tr-text">İtalyanca öğrenim kaynakları.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="irregular">
+                        <a href="https://musabikbal206.github.io/Irregular" class="glass-card group" data-app-id="irregular">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('irregular')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'irregular')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/f97316?text=Verbs" alt="Irregular">
                             </div>
                             <div class="card-content">
@@ -437,12 +438,12 @@
                                     <span class="tr-text">Düzensiz fiiller için odaklanmış alıştırmalar.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="speakeasy">
+                        <a href="https://musabikbal206.github.io/Speakeasy" class="glass-card group" data-app-id="speakeasy">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('speakeasy')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'speakeasy')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Speakeasy" alt="Speakeasy">
                             </div>
                             <div class="card-content">
@@ -453,12 +454,12 @@
                                     <span class="tr-text">Konuşma pratiği için araçlar.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="wikiread">
+                        <a href="https://musabikbal206.github.io/wikiread" class="glass-card group" data-app-id="wikiread">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('wikiread')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'wikiread')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/64748b?text=Wikiread" alt="Wikiread">
                             </div>
                             <div class="card-content">
@@ -469,14 +470,14 @@
                                     <span class="tr-text">Wiki destekli okuma aracı.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <!-- TEACHER APPS -->
                     <div class="swiper-slide" data-audience="teacher">
-                        <div class="glass-card group" data-app-id="rubrics">
+                        <a href="https://musabikbal206.github.io/studentrubrics" class="glass-card group" data-app-id="rubrics">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('rubrics')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'rubrics')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/3b82f6?text=Rubrics" alt="Rubrics">
                             </div>
                             <div class="card-content">
@@ -487,12 +488,12 @@
                                     <span class="tr-text">Değerlendirme ve notlandırma rubrikleri.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="teacher">
-                        <div class="glass-card group" data-app-id="studentpicker">
+                        <a href="https://musabikbal206.github.io/studentpicker" class="glass-card group" data-app-id="studentpicker">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('studentpicker')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'studentpicker')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/6366f1?text=Picker" alt="Student Picker">
                             </div>
                             <div class="card-content">
@@ -503,12 +504,12 @@
                                     <span class="tr-text">Rastgele öğrenci seçme aracı.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="teacher">
-                        <div class="glass-card group" data-app-id="reading">
+                        <a href="https://musabikbal206.github.io/reading" class="glass-card group" data-app-id="reading">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('reading')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'reading')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/10b981?text=Reading" alt="Reading">
                             </div>
                             <div class="card-content">
@@ -519,12 +520,12 @@
                                     <span class="tr-text">Okuma materyalleri düzenleyici.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="teacher">
-                        <div class="glass-card group" data-app-id="ydstool">
+                        <a href="https://musabikbal206.github.io/ydstool" class="glass-card group" data-app-id="ydstool">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('ydstool')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'ydstool')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/0ea5e9?text=ydstool" alt="ydstool">
                             </div>
                             <div class="card-content">
@@ -535,12 +536,12 @@
                                     <span class="tr-text">YDS hazırlık araçları.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="teacher">
-                        <div class="glass-card group" data-app-id="ydstopic">
+                        <a href="https://musabikbal206.github.io/ydstopic" class="glass-card group" data-app-id="ydstopic">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('ydstopic')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'ydstopic')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/8b5cf6?text=ydstopic" alt="ydstopic">
                             </div>
                             <div class="card-content">
@@ -551,12 +552,12 @@
                                     <span class="tr-text">YDS için konu organizasyonu.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="teacher">
-                        <div class="glass-card group" data-app-id="questionwheel">
+                        <a href="https://musabikbal206.github.io/questionwheel" class="glass-card group" data-app-id="questionwheel">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('questionwheel')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'questionwheel')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/f59e0b?text=Wheel" alt="Questionwheel">
                             </div>
                             <div class="card-content">
@@ -567,12 +568,12 @@
                                     <span class="tr-text">İnteraktif soru çarkı.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="teacher">
-                        <div class="glass-card group" data-app-id="20questions">
+                        <a href="https://musabikbal206.github.io/20questions" class="glass-card group" data-app-id="20questions">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('20questions')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, '20questions')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/ef4444?text=20+Q" alt="20 Questions">
                             </div>
                             <div class="card-content">
@@ -583,12 +584,12 @@
                                     <span class="tr-text">Klasik tahmin oyunu formatı.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="teacher">
-                        <div class="glass-card group" data-app-id="meb">
+                        <a href="https://musabikbal206.github.io/meb" class="glass-card group" data-app-id="meb">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('meb')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'meb')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/64748b?text=MEB" alt="meb">
                             </div>
                             <div class="card-content">
@@ -599,7 +600,7 @@
                                     <span class="tr-text">Resmi müfredat entegrasyon araçları.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -625,9 +626,9 @@
                 <div class="swiper-wrapper" id="wrapper-games">
                     <!-- STUDENT GAMES -->
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="maze">
+                        <a href="https://musabikbal206.github.io/maze" class="glass-card group" data-app-id="maze">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('maze')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'maze')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/84cc16?text=Mazeamazing" alt="Mazeamazing">
                             </div>
                             <div class="card-content">
@@ -638,12 +639,12 @@
                                     <span class="tr-text">Prosedürel 3D labirent keşfi.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="astrowords">
+                        <a href="https://musabikbal206.github.io/Astrowords" class="glass-card group" data-app-id="astrowords">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('astrowords')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'astrowords')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Astrowords" alt="Astrowords">
                             </div>
                             <div class="card-content">
@@ -654,12 +655,12 @@
                                     <span class="tr-text">Uzayda oyunlaştırılmış kelime öğrenimi.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="aquaverbs">
+                        <a href="https://musabikbal206.github.io/Aquaverbs" class="glass-card group" data-app-id="aquaverbs">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('aquaverbs')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'aquaverbs')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/06b6d4?text=Acquaverbs" alt="Acquaverbs">
                             </div>
                             <div class="card-content">
@@ -670,12 +671,12 @@
                                     <span class="tr-text">Sualtı fiil öğrenme macerası.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="autowords">
+                        <a href="https://musabikbal206.github.io/Autowords" class="glass-card group" data-app-id="autowords">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('autowords')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'autowords')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/f59e0b?text=Autowords" alt="Autowords">
                             </div>
                             <div class="card-content">
@@ -686,12 +687,12 @@
                                     <span class="tr-text">Tempolu kelime öğrenme oyunu.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="sudoku">
+                        <a href="https://musabikbal206.github.io/sudoku" class="glass-card group" data-app-id="sudoku">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('sudoku')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'sudoku')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/2dd4bf?text=Sudoku" alt="Sudoku">
                             </div>
                             <div class="card-content">
@@ -702,12 +703,12 @@
                                     <span class="tr-text">Mantık tabanlı sayı yerleştirme bulmacası.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="mathdoku">
+                        <a href="https://musabikbal206.github.io/mathdoku" class="glass-card group" data-app-id="mathdoku">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('mathdoku')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'mathdoku')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/f43f5e?text=Mathdoku" alt="Mathdoku">
                             </div>
                             <div class="card-content">
@@ -718,12 +719,12 @@
                                     <span class="tr-text">Matematiksel mantık bulmacası.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="chess">
+                        <a href="https://musabikbal206.github.io/chess" class="glass-card group" data-app-id="chess">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('chess')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'chess')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/94a3b8?text=Chess" alt="Chess">
                             </div>
                             <div class="card-content">
@@ -734,12 +735,12 @@
                                     <span class="tr-text">Klasik satranç oyunu uygulaması.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="recyclegame">
+                        <a href="https://musabikbal206.github.io/recyclegame" class="glass-card group" data-app-id="recyclegame">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('recyclegame')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'recyclegame')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/22c55e?text=Recycle" alt="Recycle">
                             </div>
                             <div class="card-content">
@@ -750,12 +751,12 @@
                                     <span class="tr-text">Eğitici çevre oyunu.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="sniper">
+                        <a href="https://musabikbal206.github.io/sniper" class="glass-card group" data-app-id="sniper">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('sniper')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'sniper')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/ef4444?text=Sniper" alt="Sniper">
                             </div>
                             <div class="card-content">
@@ -766,7 +767,7 @@
                                     <span class="tr-text">3D nişan ve atış oyunu.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -793,9 +794,9 @@
                     
                     <!-- STUDENT USEFUL APPS -->
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="zincirikirma">
+                        <a href="https://musabikbal206.github.io/zincirikirma" class="glass-card group" data-app-id="zincirikirma">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('zincirikirma')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'zincirikirma')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/ef4444?text=Habits" alt="Zinciri Kirma">
                             </div>
                             <div class="card-content">
@@ -806,12 +807,12 @@
                                     <span class="tr-text">Alışkanlık takip görselleştirici.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="planner">
+                        <a href="https://musabikbal206.github.io/planner" class="glass-card group" data-app-id="planner">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('planner')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'planner')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/3b82f6?text=Planner" alt="Planner">
                             </div>
                             <div class="card-content">
@@ -822,12 +823,12 @@
                                     <span class="tr-text">Günlük ve haftalık planlama aracı.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="student">
-                        <div class="glass-card group" data-app-id="personas">
+                        <a href="https://musabikbal206.github.io/PersonasBot" class="glass-card group" data-app-id="personas">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('personas')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'personas')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/10b981?text=Personas" alt="Personas">
                             </div>
                             <div class="card-content">
@@ -838,14 +839,14 @@
                                     <span class="tr-text">Yapay zeka etkileşim deneyleri.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <!-- DEVELOPER TOOLS -->
                     <div class="swiper-slide" data-audience="developer">
-                        <div class="glass-card group" data-app-id="webeditor">
+                        <a href="https://musabikbal206.github.io/WebEditor" class="glass-card group" data-app-id="webeditor">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('webeditor')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'webeditor')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/3b82f6?text=WebEditor" alt="WebEditor">
                             </div>
                             <div class="card-content">
@@ -856,12 +857,12 @@
                                     <span class="tr-text">Tarayıcı tabanlı kod editörü.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="developer">
-                        <div class="glass-card group" data-app-id="htmlsplitter">
+                        <a href="https://musabikbal206.github.io/htmlsplitter" class="glass-card group" data-app-id="htmlsplitter">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('htmlsplitter')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'htmlsplitter')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/fb923c?text=Splitter" alt="HTML Splitter">
                             </div>
                             <div class="card-content">
@@ -872,12 +873,12 @@
                                     <span class="tr-text">HTML dosyalarını ayrıştırma aracı.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="developer">
-                        <div class="glass-card group" data-app-id="exceltocsv">
+                        <a href="https://musabikbal206.github.io/exceltocsv" class="glass-card group" data-app-id="exceltocsv">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('exceltocsv')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'exceltocsv')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/4ade80?text=Excel2CSV" alt="Excel to CSV">
                             </div>
                             <div class="card-content">
@@ -888,12 +889,12 @@
                                     <span class="tr-text">Format dönüştürme aracı.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="developer">
-                        <div class="glass-card group" data-app-id="watermarkremover">
+                        <a href="https://musabikbal206.github.io/watermarkremover" class="glass-card group" data-app-id="watermarkremover">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('watermarkremover')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'watermarkremover')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/8b5cf6?text=Watermark" alt="Watermarkremover">
                             </div>
                             <div class="card-content">
@@ -904,12 +905,12 @@
                                     <span class="tr-text">Görüntü işleme aracı.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="developer">
-                        <div class="glass-card group" data-app-id="mimar">
+                        <a href="https://musabikbal206.github.io/mimar" class="glass-card group" data-app-id="mimar">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('mimar')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'mimar')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/64748b?text=mimar" alt="mimar">
                             </div>
                             <div class="card-content">
@@ -920,12 +921,12 @@
                                     <span class="tr-text">Mimari yapı araçları.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="developer">
-                        <div class="glass-card group" data-app-id="mybattery">
+                        <a href="https://musabikbal206.github.io/mybattery" class="glass-card group" data-app-id="mybattery">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('mybattery')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'mybattery')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/10b981?text=mybattery" alt="mybattery">
                             </div>
                             <div class="card-content">
@@ -936,12 +937,12 @@
                                     <span class="tr-text">Sistem analitik aracı.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="swiper-slide" data-audience="developer">
-                        <div class="glass-card group" data-app-id="clashy">
+                        <a href="https://musabikbal206.github.io/clashy" class="glass-card group" data-app-id="clashy">
                             <div class="card-image-wrapper">
-                                <div class="info-btn" onclick="openAppInfo('clashy')"><i class="fas fa-info"></i></div>
+                                <div class="info-btn" onclick="openAppInfo(event, 'clashy')"><i class="fas fa-info"></i></div>
                                 <img src="https://placehold.co/600x400/0f172a/f59e0b?text=clashy" alt="clashy">
                             </div>
                             <div class="card-content">
@@ -952,7 +953,7 @@
                                     <span class="tr-text">Oyun mantığı ve algoritma testi.</span>
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                 </div>
@@ -1010,7 +1011,7 @@
 
     <!-- APP INFO MODAL -->
     <div id="app-info-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-slate-900/80 dark:bg-black/80 backdrop-blur-md p-4 transition-all duration-500 opacity-0">
-        <div class="glass-card max-w-4xl w-full relative scale-95 transition-transform duration-500 max-h-[90vh] overflow-hidden flex flex-col md:flex-row" id="app-info-modal-content">
+        <div class="glass-card cursor-default max-w-4xl w-full relative scale-95 transition-transform duration-500 max-h-[90vh] overflow-hidden flex flex-col md:flex-row" id="app-info-modal-content">
             
             <button onclick="closeAppInfoModal()" class="absolute top-4 right-4 text-white hover:text-slate-200 bg-slate-900/50 hover:bg-slate-900 w-8 h-8 rounded-full flex items-center justify-center transition-colors z-[120]">
                 <i class="fas fa-times text-lg"></i>
@@ -1048,7 +1049,7 @@
 
     <!-- PROFILE SELECTION MODAL -->
     <div id="profile-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/80 dark:bg-black/80 backdrop-blur-md p-4 transition-all duration-500 opacity-0">
-        <div class="glass-card max-w-6xl w-full p-6 md:p-12 relative scale-95 transition-transform duration-500 max-h-[90vh] overflow-y-auto" id="profile-modal-content">
+        <div class="glass-card cursor-default max-w-6xl w-full p-6 md:p-12 relative scale-95 transition-transform duration-500 max-h-[90vh] overflow-y-auto" id="profile-modal-content">
             <button onclick="closeProfileModal()" id="modal-close-btn" class="absolute top-6 right-6 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors hidden z-10">
                 <i class="fas fa-times text-2xl"></i>
             </button>
@@ -1443,13 +1444,15 @@
         };
 
         /* App Info Modal Management */
-        function openAppInfo(appId) {
+        function openAppInfo(event, appId) {
+            event.preventDefault(); // Stop the link from redirecting
+            event.stopPropagation(); // Stop the event from bubbling
+            
             const data = appData[appId];
             if (!data) return;
 
             // Populate Modal
             document.getElementById('app-modal-title').textContent = data.title;
-            document.getElementById('app-modal-icon').className = `fas ${data.icon}`;
             document.getElementById('app-modal-img').src = data.img;
             document.getElementById('app-modal-img').alt = data.title;
             document.getElementById('app-modal-desc-en').textContent = data.descEn;
@@ -1457,7 +1460,6 @@
             document.getElementById('app-modal-link').href = data.link;
 
             // Apply slight tint to icon container based on app category color
-            // This is a simple logic to match the existing icon colors roughly
             let colorClass = 'text-cyan-500';
             if(['astrowords','speakeasy','ydstopic','watermarkremover'].includes(appId)) colorClass = 'text-purple-500';
             if(['quizzes','reading','personas','exceltocsv','mybattery'].includes(appId)) colorClass = 'text-emerald-500';
