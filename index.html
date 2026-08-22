@@ -317,7 +317,7 @@
         <div class="max-w-4xl mx-auto relative z-10 w-full reveal active">
             <!-- Logo / Emblem -->
             <div class="mb-8 flex justify-center">
-                <img src="linguamis-logo.png" alt="Linguamis Emblem" class="w-32 h-32 md:w-48 md:h-48 object-contain animate-float drop-shadow-[0_0_25px_rgba(6,182,212,0.4)]" onerror="this.src='https://placehold.co/200x200/0ea5e9/ffffff?text=L'">
+                <img id="easter-egg-logo" src="linguamis-logo.png" alt="Linguamis Emblem" class="w-32 h-32 md:w-48 md:h-48 object-contain animate-float drop-shadow-[0_0_25px_rgba(6,182,212,0.4)] select-none pointer-events-auto cursor-pointer" style="-webkit-touch-callout: none; -webkit-user-select: none;" onerror="this.src='https://placehold.co/200x200/0ea5e9/ffffff?text=L'">
             </div>
             
             <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-400 dark:to-purple-500 gradient-text drop-shadow-sm pb-2 leading-tight">
@@ -1801,6 +1801,299 @@
                 revealObserver.observe(el);
             });
         }
+        /* --- EASTER EGG: LONG PRESS & GAME LOGIC --- */
+        const easterEggLogo = document.getElementById('easter-egg-logo');
+        let pressTimer;
+        
+        // Uzun basma algılayıcı
+        function startPress(e) {
+            if(e.type === 'touchstart') {
+                if(e.touches.length > 1) return;
+            }
+            pressTimer = setTimeout(() => {
+                openEasterEgg();
+            }, 1500); 
+        }
+
+        function cancelPress() {
+            clearTimeout(pressTimer);
+        }
+
+        if (easterEggLogo) {
+            easterEggLogo.addEventListener('mousedown', startPress);
+            easterEggLogo.addEventListener('touchstart', startPress, {passive: true});
+            easterEggLogo.addEventListener('mouseup', cancelPress);
+            easterEggLogo.addEventListener('mouseleave', cancelPress);
+            easterEggLogo.addEventListener('touchend', cancelPress);
+            easterEggLogo.oncontextmenu = function(e) { e.preventDefault(); return false; };
+        }
+
+        // Modal Yönetimi
+        let gameLoopId;
+        function openEasterEgg() {
+            const modal = document.getElementById('easter-egg-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            initDinoGame(); 
+        }
+
+        function closeEasterEgg() {
+            const modal = document.getElementById('easter-egg-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                if(gameLoopId) cancelAnimationFrame(gameLoopId); 
+            }, 300);
+        }
+
+        // Gelişmiş Linguamis Run Oyunu
+        function initDinoGame() {
+            const canvas = document.getElementById('dino-game');
+            
+            // Olay dinleyicilerini temizlemek için clone yöntemi
+            const oldCanvas = canvas;
+            const newCanvas = oldCanvas.cloneNode(true);
+            oldCanvas.parentNode.replaceChild(newCanvas, oldCanvas);
+            
+            const activeCanvas = document.getElementById('dino-game');
+            const activeCtx = activeCanvas.getContext('2d');
+            
+            if(gameLoopId) cancelAnimationFrame(gameLoopId);
+
+            let isGameOver = false;
+            let mergeProgress = 0; // Birleşme animasyonu için
+            let score = 0;
+            let highScore = localStorage.getItem('linguamis_hi_score') || 0;
+            const hiScoreDisplay = document.getElementById('hi-score-display');
+            if(hiScoreDisplay) hiScoreDisplay.textContent = highScore;
+            
+            // Görseller (Senin png dosyaların)
+            const smileyImg = new Image();
+            smileyImg.src = 'smile.png';
+            
+            const globeImg = new Image();
+            globeImg.src = 'world.png';
+
+            // Fizik, Objeler ve Zemin
+            const groundY = 180;
+            const player = { x: 60, y: groundY - 45, width: 45, height: 45, dy: 0, gravity: 0.65, jumpPower: -11, isGrounded: true };
+            const obstacle = { x: activeCanvas.width, y: groundY - 45, width: 45, height: 45, speed: 5.5 }; 
+            
+            // Arka plan için kayan zemin çizgileri ve parçacıklar
+            let groundX = 0;
+            let particles = Array.from({length: 20}, () => ({
+                x: Math.random() * activeCanvas.width,
+                y: Math.random() * groundY,
+                size: Math.random() * 2 + 1,
+                speed: Math.random() * 1 + 0.5
+            }));
+
+            function jump() {
+                if (player.isGrounded && !isGameOver) {
+                    player.dy = player.jumpPower;
+                    player.isGrounded = false;
+                } else if (isGameOver && mergeProgress >= 1) {
+                    // Oyun Bitti Ekranını Geç ve Yeniden Başlat
+                    isGameOver = false;
+                    mergeProgress = 0;
+                    score = 0;
+                    obstacle.x = activeCanvas.width;
+                    obstacle.speed = 5.5;
+                    gameLoop();
+                }
+            }
+
+            window.addEventListener('keydown', (e) => { 
+                if(e.code === 'Space' && !document.getElementById('easter-egg-modal').classList.contains('hidden')) { 
+                    e.preventDefault(); 
+                    jump(); 
+                } 
+            });
+            activeCanvas.addEventListener('mousedown', jump);
+            activeCanvas.addEventListener('touchstart', (e) => { e.preventDefault(); jump(); }, {passive: false});
+
+            function update() {
+                if (isGameOver) {
+                    // Çarpışma olunca her şey donar, sinematik animasyon başlar
+                    if (mergeProgress < 1) {
+                        mergeProgress += 0.02; // Animasyonun akış hızı
+                    }
+                    return;
+                }
+
+                player.dy += player.gravity;
+                player.y += player.dy;
+
+                if (player.y + player.height >= groundY) {
+                    player.y = groundY - player.height;
+                    player.dy = 0;
+                    player.isGrounded = true;
+                }
+
+                obstacle.x -= obstacle.speed;
+                if (obstacle.x + obstacle.width < 0) {
+                    obstacle.x = activeCanvas.width + Math.random() * 200; 
+                    score += 10;
+                    obstacle.speed += 0.15; // Hızlanma 
+                    
+                    if(score > highScore) {
+                        highScore = score;
+                        localStorage.setItem('linguamis_hi_score', highScore);
+                        if(hiScoreDisplay) hiScoreDisplay.textContent = highScore;
+                    }
+                }
+
+                groundX -= obstacle.speed;
+                if (groundX <= -activeCanvas.width) groundX = 0;
+                
+                particles.forEach(p => {
+                    p.x -= p.speed;
+                    if (p.x < 0) p.x = activeCanvas.width;
+                });
+
+                // HASSAS ÇARPIŞMA (Hitbox 10'dan 5'e düşürüldü, birbirine girmesi engellendi)
+                const hitX = 5; const hitY = 5; 
+                if (player.x + hitX < obstacle.x + obstacle.width - hitX &&
+                    player.x + player.width - hitX > obstacle.x + hitX &&
+                    player.y + hitY < obstacle.y + obstacle.height - hitY &&
+                    player.y + player.height - hitY > obstacle.y + hitY) {
+                    isGameOver = true;
+                }
+            }
+
+            function draw() {
+                activeCtx.clearRect(0, 0, activeCanvas.width, activeCanvas.height);
+                const isDark = document.documentElement.classList.contains('dark');
+                
+                // Parçacıkları Çiz
+                activeCtx.fillStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)';
+                particles.forEach(p => {
+                    activeCtx.beginPath();
+                    activeCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    activeCtx.fill();
+                });
+
+                // Zemin Çizgisi
+                activeCtx.strokeStyle = isDark ? '#334155' : '#cbd5e1';
+                activeCtx.lineWidth = 2;
+                activeCtx.beginPath();
+                activeCtx.moveTo(0, groundY);
+                activeCtx.lineTo(activeCanvas.width, groundY);
+                activeCtx.stroke();
+                
+                // Zemin Detayları
+                activeCtx.fillStyle = isDark ? '#475569' : '#94a3b8';
+                for(let i = 0; i < 5; i++) {
+                    activeCtx.fillRect(((groundX + i * 150) % activeCanvas.width + activeCanvas.width) % activeCanvas.width, groundY + 5, 20, 2);
+                }
+
+                // Oyun çalışırken karakterleri normal yerlerinde çiz
+                if (!isGameOver) {
+                    try {
+                        activeCtx.drawImage(globeImg, obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+                        activeCtx.drawImage(smileyImg, player.x, player.y, player.width, player.height);
+                    } catch(e) {
+                        activeCtx.fillStyle = '#ef4444'; activeCtx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+                        activeCtx.fillStyle = '#06b6d4'; activeCtx.fillRect(player.x, player.y, player.width, player.height);
+                    }
+                }
+
+                // Skor Yazısı
+                activeCtx.fillStyle = isDark ? '#e2e8f0' : '#1e293b';
+                activeCtx.font = 'bold 22px "Plus Jakarta Sans", sans-serif';
+                activeCtx.fillText(`Skor: ${score}`, 20, 40);
+
+                // OYUN BİTTİ & BİRLEŞME ANİMASYONU EKRANI
+                if (isGameOver) {
+                    // Ekranı Karart
+                    activeCtx.fillStyle = isDark ? 'rgba(5, 5, 5, 0.7)' : 'rgba(255, 255, 255, 0.8)';
+                    activeCtx.fillRect(0, 0, activeCanvas.width, activeCanvas.height);
+                    
+                    // Merkeze Doğru Kayarak Birleşme Animasyonu
+                    const centerX = activeCanvas.width / 2;
+                    const centerY = activeCanvas.height / 2 - 20;
+                    
+                    const finalSmileX = centerX - 35;
+                    const finalGlobeX = finalSmileX + 26; // İki ikonun üst üste geçtiği tam mesafe
+                    
+                    // Ekranın sağından ve solundan merkeze gelme formülü
+                    const smX = (centerX - 150) + ((finalSmileX) - (centerX - 150)) * mergeProgress;
+                    const glX = (centerX + 150) + ((finalGlobeX) - (centerX + 150)) * mergeProgress;
+                    
+                    // Büyütülmüş logoları ekranın ortasında birleşirken çiz
+                    try {
+                        activeCtx.drawImage(globeImg, glX, centerY - 35, 70, 70);
+                        activeCtx.drawImage(smileyImg, smX, centerY - 35, 70, 70);
+                    } catch(e) {}
+                    
+                    // Birleşme tamamlandığında Yazıları Çıkar
+                    if (mergeProgress >= 1) {
+                        activeCtx.textAlign = 'center';
+                        
+                        const gradient = activeCtx.createLinearGradient(activeCanvas.width/2 - 100, 0, activeCanvas.width/2 + 100, 0);
+                        gradient.addColorStop(0, '#06b6d4');
+                        gradient.addColorStop(1, '#a855f7');
+                        
+                        activeCtx.fillStyle = gradient;
+                        activeCtx.font = '900 32px "Plus Jakarta Sans", sans-serif';
+                        activeCtx.fillText('Linguamis Birleşti!', activeCanvas.width / 2, activeCanvas.height / 2 + 50);
+                        
+                        activeCtx.font = '500 16px "Plus Jakarta Sans", sans-serif';
+                        activeCtx.fillStyle = isDark ? '#94a3b8' : '#64748b';
+                        activeCtx.fillText('(Tekrar oynamak için Space veya Tıkla)', activeCanvas.width / 2, activeCanvas.height / 2 + 80);
+                        
+                        activeCtx.textAlign = 'left'; 
+                    }
+                }
+            }
+
+            function gameLoop() {
+                update();
+                draw();
+                if (!isGameOver || mergeProgress < 1) {
+                    gameLoopId = requestAnimationFrame(gameLoop);
+                } else {
+                    draw(); // Animasyon bitince ekranı dondur
+                }
+            }
+            
+            setTimeout(gameLoop, 150);
+        }
     </script>
+    <!-- EASTER EGG GAME MODAL -->
+    <div id="easter-egg-modal" class="fixed inset-0 z-[150] hidden items-center justify-center bg-[#050505]/90 backdrop-blur-xl transition-all duration-500 opacity-0 p-4">
+        <div class="glass-card cursor-default max-w-3xl w-full p-6 md:p-8 relative overflow-hidden border border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.15)] rounded-3xl">
+            <!-- Arka plan aurora efekti -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none opacity-50">
+                <div class="absolute top-[-50%] left-[-10%] w-[300px] h-[300px] rounded-full bg-cyan-500/20 blur-[80px]"></div>
+                <div class="absolute bottom-[-50%] right-[-10%] w-[300px] h-[300px] rounded-full bg-purple-500/20 blur-[80px]"></div>
+            </div>
+
+            <button onclick="closeEasterEgg()" class="absolute top-4 right-4 text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 w-10 h-10 rounded-full flex items-center justify-center transition-all z-20 border border-white/10">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            
+            <div class="relative z-10 text-center mb-6">
+                <h3 class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 gradient-text inline-block pb-1">Linguamis Run</h3>
+                <p class="text-slate-400 text-sm mt-1">Logoya birleşmek için engelleri aş!</p>
+            </div>
+            
+            <!-- Game Canvas -->
+            <div class="relative z-10 p-1 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm shadow-inner">
+                <canvas id="dino-game" width="700" height="220" class="w-full rounded-xl cursor-pointer block"></canvas>
+            </div>
+            
+            <div class="relative z-10 mt-6 flex flex-col md:flex-row justify-between items-center text-sm font-medium gap-3">
+                <p class="text-slate-400">
+                    Zıplamak için <span class="px-2 py-1 bg-white/10 rounded-md border border-white/5 text-cyan-300 mx-1 shadow-sm">Space</span> veya <span class="px-2 py-1 bg-white/10 rounded-md border border-white/5 text-cyan-300 mx-1 shadow-sm">Tıkla</span>
+                </p>
+                <div class="text-purple-300 px-4 py-2 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                    En Yüksek Skor: <span id="hi-score-display" class="font-bold text-white">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
