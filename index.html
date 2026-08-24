@@ -2299,44 +2299,11 @@
 
     <script>
         // Sayfa yüklendiğinde Linguamis'i UI güncellemesiyle başlat
-
-        // Ana sitenin index.html dosyasında:
         document.addEventListener('DOMContentLoaded', () => {
             window.Linguamis.init((user) => {
                 updateAuthUIView(user);
             });
-        
-            // Proje kartlarına tıklandığında oturumu alt siteye güvenle pasla
-            document.querySelectorAll('.swiper-slide a, #app-modal-link').forEach(link => {
-                link.addEventListener('click', async (e) => {
-                    const originalHref = link.getAttribute('href');
-                    if (originalHref && originalHref.startsWith('http')) {
-                        e.preventDefault();
-                        const targetWithAuth = await window.Linguamis.getAppUrlWithAuth(originalHref);
-                        window.location.href = targetWithAuth;
-                    }
-                });
-            });
         });
-
-// Ana sitenin index.html dosyasında:
-document.addEventListener('DOMContentLoaded', () => {
-    window.Linguamis.init((user) => {
-        updateAuthUIView(user);
-    });
-
-    // Proje kartlarına tıklandığında oturumu alt siteye güvenle pasla
-    document.querySelectorAll('.swiper-slide a, #app-modal-link').forEach(link => {
-        link.addEventListener('click', async (e) => {
-            const originalHref = link.getAttribute('href');
-            if (originalHref && originalHref.startsWith('http')) {
-                e.preventDefault();
-                const targetWithAuth = await window.Linguamis.getAppUrlWithAuth(originalHref);
-                window.location.href = targetWithAuth;
-            }
-        });
-    });
-});
 
         /* UI Kontrolleri */
         function openAuthModal() {
