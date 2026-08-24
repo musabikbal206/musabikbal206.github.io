@@ -2549,7 +2549,7 @@
             if (!email || !password) return showAuthError("Lütfen e-posta ve şifrenizi girin.");
         
             try {
-                const { data, error } = await window.Linguamis.supabase.auth.signInWithPassword({ email, password });
+                const { data, error } = await window.Linguamis.login(email, password);
                 if (error) throw error;
                 
                 showToast("Giriş başarılı!", "success");
@@ -2569,15 +2569,7 @@
             if (password.length < 6) return showAuthError("Şifre en az 6 karakter olmalıdır.");
         
             try {
-                const { data, error } = await window.Linguamis.supabase.auth.signUp({
-                    email: email,
-                    password: password,
-                    options: {
-                        data: {
-                            display_name: name || email.split('@')[0]
-                        }
-                    }
-                });
+                const { data, error } = await window.Linguamis.signUp(email, password, name);
                 if (error) throw error;
                 
                 showToast("Kayıt başarılı! Giriş yapabilirsiniz.", "success");
@@ -2593,9 +2585,7 @@
             if (!email) return showAuthError("Lütfen kayıtlı e-posta adresinizi girin.");
         
             try {
-                const { error } = await window.Linguamis.supabase.auth.resetPasswordForEmail(email, {
-                    redirectTo: window.location.origin
-                });
+                const { error } = await window.Linguamis.resetPassword(email);
                 if (error) throw error;
                 
                 showToast("Şifre sıfırlama bağlantısı e-posta adresinize gönderildi!", "success");
@@ -2611,17 +2601,17 @@
             if (!newName) return showToast("Lütfen bir isim veya takma ad girin.", "error");
         
             try {
-                const { data, error } = await window.Linguamis.supabase.auth.updateUser({
-                    data: { display_name: newName }
-                });
+                const { data, error } = await window.Linguamis.updateProfile(newName);
                 if (error) throw error;
         
-                // UI'daki isim alanlarını hemen güncelle
-                window.Linguamis.user = data.user;
-                updateAuthUIView(data.user);
+                // UI'daki isim alanlarını anında güncelle
+                if (data && data.user) {
+                    window.Linguamis.user = data.user;
+                    updateAuthUIView(data.user);
+                }
                 showToast("Profil bilgileriniz güncellendi!", "success");
             } catch (err) {
-                showToast("Hata: " + err.message, "error");
+                showToast("Hata: " + (err.message || "Güncelleme yapılamadı."), "error");
             }
         }
         
@@ -2633,22 +2623,22 @@
             }
         
             try {
-                const { error } = await window.Linguamis.supabase.auth.updateUser({
-                    password: newPassword
-                });
+                const { error } = await window.Linguamis.changePassword(newPassword);
                 if (error) throw error;
         
                 document.getElementById('account-new-password').value = '';
                 showToast("Şifreniz başarıyla değiştirildi!", "success");
             } catch (err) {
-                showToast("Hata: " + err.message, "error");
+                showToast("Hata: " + (err.message || "Şifre değiştirilemedi."), "error");
             }
         }
         
         /* 6. ÇIKIŞ YAP */
         async function handleLogout() {
             try {
-                await window.Linguamis.supabase.auth.signOut();
+                const { error } = await window.Linguamis.logout();
+                if (error) throw error;
+                
                 closeAuthModal();
                 showToast("Başarıyla çıkış yapıldı.", "success");
             } catch (err) {
