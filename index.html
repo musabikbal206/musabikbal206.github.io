@@ -270,7 +270,8 @@
                     <span class="en-text">TR</span>
                     <span class="tr-text">EN</span>
                 </button>
-                <button onclick="openAuthModal()" id="auth-btn" class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/30 dark:hover:bg-purple-900/50 text-purple-800 dark:text-purple-100 transition-all border border-purple-200 dark:border-purple-800/50">
+                <!-- Mevcut satırı bulup şu şekilde değiştirin: -->
+                <button onclick="openAuthModal()" id="auth-btn" class="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/30 dark:hover:bg-purple-900/50 text-purple-800 dark:text-purple-100 transition-all border border-purple-200 dark:border-purple-800/50">
                     <i class="fas fa-sign-in-alt" id="auth-btn-icon"></i>
                     <span id="auth-btn-text-en" class="en-text font-bold text-xs">Login</span>
                     <span id="auth-btn-text-tr" class="tr-text font-bold text-xs">Giriş Yap</span>
@@ -308,6 +309,12 @@
                     <span class="tr-text dynamic-nav-tr-too">Uygulamalar</span>
                 </a>
                 <div class="h-px w-full bg-slate-200 dark:bg-white/10 my-1"></div>
+                <!-- <div class="h-px w-full bg-slate-200 dark:bg-white/10 my-1"></div> satırının hemen altına ekleyin -->
+                <button onclick="openAuthModal(); toggleMobileMenu()" class="flex items-center gap-3 text-base font-semibold text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400">
+                    <i class="fas fa-sign-in-alt w-5 text-center text-purple-600 dark:text-purple-400" id="mobile-auth-icon"></i>
+                    <span id="mobile-auth-text-en" class="en-text">Login</span>
+                    <span id="mobile-auth-text-tr" class="tr-text">Giriş Yap</span>
+                </button>
                 <button onclick="openProfileModal(true); toggleMobileMenu()" class="flex items-center gap-3 text-base font-semibold text-slate-700 dark:text-slate-300">
                     <i class="fas fa-user-circle w-5 text-center text-cyan-600 dark:text-cyan-400"></i>
                     <span class="en-text">Change Profile</span>
@@ -2336,6 +2343,9 @@
             const authBtnTextEn = document.getElementById('auth-btn-text-en');
             const authBtnTextTr = document.getElementById('auth-btn-text-tr');
             const userEmailDisplay = document.getElementById('user-email-display');
+            const mobileAuthIcon = document.getElementById('mobile-auth-icon');
+            const mobileAuthTextEn = document.getElementById('mobile-auth-text-en');
+            const mobileAuthTextTr = document.getElementById('mobile-auth-text-tr');
 
             if (user) {
                 if (loggedOutView) loggedOutView.classList.add('hidden');
@@ -2344,12 +2354,18 @@
                 if (authBtnIcon) authBtnIcon.className = "fas fa-user-check";
                 if (authBtnTextEn) authBtnTextEn.textContent = "My Account";
                 if (authBtnTextTr) authBtnTextTr.textContent = "Hesabım";
+                if (mobileAuthIcon) mobileAuthIcon.className = "fas fa-user-check w-5 text-center text-purple-600 dark:text-purple-400";
+                if (mobileAuthTextEn) mobileAuthTextEn.textContent = "My Account";
+                if (mobileAuthTextTr) mobileAuthTextTr.textContent = "Hesabım";
             } else {
                 if (loggedOutView) loggedOutView.classList.remove('hidden');
                 if (loggedInView) loggedInView.classList.add('hidden');
                 if (authBtnIcon) authBtnIcon.className = "fas fa-sign-in-alt";
                 if (authBtnTextEn) authBtnTextEn.textContent = "Login";
                 if (authBtnTextTr) authBtnTextTr.textContent = "Giriş Yap";
+                if (mobileAuthIcon) mobileAuthIcon.className = "fas fa-sign-in-alt w-5 text-center text-purple-600 dark:text-purple-400";
+                if (mobileAuthTextEn) mobileAuthTextEn.textContent = "Login";
+                if (mobileAuthTextTr) mobileAuthTextTr.textContent = "Giriş Yap";
             }
         }
 
@@ -2361,7 +2377,7 @@
             try {
                 const { error } = await window.Linguamis.signUp(email, password);
                 if (error) throw error;
-                alert("Kayıt başarılı! Giriş yapabilirsiniz.");
+                showToast("Kayıt başarılı! Giriş yapabilirsiniz.");
             } catch (err) {
                 showAuthError(err.message);
             }
@@ -2382,19 +2398,19 @@
         async function handleLogout() {
             await window.Linguamis.logout();
             closeAuthModal();
-            alert("Çıkış yapıldı.");
+            showToast("Çıkış yapıldı.");
         }
 
         async function saveApiKey() {
             const key = document.getElementById('gemini-api-key').value;
-            if (!key) return alert("Lütfen boş bırakmayın.");
+            if (!key) return showToast("Lütfen boş bırakmayın.");
             try {
                 const { error } = await window.Linguamis.saveGeminiKey(key);
                 if (error) throw error;
-                alert("Gemini API Anahtarınız başarıyla kaydedildi!");
+                showToast("Gemini API Anahtarınız başarıyla kaydedildi!");
                 document.getElementById('gemini-api-key').value = '';
             } catch (err) {
-                alert("Hata: " + err.message);
+                showToast("Hata: " + err.message);
             }
         }
 
@@ -2406,6 +2422,29 @@
                 setTimeout(() => errorEl.classList.add('hidden'), 4000);
             }
         }
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast-notification');
+        const icon = document.getElementById('toast-icon');
+        const msgEl = document.getElementById('toast-message');
+
+        msgEl.textContent = message;
+
+        if (type === 'success') {
+            toast.className = "fixed bottom-6 right-6 z-[200] transform transition-all duration-300 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl text-sm font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/90 dark:text-emerald-100 border border-emerald-200 dark:border-emerald-800/50 backdrop-blur-md";
+            icon.className = "fas fa-check-circle text-lg";
+        } else if (type === 'error') {
+            toast.className = "fixed bottom-6 right-6 z-[200] transform transition-all duration-300 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl text-sm font-semibold bg-red-100 text-red-800 dark:bg-red-900/90 dark:text-red-100 border border-red-200 dark:border-red-800/50 backdrop-blur-md";
+            icon.className = "fas fa-exclamation-circle text-lg";
+        }
+
+        setTimeout(() => toast.classList.remove('translate-y-20', 'opacity-0'), 10);
+        setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
+    }
     </script>
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-notification" class="fixed bottom-6 right-6 z-[200] transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl text-sm font-semibold pointer-events-none">
+        <i id="toast-icon" class="fas fa-info-circle text-lg"></i>
+        <span id="toast-message"></span>
+    </div>
 </body>
 </html>
