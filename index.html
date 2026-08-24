@@ -2293,24 +2293,23 @@
             </div>
         </div>
     </div>
-    <!-- 1. Supabase Kütüphanesi -->
-    
-    <!-- 2. Linguamis Core ve Auth Fonksiyonları -->
-    
+<!-- Supabase ve Core Script Bağlantıları -->
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    
-    <!-- 2. Kendi Core Dosyamız -->
     <script src="linguamis-core.js"></script>
 
     <script>
-        /* --- AUTH MODAL & SUPABASE LOGIC --- */
+        // Sayfa yüklendiğinde Linguamis'i UI güncellemesiyle başlat
+        document.addEventListener('DOMContentLoaded', () => {
+            window.Linguamis.init((user) => {
+                updateAuthUIView(user);
+            });
+        });
 
+        /* UI Kontrolleri */
         function openAuthModal() {
             const modal = document.getElementById('auth-modal');
             const content = document.getElementById('auth-modal-content');
-            
-            updateAuthUIView();
-
+            updateAuthUIView(window.Linguamis.user);
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             setTimeout(() => {
@@ -2322,7 +2321,6 @@
         function closeAuthModal() {
             const modal = document.getElementById('auth-modal');
             const content = document.getElementById('auth-modal-content');
-            
             modal.classList.add('opacity-0');
             content.classList.add('scale-95');
             setTimeout(() => {
@@ -2331,26 +2329,24 @@
             }, 300);
         }
 
-        function updateAuthUIView() {
+        function updateAuthUIView(user) {
             const loggedOutView = document.getElementById('logged-out-view');
             const loggedInView = document.getElementById('logged-in-view');
             const authBtnIcon = document.getElementById('auth-btn-icon');
             const authBtnTextEn = document.getElementById('auth-btn-text-en');
             const authBtnTextTr = document.getElementById('auth-btn-text-tr');
-            
-            if (window.Linguamis && window.Linguamis.user) {
+            const userEmailDisplay = document.getElementById('user-email-display');
+
+            if (user) {
                 if (loggedOutView) loggedOutView.classList.add('hidden');
                 if (loggedInView) loggedInView.classList.remove('hidden');
-                const userEmailDisplay = document.getElementById('user-email-display');
-                if (userEmailDisplay) userEmailDisplay.textContent = window.Linguamis.user.email;
-                
+                if (userEmailDisplay) userEmailDisplay.textContent = user.email;
                 if (authBtnIcon) authBtnIcon.className = "fas fa-user-check";
                 if (authBtnTextEn) authBtnTextEn.textContent = "My Account";
                 if (authBtnTextTr) authBtnTextTr.textContent = "Hesabım";
             } else {
                 if (loggedOutView) loggedOutView.classList.remove('hidden');
                 if (loggedInView) loggedInView.classList.add('hidden');
-                
                 if (authBtnIcon) authBtnIcon.className = "fas fa-sign-in-alt";
                 if (authBtnTextEn) authBtnTextEn.textContent = "Login";
                 if (authBtnTextTr) authBtnTextTr.textContent = "Giriş Yap";
@@ -2360,50 +2356,46 @@
         async function handleSignUp() {
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-password').value;
-            
-            if(!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
-            
-            const { data, error } = await window.Linguamis.db.auth.signUp({ email, password });
-            
-            if (error) {
-                showAuthError(error.message);
-            } else {
-                alert("Kayıt başarılı! Lütfen giriş yapın.");
+            if (!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
+
+            try {
+                const { error } = await window.Linguamis.signUp(email, password);
+                if (error) throw error;
+                alert("Kayıt başarılı! Giriş yapabilirsiniz.");
+            } catch (err) {
+                showAuthError(err.message);
             }
         }
 
         async function handleLogin() {
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-password').value;
-            
-            if(!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
-            
-            const { data, error } = await window.Linguamis.db.auth.signInWithPassword({ email, password });
-            
-            if (error) {
-                showAuthError(error.message);
-            } else {
-                window.Linguamis.user = data.user;
-                updateAuthUIView();
+            if (!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
+
+            try {
+                await window.Linguamis.login(email, password);
+            } catch (err) {
+                showAuthError(err.message);
             }
         }
 
         async function handleLogout() {
-            const { error } = await window.Linguamis.db.auth.signOut();
-            if (!error) {
-                window.Linguamis.user = null;
-                updateAuthUIView();
-                closeAuthModal();
-                alert("Çıkış yapıldı.");
-            }
+            await window.Linguamis.logout();
+            closeAuthModal();
+            alert("Çıkış yapıldı.");
         }
 
-        function saveApiKey() {
+        async function saveApiKey() {
             const key = document.getElementById('gemini-api-key').value;
-            if(!key) return alert("Lütfen boş bırakmayın.");
-            
-            window.Linguamis.saveGeminiKey(key);
-            document.getElementById('gemini-api-key').value = ''; 
+            if (!key) return alert("Lütfen boş bırakmayın.");
+            try {
+                const { error } = await window.Linguamis.saveGeminiKey(key);
+                if (error) throw error;
+                alert("Gemini API Anahtarınız başarıyla kaydedildi!");
+                document.getElementById('gemini-api-key').value = '';
+            } catch (err) {
+                alert("Hata: " + err.message);
+            }
         }
 
         function showAuthError(msg) {
