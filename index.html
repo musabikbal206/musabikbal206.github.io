@@ -1135,90 +1135,212 @@
 
     <!-- AUTH & PROFILE MODAL -->
     <div id="auth-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-slate-900/80 dark:bg-black/80 backdrop-blur-md p-4 transition-all duration-500 opacity-0">
-        <div class="glass-card cursor-default max-w-md w-full relative scale-95 transition-transform duration-500 p-8" id="auth-modal-content">
+        <div class="glass-card cursor-default max-w-md w-full relative scale-95 transition-transform duration-500 p-6 md:p-8 max-h-[90vh] overflow-y-auto" id="auth-modal-content">
             
+            <!-- Kapat Butonu -->
             <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors z-[120]">
                 <i class="fas fa-times text-xl"></i>
             </button>
             
-            <!-- LOGGED OUT STATE (Giriş Yapılmamışsa Gösterilecek) -->
+            <!-- ================= LOGGED OUT STATE (Giriş Yapılmamışsa) ================= -->
             <div id="logged-out-view" class="block">
-                <div class="text-center mb-6">
-                    <div class="w-16 h-16 mx-auto bg-gradient-to-br from-purple-500/10 to-cyan-500/10 border border-purple-500/30 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center text-3xl mb-4">
-                        <i class="fas fa-user-lock"></i>
+                
+                <!-- 1. GİRİŞ YAP (LOGIN) GÖRÜNÜMÜ -->
+                <div id="auth-subview-login" class="block">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 mx-auto bg-gradient-to-br from-purple-500/10 to-cyan-500/10 border border-purple-500/30 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center text-3xl mb-4">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">
+                            <span class="en-text">Welcome Back</span>
+                            <span class="tr-text">Tekrar Hoş Geldin</span>
+                        </h2>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">
+                            <span class="en-text">Sign in to your Linguamis account.</span>
+                            <span class="tr-text">Linguamis hesabına giriş yap.</span>
+                        </p>
                     </div>
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                        <span class="en-text">Welcome to Linguamis</span>
-                        <span class="tr-text">Linguamis'e Hoş Geldin</span>
-                    </h2>
-                    <p class="text-sm text-slate-600 dark:text-slate-400">
-                        <span class="en-text">Login or create an account to continue.</span>
-                        <span class="tr-text">Devam etmek için giriş yap veya kayıt ol.</span>
-                    </p>
-                </div>
-
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">E-mail</label>
-                        <input type="email" id="auth-email" class="w-full px-4 py-2 rounded-xl border border-slate-300 dark:border-white/10 bg-white/50 dark:bg-black/50 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500 transition-colors" placeholder="mail@example.com">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                            <span class="en-text">Password</span>
-                            <span class="tr-text">Şifre</span>
-                        </label>
-                        <input type="password" id="auth-password" class="w-full px-4 py-2 rounded-xl border border-slate-300 dark:border-white/10 bg-white/50 dark:bg-black/50 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500 transition-colors" placeholder="••••••••">
-                    </div>
-                    
-                    <div class="flex gap-3 mt-6">
-                        <button onclick="handleLogin()" class="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white py-2 rounded-xl font-semibold transition-colors shadow-md">
+    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">E-mail</label>
+                            <input type="email" id="login-email" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 bg-white/50 dark:bg-black/50 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors" placeholder="mail@example.com">
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                    <span class="en-text">Password</span>
+                                    <span class="tr-text">Şifre</span>
+                                </label>
+                                <button onclick="showAuthSubview('forgot')" class="text-xs text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300 font-medium">
+                                    <span class="en-text">Forgot Password?</span>
+                                    <span class="tr-text">Şifremi Unuttum</span>
+                                </button>
+                            </div>
+                            <input type="password" id="login-password" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 bg-white/50 dark:bg-black/50 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors" placeholder="••••••••">
+                        </div>
+    
+                        <button onclick="handleLogin()" class="w-full mt-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white py-2.5 rounded-xl font-semibold transition-all shadow-md">
                             <span class="en-text">Login</span>
                             <span class="tr-text">Giriş Yap</span>
                         </button>
-                        <button onclick="handleSignUp()" class="flex-1 bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 text-slate-800 dark:text-white py-2 rounded-xl font-semibold transition-colors">
+    
+                        <div class="text-center pt-2 text-sm text-slate-600 dark:text-slate-400">
+                            <span class="en-text">Don't have an account?</span>
+                            <span class="tr-text">Hesabın yok mu?</span>
+                            <button onclick="showAuthSubview('signup')" class="ml-1 text-cyan-600 dark:text-cyan-400 font-bold hover:underline">
+                                <span class="en-text">Sign Up</span>
+                                <span class="tr-text">Kayıt Ol</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- 2. KAYIT OL (SIGN UP) GÖRÜNÜMÜ -->
+                <div id="auth-subview-signup" class="hidden">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 mx-auto bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center text-3xl mb-4">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">
+                            <span class="en-text">Create Account</span>
+                            <span class="tr-text">Hesap Oluştur</span>
+                        </h2>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">
+                            <span class="en-text">Join Linguamis today.</span>
+                            <span class="tr-text">Linguamis topluluğuna katıl.</span>
+                        </p>
+                    </div>
+    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                <span class="en-text">Full Name or Nickname</span>
+                                <span class="tr-text">Ad Soyad veya Takma Ad</span>
+                            </label>
+                            <input type="text" id="signup-name" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 bg-white/50 dark:bg-black/50 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors" placeholder="Ahmet Yılmaz / linguadev">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">E-mail</label>
+                            <input type="email" id="signup-email" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 bg-white/50 dark:bg-black/50 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors" placeholder="mail@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                <span class="en-text">Password</span>
+                                <span class="tr-text">Şifre (Min. 6 Karakter)</span>
+                            </label>
+                            <input type="password" id="signup-password" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 bg-white/50 dark:bg-black/50 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-cyan-500 transition-colors" placeholder="••••••••">
+                        </div>
+    
+                        <button onclick="handleSignUp()" class="w-full mt-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-2.5 rounded-xl font-semibold transition-all shadow-md">
                             <span class="en-text">Sign Up</span>
                             <span class="tr-text">Kayıt Ol</span>
                         </button>
+    
+                        <div class="text-center pt-2 text-sm text-slate-600 dark:text-slate-400">
+                            <span class="en-text">Already have an account?</span>
+                            <span class="tr-text">Zaten hesabın var mı?</span>
+                            <button onclick="showAuthSubview('login')" class="ml-1 text-cyan-600 dark:text-cyan-400 font-bold hover:underline">
+                                <span class="en-text">Login</span>
+                                <span class="tr-text">Giriş Yap</span>
+                            </button>
+                        </div>
                     </div>
-                    <p id="auth-error-msg" class="text-red-500 text-sm text-center hidden mt-2"></p>
                 </div>
+    
+                <!-- 3. ŞİFREMİ UNUTTUM (FORGOT PASSWORD) GÖRÜNÜMÜ -->
+                <div id="auth-subview-forgot" class="hidden">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 mx-auto bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 rounded-2xl flex items-center justify-center text-3xl mb-4">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">
+                            <span class="en-text">Reset Password</span>
+                            <span class="tr-text">Şifre Sıfırlama</span>
+                        </h2>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">
+                            <span class="en-text">Enter your email to receive a reset link.</span>
+                            <span class="tr-text">Sıfırlama bağlantısı için e-postanı gir.</span>
+                        </p>
+                    </div>
+    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">E-mail</label>
+                            <input type="email" id="forgot-email" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 bg-white/50 dark:bg-black/50 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-amber-500 transition-colors" placeholder="mail@example.com">
+                        </div>
+    
+                        <button onclick="handleForgotPassword()" class="w-full mt-2 bg-amber-500 hover:bg-amber-600 text-white py-2.5 rounded-xl font-semibold transition-all shadow-md">
+                            <span class="en-text">Send Reset Link</span>
+                            <span class="tr-text">Sıfırlama Bağlantısı Gönder</span>
+                        </button>
+    
+                        <div class="text-center pt-2 text-sm">
+                            <button onclick="showAuthSubview('login')" class="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white font-medium inline-flex items-center gap-2">
+                                <i class="fas fa-arrow-left text-xs"></i>
+                                <span class="en-text">Back to Login</span>
+                                <span class="tr-text">Giriş Ekranına Dön</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+                <p id="auth-error-msg" class="text-red-500 text-xs text-center hidden mt-4 bg-red-50 dark:bg-red-950/40 p-2 rounded-lg border border-red-200 dark:border-red-800/40"></p>
             </div>
-
-            <!-- LOGGED IN STATE (Giriş Yapılmışsa Gösterilecek) -->
+    
+            <!-- ================= LOGGED IN STATE (Giriş Yapılmışsa - HESABIM) ================= -->
             <div id="logged-in-view" class="hidden">
+                <!-- Profil Başlığı & Bilgisi -->
                 <div class="text-center mb-6">
-                    <div class="w-16 h-16 mx-auto bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center text-3xl mb-4">
-                        <i class="fas fa-check-circle"></i>
+                    <div class="w-16 h-16 mx-auto bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 rounded-2xl flex items-center justify-center text-3xl mb-3 shadow-sm">
+                        <i class="fas fa-user-circle"></i>
                     </div>
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">
-                        <span class="en-text">My Account</span>
-                        <span class="tr-text">Hesabım</span>
-                    </h2>
-                    <p id="user-email-display" class="text-sm font-medium text-cyan-600 dark:text-cyan-400 mb-6"></p>
+                    <h2 id="user-display-name-header" class="text-2xl font-bold text-slate-900 dark:text-white mb-0.5"></h2>
+                    <p id="user-email-display" class="text-xs font-medium text-slate-500 dark:text-slate-400 mb-4"></p>
                 </div>
-
-                <!-- Gemini API Key Alanı -->
-                <div class="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10 mb-6">
-                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                        <i class="fas fa-key text-amber-500 mr-2"></i>Google Gemini API Key
-                    </label>
-                    <input type="password" id="gemini-api-key" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-black/50 text-slate-900 dark:text-white text-sm mb-3 focus:outline-none focus:border-amber-500" placeholder="AIzaSy...">
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                        <span class="en-text">Your key is encrypted and stored safely.</span>
-                        <span class="tr-text">Anahtarınız güvenli bir şekilde şifrelenip saklanır.</span>
-                    </p>
-                    <button onclick="saveApiKey()" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-2 rounded-lg font-semibold transition-colors text-sm shadow-sm">
-                        <span class="en-text">Save / Update Key</span>
-                        <span class="tr-text">Anahtarı Kaydet / Güncelle</span>
+    
+                <div class="space-y-5">
+                    <!-- 1. Ad Soyad / Nickname Düzenleme -->
+                    <div class="bg-slate-50 dark:bg-white/[0.03] p-4 rounded-2xl border border-slate-200 dark:border-white/10">
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
+                            <i class="fas fa-id-badge text-cyan-600 dark:text-cyan-400"></i>
+                            <span class="en-text">Full Name / Nickname</span>
+                            <span class="tr-text">Ad Soyad / Nickname</span>
+                        </label>
+                        <div class="flex gap-2">
+                            <input type="text" id="account-display-name" class="flex-1 px-3 py-2 rounded-xl border border-slate-300 dark:border-white/10 bg-white dark:bg-black/50 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-cyan-500" placeholder="Adınız veya Takma Adınız">
+                            <button onclick="handleUpdateProfile()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl text-xs font-semibold transition-colors shrink-0">
+                                <span class="en-text">Update</span>
+                                <span class="tr-text">Güncelle</span>
+                            </button>
+                        </div>
+                    </div>
+    
+                    <!-- 2. Şifre Değiştirme -->
+                    <div class="bg-slate-50 dark:bg-white/[0.03] p-4 rounded-2xl border border-slate-200 dark:border-white/10">
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-2">
+                            <i class="fas fa-lock text-purple-600 dark:text-purple-400"></i>
+                            <span class="en-text">Change Password</span>
+                            <span class="tr-text">Şifre Değiştir</span>
+                        </label>
+                        <div class="space-y-2">
+                            <input type="password" id="account-new-password" class="w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-white/10 bg-white dark:bg-black/50 text-slate-900 dark:text-white text-sm focus:outline-none focus:border-purple-500" placeholder="Yeni şifreniz (Min. 6 karakter)">
+                            <button onclick="handleChangePassword()" class="w-full py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-semibold transition-colors">
+                                <span class="en-text">Save New Password</span>
+                                <span class="tr-text">Yeni Şifreyi Kaydet</span>
+                            </button>
+                        </div>
+                    </div>
+    
+                    <!-- 3. Çıkış Yap Butonu -->
+                    <button onclick="handleLogout()" class="w-full bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-600 dark:text-red-400 py-2.5 rounded-xl font-semibold transition-colors text-sm flex items-center justify-center gap-2">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="en-text">Logout</span>
+                        <span class="tr-text">Çıkış Yap</span>
                     </button>
                 </div>
-
-                <button onclick="handleLogout()" class="w-full bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-600 dark:text-red-400 py-2 rounded-xl font-semibold transition-colors">
-                    <span class="en-text">Logout</span>
-                    <span class="tr-text">Çıkış Yap</span>
-                </button>
             </div>
-
+    
         </div>
     </div>
 
@@ -2306,17 +2428,41 @@
 
     <script>
         // Sayfa yüklendiğinde Linguamis'i UI güncellemesiyle başlat
+// Sayfa yüklendiğinde Linguamis'i UI güncellemesiyle başlat
         document.addEventListener('DOMContentLoaded', () => {
-            window.Linguamis.init((user) => {
-                updateAuthUIView(user);
-            });
+            if (window.Linguamis && window.Linguamis.init) {
+                window.Linguamis.init((user) => {
+                    updateAuthUIView(user);
+                });
+            }
         });
-
-        /* UI Kontrolleri */
+        
+        /* Modal İçi Alt Görünümleri Değiştirme (Login / SignUp / Forgot) */
+        function showAuthSubview(view) {
+            const loginView = document.getElementById('auth-subview-login');
+            const signupView = document.getElementById('auth-subview-signup');
+            const forgotView = document.getElementById('auth-subview-forgot');
+            const errorEl = document.getElementById('auth-error-msg');
+            
+            if (errorEl) errorEl.classList.add('hidden');
+            
+            if (loginView) loginView.classList.add('hidden');
+            if (signupView) signupView.classList.add('hidden');
+            if (forgotView) forgotView.classList.add('hidden');
+        
+            if (view === 'login' && loginView) loginView.classList.remove('hidden');
+            if (view === 'signup' && signupView) signupView.classList.remove('hidden');
+            if (view === 'forgot' && forgotView) forgotView.classList.remove('hidden');
+        }
+        
+        /* Modal Açma / Kapama */
         function openAuthModal() {
             const modal = document.getElementById('auth-modal');
             const content = document.getElementById('auth-modal-content');
-            updateAuthUIView(window.Linguamis.user);
+            
+            showAuthSubview('login'); // Varsayılan olarak login ekranıyla aç
+            updateAuthUIView(window.Linguamis ? window.Linguamis.user : null);
+            
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             setTimeout(() => {
@@ -2324,7 +2470,7 @@
                 content.classList.remove('scale-95');
             }, 10);
         }
-
+        
         function closeAuthModal() {
             const modal = document.getElementById('auth-modal');
             const content = document.getElementById('auth-modal-content');
@@ -2335,111 +2481,207 @@
                 modal.classList.remove('flex');
             }, 300);
         }
-
+        
+        // Modal dışına tıklandığında kapatma
+        document.getElementById('auth-modal')?.addEventListener('click', function(e) {
+            if (e.target === this) closeAuthModal();
+        });
+        
+        /* Kullanıcı Durumuna Göre Arayüzü Güncelleme */
         function updateAuthUIView(user) {
             const loggedOutView = document.getElementById('logged-out-view');
             const loggedInView = document.getElementById('logged-in-view');
+            
+            // Masaüstü Buton Elementleri
             const authBtnIcon = document.getElementById('auth-btn-icon');
             const authBtnTextEn = document.getElementById('auth-btn-text-en');
             const authBtnTextTr = document.getElementById('auth-btn-text-tr');
-            const userEmailDisplay = document.getElementById('user-email-display');
+            
+            // Mobil Buton Elementleri
             const mobileAuthIcon = document.getElementById('mobile-auth-icon');
             const mobileAuthTextEn = document.getElementById('mobile-auth-text-en');
             const mobileAuthTextTr = document.getElementById('mobile-auth-text-tr');
-
+            
+            // Hesap Alanı Elementleri
+            const userEmailDisplay = document.getElementById('user-email-display');
+            const userDisplayNameHeader = document.getElementById('user-display-name-header');
+            const accountDisplayNameInput = document.getElementById('account-display-name');
+        
             if (user) {
+                const displayName = user.user_metadata?.display_name || user.user_metadata?.full_name || user.email.split('@')[0];
+        
                 if (loggedOutView) loggedOutView.classList.add('hidden');
                 if (loggedInView) loggedInView.classList.remove('hidden');
+                
                 if (userEmailDisplay) userEmailDisplay.textContent = user.email;
+                if (userDisplayNameHeader) userDisplayNameHeader.textContent = displayName;
+                if (accountDisplayNameInput) accountDisplayNameInput.value = user.user_metadata?.display_name || '';
+        
+                // Desktop buton
                 if (authBtnIcon) authBtnIcon.className = "fas fa-user-check";
-                if (authBtnTextEn) authBtnTextEn.textContent = "My Account";
-                if (authBtnTextTr) authBtnTextTr.textContent = "Hesabım";
+                if (authBtnTextEn) authBtnTextEn.textContent = displayName;
+                if (authBtnTextTr) authBtnTextTr.textContent = displayName;
+                
+                // Mobil buton
                 if (mobileAuthIcon) mobileAuthIcon.className = "fas fa-user-check w-5 text-center text-purple-600 dark:text-purple-400";
                 if (mobileAuthTextEn) mobileAuthTextEn.textContent = "My Account";
                 if (mobileAuthTextTr) mobileAuthTextTr.textContent = "Hesabım";
             } else {
                 if (loggedOutView) loggedOutView.classList.remove('hidden');
                 if (loggedInView) loggedInView.classList.add('hidden');
+                
+                // Desktop buton
                 if (authBtnIcon) authBtnIcon.className = "fas fa-sign-in-alt";
                 if (authBtnTextEn) authBtnTextEn.textContent = "Login";
                 if (authBtnTextTr) authBtnTextTr.textContent = "Giriş Yap";
+                
+                // Mobil buton
                 if (mobileAuthIcon) mobileAuthIcon.className = "fas fa-sign-in-alt w-5 text-center text-purple-600 dark:text-purple-400";
                 if (mobileAuthTextEn) mobileAuthTextEn.textContent = "Login";
                 if (mobileAuthTextTr) mobileAuthTextTr.textContent = "Giriş Yap";
             }
         }
-
-        async function handleSignUp() {
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
-            if (!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
-
-            try {
-                const { error } = await window.Linguamis.signUp(email, password);
-                if (error) throw error;
-                showToast("Kayıt başarılı! Giriş yapabilirsiniz.");
-            } catch (err) {
-                showAuthError(err.message);
-            }
-        }
-
+        
+        /* 1. GİRİŞ YAP İŞLEMİ */
         async function handleLogin() {
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
-            if (!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
-
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            if (!email || !password) return showAuthError("Lütfen e-posta ve şifrenizi girin.");
+        
             try {
-                await window.Linguamis.login(email, password);
-            } catch (err) {
-                showAuthError(err.message);
-            }
-        }
-
-        async function handleLogout() {
-            await window.Linguamis.logout();
-            closeAuthModal();
-            showToast("Çıkış yapıldı.");
-        }
-
-        async function saveApiKey() {
-            const key = document.getElementById('gemini-api-key').value;
-            if (!key) return showToast("Lütfen boş bırakmayın.");
-            try {
-                const { error } = await window.Linguamis.saveGeminiKey(key);
+                const { data, error } = await window.Linguamis.supabase.auth.signInWithPassword({ email, password });
                 if (error) throw error;
-                showToast("Gemini API Anahtarınız başarıyla kaydedildi!");
-                document.getElementById('gemini-api-key').value = '';
+                
+                showToast("Giriş başarılı!", "success");
+                closeAuthModal();
             } catch (err) {
-                showToast("Hata: " + err.message);
+                showAuthError(err.message || "Giriş yapılamadı. Bilgilerinizi kontrol edin.");
             }
         }
-
+        
+        /* 2. KAYIT OL İŞLEMİ (Ad Soyad / Nickname ile) */
+        async function handleSignUp() {
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+        
+            if (!email || !password) return showAuthError("Lütfen e-posta ve şifre alanlarını doldurun.");
+            if (password.length < 6) return showAuthError("Şifre en az 6 karakter olmalıdır.");
+        
+            try {
+                const { data, error } = await window.Linguamis.supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            display_name: name || email.split('@')[0]
+                        }
+                    }
+                });
+                if (error) throw error;
+                
+                showToast("Kayıt başarılı! Giriş yapabilirsiniz.", "success");
+                showAuthSubview('login');
+            } catch (err) {
+                showAuthError(err.message || "Kayıt sırasında bir hata oluştu.");
+            }
+        }
+        
+        /* 3. ŞİFREMİ UNUTTUM İŞLEMİ */
+        async function handleForgotPassword() {
+            const email = document.getElementById('forgot-email').value.trim();
+            if (!email) return showAuthError("Lütfen kayıtlı e-posta adresinizi girin.");
+        
+            try {
+                const { error } = await window.Linguamis.supabase.auth.resetPasswordForEmail(email, {
+                    redirectTo: window.location.origin
+                });
+                if (error) throw error;
+                
+                showToast("Şifre sıfırlama bağlantısı e-posta adresinize gönderildi!", "success");
+                showAuthSubview('login');
+            } catch (err) {
+                showAuthError(err.message || "Sıfırlama bağlantısı gönderilemedi.");
+            }
+        }
+        
+        /* 4. AD SOYAD / NICKNAME GÜNCELLEME */
+        async function handleUpdateProfile() {
+            const newName = document.getElementById('account-display-name').value.trim();
+            if (!newName) return showToast("Lütfen bir isim veya takma ad girin.", "error");
+        
+            try {
+                const { data, error } = await window.Linguamis.supabase.auth.updateUser({
+                    data: { display_name: newName }
+                });
+                if (error) throw error;
+        
+                // UI'daki isim alanlarını hemen güncelle
+                window.Linguamis.user = data.user;
+                updateAuthUIView(data.user);
+                showToast("Profil bilgileriniz güncellendi!", "success");
+            } catch (err) {
+                showToast("Hata: " + err.message, "error");
+            }
+        }
+        
+        /* 5. ŞİFRE DEĞİŞTİRME */
+        async function handleChangePassword() {
+            const newPassword = document.getElementById('account-new-password').value;
+            if (!newPassword || newPassword.length < 6) {
+                return showToast("Yeni şifre en az 6 karakter olmalıdır.", "error");
+            }
+        
+            try {
+                const { error } = await window.Linguamis.supabase.auth.updateUser({
+                    password: newPassword
+                });
+                if (error) throw error;
+        
+                document.getElementById('account-new-password').value = '';
+                showToast("Şifreniz başarıyla değiştirildi!", "success");
+            } catch (err) {
+                showToast("Hata: " + err.message, "error");
+            }
+        }
+        
+        /* 6. ÇIKIŞ YAP */
+        async function handleLogout() {
+            try {
+                await window.Linguamis.supabase.auth.signOut();
+                closeAuthModal();
+                showToast("Başarıyla çıkış yapıldı.", "success");
+            } catch (err) {
+                showToast("Çıkış yapılırken bir sorun oluştu.", "error");
+            }
+        }
+        
+        /* Hata Mesajı Gösterme Yardımcısı */
         function showAuthError(msg) {
             const errorEl = document.getElementById('auth-error-msg');
             if (errorEl) {
                 errorEl.textContent = msg;
                 errorEl.classList.remove('hidden');
-                setTimeout(() => errorEl.classList.add('hidden'), 4000);
             }
         }
-    function showToast(message, type = 'success') {
-        const toast = document.getElementById('toast-notification');
-        const icon = document.getElementById('toast-icon');
-        const msgEl = document.getElementById('toast-message');
-
-        msgEl.textContent = message;
-
-        if (type === 'success') {
-            toast.className = "fixed bottom-6 right-6 z-[200] transform transition-all duration-300 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl text-sm font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/90 dark:text-emerald-100 border border-emerald-200 dark:border-emerald-800/50 backdrop-blur-md";
-            icon.className = "fas fa-check-circle text-lg";
-        } else if (type === 'error') {
-            toast.className = "fixed bottom-6 right-6 z-[200] transform transition-all duration-300 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl text-sm font-semibold bg-red-100 text-red-800 dark:bg-red-900/90 dark:text-red-100 border border-red-200 dark:border-red-800/50 backdrop-blur-md";
-            icon.className = "fas fa-exclamation-circle text-lg";
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast-notification');
+            const icon = document.getElementById('toast-icon');
+            const msgEl = document.getElementById('toast-message');
+    
+            msgEl.textContent = message;
+    
+            if (type === 'success') {
+                toast.className = "fixed bottom-6 right-6 z-[200] transform transition-all duration-300 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl text-sm font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/90 dark:text-emerald-100 border border-emerald-200 dark:border-emerald-800/50 backdrop-blur-md";
+                icon.className = "fas fa-check-circle text-lg";
+            } else if (type === 'error') {
+                toast.className = "fixed bottom-6 right-6 z-[200] transform transition-all duration-300 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl text-sm font-semibold bg-red-100 text-red-800 dark:bg-red-900/90 dark:text-red-100 border border-red-200 dark:border-red-800/50 backdrop-blur-md";
+                icon.className = "fas fa-exclamation-circle text-lg";
+            }
+    
+            setTimeout(() => toast.classList.remove('translate-y-20', 'opacity-0'), 10);
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
         }
-
-        setTimeout(() => toast.classList.remove('translate-y-20', 'opacity-0'), 10);
-        setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
-    }
     </script>
     <!-- TOAST NOTIFICATION -->
     <div id="toast-notification" class="fixed bottom-6 right-6 z-[200] transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3 px-6 py-4 rounded-xl shadow-xl text-sm font-semibold pointer-events-none">
