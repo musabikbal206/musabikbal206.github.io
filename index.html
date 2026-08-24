@@ -1216,10 +1216,13 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <!-- 2. Linguamis Core (Bağlantı Sorununu Çözmek İçin HTML İçine Alındı) -->
     <script>
-        // 1. Supabase Bağlantı Ayarları (Sondaki /rest/v1/ olmadan)
+    // Supabase yüklendi mi kontrol et
+        if (typeof window.supabase === 'undefined') {
+            console.error("Supabase kütüphanesi yüklenemedi! İnternet bağlantını veya CDN linkini kontrol et.");
+        } else {
         const SUPABASE_URL = 'https://mpwmkxbwbkdtbxbbwynw.supabase.co'; 
         
         // DİKKAT: Aşağıdaki tırnak içine kendi uzun ANON_KEY bilginizi yapıştırın
@@ -1228,19 +1231,15 @@
         // Supabase istemcisini başlatıyoruz
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // 2. Linguamis Hub Objesi
         window.Linguamis = {
             db: supabase,
             user: null,
 
             init: async function() {
                 const { data: { session }, error } = await this.db.auth.getSession();
-                
                 if (session) {
                     this.user = session.user;
                     console.log("Giriş başarılı. Hoş geldin:", this.user.email);
-                } else {
-                    console.log("Aktif oturum yok.");
                 }
             },
 
