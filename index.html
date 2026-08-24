@@ -270,12 +270,6 @@
                     <span class="en-text">TR</span>
                     <span class="tr-text">EN</span>
                 </button>
-                <!-- Auth (Giriş) Butonu -->
-                <button onclick="openAuthModal()" id="auth-btn" class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/30 dark:hover:bg-purple-900/50 text-purple-800 dark:text-purple-100 transition-all border border-purple-200 dark:border-purple-800/50">
-                    <i class="fas fa-sign-in-alt" id="auth-btn-icon"></i>
-                    <span id="auth-btn-text-en" class="en-text font-bold text-xs">Login</span>
-                    <span id="auth-btn-text-tr" class="tr-text font-bold text-xs">Giriş Yap</span>
-                </button>
                 <!-- Profile Toggle (Desktop) -->
                 <button onclick="openProfileModal(true)" class="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-100 hover:bg-cyan-200 dark:bg-cyan-900/30 dark:hover:bg-cyan-900/50 text-cyan-800 dark:text-cyan-100 transition-all border border-cyan-200 dark:border-cyan-800/50">
                     <i class="fas fa-user-circle"></i>
@@ -1058,7 +1052,76 @@
         </div>
     </div>
 
-        <!-- AUTH & PROFILE MODAL -->
+
+    <!-- PROFILE SELECTION MODAL -->
+    <div id="profile-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/80 dark:bg-black/80 backdrop-blur-md p-4 transition-all duration-500 opacity-0">
+        <div class="glass-card cursor-default max-w-6xl w-full p-6 md:p-12 relative scale-95 transition-transform duration-500 max-h-[90vh] overflow-y-auto" id="profile-modal-content">
+            <button onclick="closeProfileModal()" id="modal-close-btn" class="absolute top-6 right-6 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors hidden z-10">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            
+            <div class="text-center mb-8 md:mb-10">
+                <h2 class="text-3xl md:text-5xl font-bold bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-400 dark:to-purple-500 gradient-text mb-4 pb-1">
+                    <span class="en-text">What brings you to Linguamis?</span>
+                    <span class="tr-text">Linguamis'e hangi rüzgar attı?</span>
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 text-lg md:text-xl font-light">
+                    <span class="en-text">Pick your path. I'll keep the hub focused, so you see the projects that actually fit you.</span>
+                    <span class="tr-text">Yolunu seç. Sadece sana uygun projeleri görebilmen için içeriği odaklı tutacağım.</span>
+                </p>
+            </div>
+            
+            <!-- 3 Column Grid -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Student Card -->
+                <button onclick="setProfile('student')" class="group relative bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.1] rounded-3xl p-6 md:p-8 text-left hover:bg-white dark:hover:bg-white/[0.08] hover:border-cyan-400/60 dark:hover:border-cyan-400/60 transition-all duration-300 shadow-sm dark:shadow-2xl hover:shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 dark:from-cyan-500/20 dark:to-blue-500/20 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3">
+                        <span class="en-text">For Students</span>
+                        <span class="tr-text">Öğrenciler İçin</span>
+                    </h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        <span class="en-text">Games, quizzes, language practice and learning experiences.</span>
+                        <span class="tr-text">Oyunlar, quizler, dil pratiği ve öğrenme deneyimleri.</span>
+                    </p>
+                </button>
+                
+                <!-- Teacher Card -->
+                <button onclick="setProfile('teacher')" class="group relative bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.1] rounded-3xl p-6 md:p-8 text-left hover:bg-white dark:hover:bg-white/[0.08] hover:border-purple-400/60 transition-all duration-300 shadow-sm dark:shadow-2xl hover:shadow-lg hover:shadow-purple-500/20 hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20 border border-purple-500/30 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3">
+                        <span class="en-text">For Teachers</span>
+                        <span class="tr-text">Öğretmenler İçin</span>
+                    </h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        <span class="en-text">Classroom tools, productivity helpers, and practical teaching utilities.</span>
+                        <span class="tr-text">Sınıf araçları, üretkenlik yardımcıları ve pratik öğretim araçları.</span>
+                    </p>
+                </button>
+
+                <!-- Developer Card -->
+                <button onclick="setProfile('developer')" class="group relative bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.1] rounded-3xl p-6 md:p-8 text-left hover:bg-white dark:hover:bg-white/[0.08] hover:border-emerald-400/60 dark:hover:border-emerald-400/60 transition-all duration-300 shadow-sm dark:shadow-2xl hover:shadow-lg hover:shadow-emerald-500/20 hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3">
+                        <span class="en-text">For Developers</span>
+                        <span class="tr-text">Geliştiriciler İçin</span>
+                    </h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                        <span class="en-text">Code repos, advanced tools, and web development projects.</span>
+                        <span class="tr-text">Kod depoları, gelişmiş araçlar ve web geliştirme projeleri.</span>
+                    </p>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUTH & PROFILE MODAL -->
     <div id="auth-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-slate-900/80 dark:bg-black/80 backdrop-blur-md p-4 transition-all duration-500 opacity-0">
         <div class="glass-card cursor-default max-w-md w-full relative scale-95 transition-transform duration-500 p-8" id="auth-modal-content">
             
@@ -1146,128 +1209,6 @@
 
         </div>
     </div>
-
-
-    <!-- PROFILE SELECTION MODAL -->
-    <div id="profile-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/80 dark:bg-black/80 backdrop-blur-md p-4 transition-all duration-500 opacity-0">
-        <div class="glass-card cursor-default max-w-6xl w-full p-6 md:p-12 relative scale-95 transition-transform duration-500 max-h-[90vh] overflow-y-auto" id="profile-modal-content">
-            <button onclick="closeProfileModal()" id="modal-close-btn" class="absolute top-6 right-6 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors hidden z-10">
-                <i class="fas fa-times text-2xl"></i>
-            </button>
-            
-            <div class="text-center mb-8 md:mb-10">
-                <h2 class="text-3xl md:text-5xl font-bold bg-gradient-to-r from-cyan-600 to-purple-600 dark:from-cyan-400 dark:to-purple-500 gradient-text mb-4 pb-1">
-                    <span class="en-text">What brings you to Linguamis?</span>
-                    <span class="tr-text">Linguamis'e hangi rüzgar attı?</span>
-                </h2>
-                <p class="text-slate-600 dark:text-slate-400 text-lg md:text-xl font-light">
-                    <span class="en-text">Pick your path. I'll keep the hub focused, so you see the projects that actually fit you.</span>
-                    <span class="tr-text">Yolunu seç. Sadece sana uygun projeleri görebilmen için içeriği odaklı tutacağım.</span>
-                </p>
-            </div>
-            
-            <!-- 3 Column Grid -->
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- Student Card -->
-                <button onclick="setProfile('student')" class="group relative bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.1] rounded-3xl p-6 md:p-8 text-left hover:bg-white dark:hover:bg-white/[0.08] hover:border-cyan-400/60 dark:hover:border-cyan-400/60 transition-all duration-300 shadow-sm dark:shadow-2xl hover:shadow-lg hover:shadow-cyan-500/20 hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 dark:from-cyan-500/20 dark:to-blue-500/20 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3">
-                        <span class="en-text">For Students</span>
-                        <span class="tr-text">Öğrenciler İçin</span>
-                    </h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                        <span class="en-text">Games, quizzes, language practice and learning experiences.</span>
-                        <span class="tr-text">Oyunlar, quizler, dil pratiği ve öğrenme deneyimleri.</span>
-                    </p>
-                </button>
-                
-                <!-- Teacher Card -->
-                <button onclick="setProfile('teacher')" class="group relative bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.1] rounded-3xl p-6 md:p-8 text-left hover:bg-white dark:hover:bg-white/[0.08] hover:border-purple-400/60 transition-all duration-300 shadow-sm dark:shadow-2xl hover:shadow-lg hover:shadow-purple-500/20 hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20 border border-purple-500/30 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3">
-                        <span class="en-text">For Teachers</span>
-                        <span class="tr-text">Öğretmenler İçin</span>
-                    </h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                        <span class="en-text">Classroom tools, productivity helpers, and practical teaching utilities.</span>
-                        <span class="tr-text">Sınıf araçları, üretkenlik yardımcıları ve pratik öğretim araçları.</span>
-                    </p>
-                </button>
-
-                <!-- Developer Card -->
-                <button onclick="setProfile('developer')" class="group relative bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/[0.1] rounded-3xl p-6 md:p-8 text-left hover:bg-white dark:hover:bg-white/[0.08] hover:border-emerald-400/60 dark:hover:border-emerald-400/60 transition-all duration-300 shadow-sm dark:shadow-2xl hover:shadow-lg hover:shadow-emerald-500/20 hover:-translate-y-2">
-                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-3">
-                        <span class="en-text">For Developers</span>
-                        <span class="tr-text">Geliştiriciler İçin</span>
-                    </h3>
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                        <span class="en-text">Code repos, advanced tools, and web development projects.</span>
-                        <span class="tr-text">Kod depoları, gelişmiş araçlar ve web geliştirme projeleri.</span>
-                    </p>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <!-- 2. Linguamis Core (Bağlantı Sorununu Çözmek İçin HTML İçine Alındı) -->
-    <script>
-    // Supabase yüklendi mi kontrol et
-        if (typeof window.supabase === 'undefined') {
-            console.error("Supabase kütüphanesi yüklenemedi! İnternet bağlantını veya CDN linkini kontrol et.");
-        } else {
-        const SUPABASE_URL = 'https://mpwmkxbwbkdtbxbbwynw.supabase.co'; 
-        
-        // DİKKAT: Aşağıdaki tırnak içine kendi uzun ANON_KEY bilginizi yapıştırın
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wd21reGJ3YmtkdGJ4YmJ3eW53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1NzI0MzUsImV4cCI6MjEwMzE0ODQzNX0.Ng5pAcxzeJZQKgIqiPpXjJKkdxBlLhHKnSCTRnaOw_8';
-
-        // Supabase istemcisini başlatıyoruz
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        window.Linguamis = {
-            db: supabase,
-            user: null,
-
-            init: async function() {
-                const { data: { session }, error } = await this.db.auth.getSession();
-                if (session) {
-                    this.user = session.user;
-                    console.log("Giriş başarılı. Hoş geldin:", this.user.email);
-                }
-            },
-
-            saveGeminiKey: async function(apiKey) {
-                if (!this.user) return alert("Lütfen önce giriş yapın!");
-
-                const { error } = await this.db
-                    .from('user_api_keys')
-                    .upsert({ 
-                        user_id: this.user.id, 
-                        provider: 'gemini', 
-                        api_key: apiKey 
-                    });
-
-                if (error) {
-                    console.error("Anahtar kaydedilemedi:", error.message);
-                    alert("Bir hata oluştu, tekrar deneyin.");
-                } else {
-                    alert("Gemini API Anahtarınız başarıyla kaydedildi!");
-                }
-            }
-        };
-
-        // Sayfa yüklendiğinde oturumu otomatik kontrol et
-        document.addEventListener('DOMContentLoaded', () => {
-            window.Linguamis.init();
-        });
-    </script>
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -2313,136 +2254,6 @@
             
             requestAnimationFrame(gameLoop);
         }
-                /* --- AUTH MODAL & SUPABASE LOGIC --- */
-
-        function openAuthModal() {
-            const modal = document.getElementById('auth-modal');
-            const content = document.getElementById('auth-modal-content');
-            
-            // Kullanıcı durumuna göre hangi ekranın gösterileceğini seç
-            updateAuthUIView();
-
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                content.classList.remove('scale-95');
-            }, 10);
-        }
-
-        function closeAuthModal() {
-            const modal = document.getElementById('auth-modal');
-            const content = document.getElementById('auth-modal-content');
-            
-            modal.classList.add('opacity-0');
-            content.classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }, 300);
-        }
-
-        // UI Güncelleme (Menüdeki butonu ve modal içini günceller)
-        function updateAuthUIView() {
-            const loggedOutView = document.getElementById('logged-out-view');
-            const loggedInView = document.getElementById('logged-in-view');
-            const authBtnIcon = document.getElementById('auth-btn-icon');
-            const authBtnTextEn = document.getElementById('auth-btn-text-en');
-            const authBtnTextTr = document.getElementById('auth-btn-text-tr');
-            
-            if (window.Linguamis && window.Linguamis.user) {
-                // Giriş Yapılmış Durum
-                loggedOutView.classList.add('hidden');
-                loggedInView.classList.remove('hidden');
-                document.getElementById('user-email-display').textContent = window.Linguamis.user.email;
-                
-                // Menü Butonunu "Hesabım" Yap
-                authBtnIcon.className = "fas fa-user-check";
-                authBtnTextEn.textContent = "My Account";
-                authBtnTextTr.textContent = "Hesabım";
-            } else {
-                // Giriş Yapılmamış Durum
-                loggedOutView.classList.remove('hidden');
-                loggedInView.classList.add('hidden');
-                
-                // Menü Butonunu "Login" Yap
-                authBtnIcon.className = "fas fa-sign-in-alt";
-                authBtnTextEn.textContent = "Login";
-                authBtnTextTr.textContent = "Giriş Yap";
-            }
-        }
-
-        // Kayıt Ol
-        async function handleSignUp() {
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
-            const errorMsg = document.getElementById('auth-error-msg');
-            
-            if(!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
-            
-            const { data, error } = await window.Linguamis.db.auth.signUp({ email, password });
-            
-            if (error) {
-                showAuthError(error.message);
-            } else {
-                alert("Kayıt başarılı! Lütfen giriş yapın.");
-                // Gerekirse e-posta onayı açıksa kullanıcıdan mailini kontrol etmesini isteyebilirsiniz.
-            }
-        }
-
-        // Giriş Yap
-        async function handleLogin() {
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
-            
-            if(!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
-            
-            const { data, error } = await window.Linguamis.db.auth.signInWithPassword({ email, password });
-            
-            if (error) {
-                showAuthError("Giriş başarısız. Bilgilerinizi kontrol edin.");
-            } else {
-                // Core objesindeki kullanıcıyı güncelle
-                window.Linguamis.user = data.user;
-                updateAuthUIView();
-            }
-        }
-
-        // Çıkış Yap
-        async function handleLogout() {
-            const { error } = await window.Linguamis.db.auth.signOut();
-            if (!error) {
-                window.Linguamis.user = null;
-                updateAuthUIView();
-                closeAuthModal();
-                alert("Çıkış yapıldı.");
-            }
-        }
-
-        // API Anahtarı Kaydetme
-        function saveApiKey() {
-            const key = document.getElementById('gemini-api-key').value;
-            if(!key) return alert("Lütfen boş bırakmayın.");
-            
-            // linguamis-core.js içindeki fonksiyonu çağır
-            window.Linguamis.saveGeminiKey(key);
-            document.getElementById('gemini-api-key').value = ''; // Güvenlik için inputu temizle
-        }
-
-        // Hata gösterme yardımcısı
-        function showAuthError(msg) {
-            const errorEl = document.getElementById('auth-error-msg');
-            errorEl.textContent = msg;
-            errorEl.classList.remove('hidden');
-            setTimeout(() => errorEl.classList.add('hidden'), 4000);
-        }
-
-        // Sayfa yüklendiğinde Linguamis objesinin yüklenmesini bekle ve UI'ı güncelle
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                updateAuthUIView();
-            }, 500); // core.js'nin auth durumunu çekmesi için ufak bir gecikme
-        });
     </script>
     <!-- EASTER EGG GAME MODAL -->
     <div id="easter-egg-modal" class="fixed inset-0 z-[150] hidden items-center justify-center bg-[#050505]/90 backdrop-blur-xl transition-all duration-500 opacity-0 p-4">
@@ -2477,5 +2288,170 @@
             </div>
         </div>
     </div>
+    <!-- 1. Supabase Kütüphanesi -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <!-- 2. Linguamis Core ve Auth Fonksiyonları -->
+    <script>
+        // Supabase yüklendi mi kontrol et
+        if (typeof window.supabase === 'undefined') {
+            console.error("Supabase kütüphanesi yüklenemedi! İnternet bağlantını veya CDN linkini kontrol et.");
+        } else {
+            // DİKKAT: Buradaki URL ve KEY kısımlarını kendi projene göre doldurmalısın.
+            const SUPABASE_URL = 'https://mpwmkxbwbkdtbxbbwynw.supabase.co'; 
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wd21reGJ3YmtkdGJ4YmJ3eW53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1NzI0MzUsImV4cCI6MjEwMzE0ODQzNX0.Ng5pAcxzeJZQKgIqiPpXjJKkdxBlLhHKnSCTRnaOw_8';
+
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+            window.Linguamis = {
+                db: supabase,
+                user: null,
+
+                init: async function() {
+                    const { data: { session }, error } = await this.db.auth.getSession();
+                    if (session) {
+                        this.user = session.user;
+                        console.log("Giriş başarılı. Hoş geldin:", this.user.email);
+                        updateAuthUIView();
+                    }
+                },
+                 saveGeminiKey: async function(apiKey) {
+                    if (!this.user) return alert("Lütfen önce giriş yapın!");
+
+                    const { error } = await this.db
+                        .from('user_api_keys')
+                        .upsert({ 
+                            user_id: this.user.id, 
+                            provider: 'gemini', 
+                            api_key: apiKey 
+                        });
+
+                    if (error) {
+                        console.error("Anahtar kaydedilemedi:", error.message);
+                        alert("Bir hata oluştu, tekrar deneyin.");
+                    } else {
+                        alert("Gemini API Anahtarınız başarıyla kaydedildi!");
+                    }
+                }
+            };
+
+            document.addEventListener('DOMContentLoaded', () => {
+                window.Linguamis.init();
+                updateAuthUIView();
+            });
+        }
+        
+        /* --- AUTH MODAL & SUPABASE LOGIC --- */
+
+        function openAuthModal() {
+            const modal = document.getElementById('auth-modal');
+            const content = document.getElementById('auth-modal-content');
+            
+            updateAuthUIView();
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById('auth-modal');
+            const content = document.getElementById('auth-modal-content');
+            
+            modal.classList.add('opacity-0');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        function updateAuthUIView() {
+            const loggedOutView = document.getElementById('logged-out-view');
+            const loggedInView = document.getElementById('logged-in-view');
+            const authBtnIcon = document.getElementById('auth-btn-icon');
+            const authBtnTextEn = document.getElementById('auth-btn-text-en');
+            const authBtnTextTr = document.getElementById('auth-btn-text-tr');
+            
+            if (window.Linguamis && window.Linguamis.user) {
+                if (loggedOutView) loggedOutView.classList.add('hidden');
+                if (loggedInView) loggedInView.classList.remove('hidden');
+                const userEmailDisplay = document.getElementById('user-email-display');
+                if (userEmailDisplay) userEmailDisplay.textContent = window.Linguamis.user.email;
+                
+                if (authBtnIcon) authBtnIcon.className = "fas fa-user-check";
+                if (authBtnTextEn) authBtnTextEn.textContent = "My Account";
+                if (authBtnTextTr) authBtnTextTr.textContent = "Hesabım";
+            } else {
+                if (loggedOutView) loggedOutView.classList.remove('hidden');
+                if (loggedInView) loggedInView.classList.add('hidden');
+                
+                if (authBtnIcon) authBtnIcon.className = "fas fa-sign-in-alt";
+                if (authBtnTextEn) authBtnTextEn.textContent = "Login";
+                if (authBtnTextTr) authBtnTextTr.textContent = "Giriş Yap";
+            }
+        }
+
+        async function handleSignUp() {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            
+            if(!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
+            
+            const { data, error } = await window.Linguamis.db.auth.signUp({ email, password });
+            
+            if (error) {
+                showAuthError(error.message);
+            } else {
+                alert("Kayıt başarılı! Lütfen giriş yapın.");
+            }
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            
+            if(!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
+            
+            const { data, error } = await window.Linguamis.db.auth.signInWithPassword({ email, password });
+            
+            if (error) {
+                showAuthError(error.message);
+            } else {
+                window.Linguamis.user = data.user;
+                updateAuthUIView();
+            }
+        }
+
+        async function handleLogout() {
+            const { error } = await window.Linguamis.db.auth.signOut();
+            if (!error) {
+                window.Linguamis.user = null;
+                updateAuthUIView();
+                closeAuthModal();
+                alert("Çıkış yapıldı.");
+            }
+        }
+
+        function saveApiKey() {
+            const key = document.getElementById('gemini-api-key').value;
+            if(!key) return alert("Lütfen boş bırakmayın.");
+            
+            window.Linguamis.saveGeminiKey(key);
+            document.getElementById('gemini-api-key').value = ''; 
+        }
+
+        function showAuthError(msg) {
+            const errorEl = document.getElementById('auth-error-msg');
+            if (errorEl) {
+                errorEl.textContent = msg;
+                errorEl.classList.remove('hidden');
+                setTimeout(() => errorEl.classList.add('hidden'), 4000);
+            }
+        }
+    </script>
 </body>
 </html>
