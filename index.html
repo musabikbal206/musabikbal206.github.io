@@ -270,12 +270,6 @@
                     <span class="en-text">TR</span>
                     <span class="tr-text">EN</span>
                 </button>
-                <!-- Auth (Giriş) Butonu -->
-                <button onclick="openAuthModal()" id="auth-btn" class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/30 dark:hover:bg-purple-900/50 text-purple-800 dark:text-purple-100 transition-all border border-purple-200 dark:border-purple-800/50">
-                    <i class="fas fa-sign-in-alt" id="auth-btn-icon"></i>
-                    <span id="auth-btn-text-en" class="en-text font-bold text-xs">Login</span>
-                    <span id="auth-btn-text-tr" class="tr-text font-bold text-xs">Giriş Yap</span>
-                </button>
                 <!-- Profile Toggle (Desktop) -->
                 <button onclick="openProfileModal(true)" class="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-100 hover:bg-cyan-200 dark:bg-cyan-900/30 dark:hover:bg-cyan-900/50 text-cyan-800 dark:text-cyan-100 transition-all border border-cyan-200 dark:border-cyan-800/50">
                     <i class="fas fa-user-circle"></i>
@@ -1058,95 +1052,6 @@
         </div>
     </div>
 
-        <!-- AUTH & PROFILE MODAL -->
-    <div id="auth-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-slate-900/80 dark:bg-black/80 backdrop-blur-md p-4 transition-all duration-500 opacity-0">
-        <div class="glass-card cursor-default max-w-md w-full relative scale-95 transition-transform duration-500 p-8" id="auth-modal-content">
-            
-            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors z-[120]">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            
-            <!-- LOGGED OUT STATE (Giriş Yapılmamışsa Gösterilecek) -->
-            <div id="logged-out-view" class="block">
-                <div class="text-center mb-6">
-                    <div class="w-16 h-16 mx-auto bg-gradient-to-br from-purple-500/10 to-cyan-500/10 border border-purple-500/30 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center text-3xl mb-4">
-                        <i class="fas fa-user-lock"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                        <span class="en-text">Welcome to Linguamis</span>
-                        <span class="tr-text">Linguamis'e Hoş Geldin</span>
-                    </h2>
-                    <p class="text-sm text-slate-600 dark:text-slate-400">
-                        <span class="en-text">Login or create an account to continue.</span>
-                        <span class="tr-text">Devam etmek için giriş yap veya kayıt ol.</span>
-                    </p>
-                </div>
-
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">E-mail</label>
-                        <input type="email" id="auth-email" class="w-full px-4 py-2 rounded-xl border border-slate-300 dark:border-white/10 bg-white/50 dark:bg-black/50 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500 transition-colors" placeholder="mail@example.com">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                            <span class="en-text">Password</span>
-                            <span class="tr-text">Şifre</span>
-                        </label>
-                        <input type="password" id="auth-password" class="w-full px-4 py-2 rounded-xl border border-slate-300 dark:border-white/10 bg-white/50 dark:bg-black/50 text-slate-900 dark:text-white focus:outline-none focus:border-cyan-500 transition-colors" placeholder="••••••••">
-                    </div>
-                    
-                    <div class="flex gap-3 mt-6">
-                        <button onclick="handleLogin()" class="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white py-2 rounded-xl font-semibold transition-colors shadow-md">
-                            <span class="en-text">Login</span>
-                            <span class="tr-text">Giriş Yap</span>
-                        </button>
-                        <button onclick="handleSignUp()" class="flex-1 bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 text-slate-800 dark:text-white py-2 rounded-xl font-semibold transition-colors">
-                            <span class="en-text">Sign Up</span>
-                            <span class="tr-text">Kayıt Ol</span>
-                        </button>
-                    </div>
-                    <p id="auth-error-msg" class="text-red-500 text-sm text-center hidden mt-2"></p>
-                </div>
-            </div>
-
-            <!-- LOGGED IN STATE (Giriş Yapılmışsa Gösterilecek) -->
-            <div id="logged-in-view" class="hidden">
-                <div class="text-center mb-6">
-                    <div class="w-16 h-16 mx-auto bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center text-3xl mb-4">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-1">
-                        <span class="en-text">My Account</span>
-                        <span class="tr-text">Hesabım</span>
-                    </h2>
-                    <p id="user-email-display" class="text-sm font-medium text-cyan-600 dark:text-cyan-400 mb-6"></p>
-                </div>
-
-                <!-- Gemini API Key Alanı -->
-                <div class="bg-slate-50 dark:bg-white/5 p-4 rounded-xl border border-slate-200 dark:border-white/10 mb-6">
-                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                        <i class="fas fa-key text-amber-500 mr-2"></i>Google Gemini API Key
-                    </label>
-                    <input type="password" id="gemini-api-key" class="w-full px-4 py-2 rounded-lg border border-slate-300 dark:border-white/10 bg-white dark:bg-black/50 text-slate-900 dark:text-white text-sm mb-3 focus:outline-none focus:border-amber-500" placeholder="AIzaSy...">
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">
-                        <span class="en-text">Your key is encrypted and stored safely.</span>
-                        <span class="tr-text">Anahtarınız güvenli bir şekilde şifrelenip saklanır.</span>
-                    </p>
-                    <button onclick="saveApiKey()" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-2 rounded-lg font-semibold transition-colors text-sm shadow-sm">
-                        <span class="en-text">Save / Update Key</span>
-                        <span class="tr-text">Anahtarı Kaydet / Güncelle</span>
-                    </button>
-                </div>
-
-                <button onclick="handleLogout()" class="w-full bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-600 dark:text-red-400 py-2 rounded-xl font-semibold transition-colors">
-                    <span class="en-text">Logout</span>
-                    <span class="tr-text">Çıkış Yap</span>
-                </button>
-            </div>
-
-        </div>
-    </div>
-
 
     <!-- PROFILE SELECTION MODAL -->
     <div id="profile-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-900/80 dark:bg-black/80 backdrop-blur-md p-4 transition-all duration-500 opacity-0">
@@ -1215,60 +1120,6 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- 2. Linguamis Core (Bağlantı Sorununu Çözmek İçin HTML İçine Alındı) -->
-    <script>
-        // 1. Supabase Bağlantı Ayarları (Sondaki /rest/v1/ olmadan)
-        const SUPABASE_URL = 'https://mpwmkxbwbkdtbxbbwynw.supabase.co'; 
-        
-        // DİKKAT: Aşağıdaki tırnak içine kendi uzun ANON_KEY bilginizi yapıştırın
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1wd21reGJ3YmtkdGJ4YmJ3eW53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc1NzI0MzUsImV4cCI6MjEwMzE0ODQzNX0.Ng5pAcxzeJZQKgIqiPpXjJKkdxBlLhHKnSCTRnaOw_8';
-
-        // Supabase istemcisini başlatıyoruz
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // 2. Linguamis Hub Objesi
-        window.Linguamis = {
-            db: supabase,
-            user: null,
-
-            init: async function() {
-                const { data: { session }, error } = await this.db.auth.getSession();
-                
-                if (session) {
-                    this.user = session.user;
-                    console.log("Giriş başarılı. Hoş geldin:", this.user.email);
-                } else {
-                    console.log("Aktif oturum yok.");
-                }
-            },
-
-            saveGeminiKey: async function(apiKey) {
-                if (!this.user) return alert("Lütfen önce giriş yapın!");
-
-                const { error } = await this.db
-                    .from('user_api_keys')
-                    .upsert({ 
-                        user_id: this.user.id, 
-                        provider: 'gemini', 
-                        api_key: apiKey 
-                    });
-
-                if (error) {
-                    console.error("Anahtar kaydedilemedi:", error.message);
-                    alert("Bir hata oluştu, tekrar deneyin.");
-                } else {
-                    alert("Gemini API Anahtarınız başarıyla kaydedildi!");
-                }
-            }
-        };
-
-        // Sayfa yüklendiğinde oturumu otomatik kontrol et
-        document.addEventListener('DOMContentLoaded', () => {
-            window.Linguamis.init();
-        });
-    </script>
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -2314,136 +2165,6 @@
             
             requestAnimationFrame(gameLoop);
         }
-                /* --- AUTH MODAL & SUPABASE LOGIC --- */
-
-        function openAuthModal() {
-            const modal = document.getElementById('auth-modal');
-            const content = document.getElementById('auth-modal-content');
-            
-            // Kullanıcı durumuna göre hangi ekranın gösterileceğini seç
-            updateAuthUIView();
-
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                content.classList.remove('scale-95');
-            }, 10);
-        }
-
-        function closeAuthModal() {
-            const modal = document.getElementById('auth-modal');
-            const content = document.getElementById('auth-modal-content');
-            
-            modal.classList.add('opacity-0');
-            content.classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }, 300);
-        }
-
-        // UI Güncelleme (Menüdeki butonu ve modal içini günceller)
-        function updateAuthUIView() {
-            const loggedOutView = document.getElementById('logged-out-view');
-            const loggedInView = document.getElementById('logged-in-view');
-            const authBtnIcon = document.getElementById('auth-btn-icon');
-            const authBtnTextEn = document.getElementById('auth-btn-text-en');
-            const authBtnTextTr = document.getElementById('auth-btn-text-tr');
-            
-            if (window.Linguamis && window.Linguamis.user) {
-                // Giriş Yapılmış Durum
-                loggedOutView.classList.add('hidden');
-                loggedInView.classList.remove('hidden');
-                document.getElementById('user-email-display').textContent = window.Linguamis.user.email;
-                
-                // Menü Butonunu "Hesabım" Yap
-                authBtnIcon.className = "fas fa-user-check";
-                authBtnTextEn.textContent = "My Account";
-                authBtnTextTr.textContent = "Hesabım";
-            } else {
-                // Giriş Yapılmamış Durum
-                loggedOutView.classList.remove('hidden');
-                loggedInView.classList.add('hidden');
-                
-                // Menü Butonunu "Login" Yap
-                authBtnIcon.className = "fas fa-sign-in-alt";
-                authBtnTextEn.textContent = "Login";
-                authBtnTextTr.textContent = "Giriş Yap";
-            }
-        }
-
-        // Kayıt Ol
-        async function handleSignUp() {
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
-            const errorMsg = document.getElementById('auth-error-msg');
-            
-            if(!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
-            
-            const { data, error } = await window.Linguamis.db.auth.signUp({ email, password });
-            
-            if (error) {
-                showAuthError(error.message);
-            } else {
-                alert("Kayıt başarılı! Lütfen giriş yapın.");
-                // Gerekirse e-posta onayı açıksa kullanıcıdan mailini kontrol etmesini isteyebilirsiniz.
-            }
-        }
-
-        // Giriş Yap
-        async function handleLogin() {
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
-            
-            if(!email || !password) return showAuthError("Lütfen e-posta ve şifre girin.");
-            
-            const { data, error } = await window.Linguamis.db.auth.signInWithPassword({ email, password });
-            
-            if (error) {
-                showAuthError("Giriş başarısız. Bilgilerinizi kontrol edin.");
-            } else {
-                // Core objesindeki kullanıcıyı güncelle
-                window.Linguamis.user = data.user;
-                updateAuthUIView();
-            }
-        }
-
-        // Çıkış Yap
-        async function handleLogout() {
-            const { error } = await window.Linguamis.db.auth.signOut();
-            if (!error) {
-                window.Linguamis.user = null;
-                updateAuthUIView();
-                closeAuthModal();
-                alert("Çıkış yapıldı.");
-            }
-        }
-
-        // API Anahtarı Kaydetme
-        function saveApiKey() {
-            const key = document.getElementById('gemini-api-key').value;
-            if(!key) return alert("Lütfen boş bırakmayın.");
-            
-            // linguamis-core.js içindeki fonksiyonu çağır
-            window.Linguamis.saveGeminiKey(key);
-            document.getElementById('gemini-api-key').value = ''; // Güvenlik için inputu temizle
-        }
-
-        // Hata gösterme yardımcısı
-        function showAuthError(msg) {
-            const errorEl = document.getElementById('auth-error-msg');
-            errorEl.textContent = msg;
-            errorEl.classList.remove('hidden');
-            setTimeout(() => errorEl.classList.add('hidden'), 4000);
-        }
-
-        // Sayfa yüklendiğinde Linguamis objesinin yüklenmesini bekle ve UI'ı güncelle
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                updateAuthUIView();
-            }, 500); // core.js'nin auth durumunu çekmesi için ufak bir gecikme
-        });
     </script>
     <!-- EASTER EGG GAME MODAL -->
     <div id="easter-egg-modal" class="fixed inset-0 z-[150] hidden items-center justify-center bg-[#050505]/90 backdrop-blur-xl transition-all duration-500 opacity-0 p-4">
@@ -2478,5 +2199,7 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="linguamis-core.js"></script>
 </body>
 </html>
